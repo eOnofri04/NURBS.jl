@@ -1,14 +1,14 @@
-# Algoritmi NURBS
+# Algorithms NURBS
 
-Di seguito riportiamo tutti gli algoritmi in C presenti sul libro [Rog00]
+Here we present the Algorithm list of the C code in [Rog00]
 
-### Capitolo 2: Bezier Curves
+### Chapter 2: Bezier Curves
 
  - Calculates a Bezier curve.
  - Calculates a Bezier curve and it's derivatives.
 
 
-### Capitolo 3: B-spline Curves
+### Chapter 3: B-spline Curves
  
  - Calculates the B-spline basis functions.
  - Calculates a B-spline curve.
@@ -23,7 +23,7 @@ Di seguito riportiamo tutti gli algoritmi in C presenti sul libro [Rog00]
  - Calculates the chord length paramter values.
 
 
-### Capitolo 4: Rational B-spline (NURBS) Curves
+### Chapter 4: Rational B-spline (NURBS) Curves
 
  - Calculates an open knot vector.
  - Calculates a periodic knot vector.
@@ -32,12 +32,12 @@ Di seguito riportiamo tutti gli algoritmi in C presenti sul libro [Rog00]
  - Calculates a periodic rational B-spline curve.
 
 
-### Capitolo 5: Bezier Surface
+### Chapter 5: Bezier Surface
 
  - Calculates a Bezier surface.
 
 
-### Capitolo 6: B-spline Surfaces
+### Chapter 6: B-spline Surfaces
 
  - Calculates the B-spline basis functions.
  - Calculates a B-spline surface.
@@ -48,7 +48,7 @@ Di seguito riportiamo tutti gli algoritmi in C presenti sul libro [Rog00]
  - Calculates a periodic knot vector.
 
 
-### Capitolo 7: Rational B-spline (NURBS) Surfaces
+### Chapter 7: Rational B-spline (NURBS) Surfaces
 
  - Calculates the B-spline basis functions.
  - Calculates and test the fast B-spline surface algorithm.
@@ -56,12 +56,12 @@ Di seguito riportiamo tutti gli algoritmi in C presenti sul libro [Rog00]
  - Calculates a rational B-spline (NURBS) surface.
 
 
- **Cap** | **No.** | **Done**
----------|---------|----------
- 2       |     2   |    0
- 3       |    11   |    0
- 4       |     5   |    0
- 5       |     1   |    0
- 6       |     7   |    0
- 7       |     4   |    0
- **Tot** |    30   |    0
+ **Chap** | **No.** | **Done**
+----------|---------|----------
+ 2        |     2   |    0
+ 3        |    11   |    0
+ 4        |     5   |    0
+ 5        |     1   |    0
+ 6        |     7   |    0
+ 7        |     4   |    0
+ **Tot**  |    30   |    0
