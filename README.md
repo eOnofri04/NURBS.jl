@@ -3,7 +3,7 @@ IN480 - Calcolo Parallelo e Distribuito - 2018/19
 
 ## Structure of the Repository
 
-- Log: Contains the Log files of our meetings
+- Logs: Contains the Log files of our meetings
 
 
 ## Authors
