@@ -58,10 +58,10 @@ Di seguito riportiamo tutti gli algoritmi in C presenti sul libro [Rog00]
 
  **Cap** | **No.** | **Done**
 ---------|---------|----------
-    2    |     2   |    0
-    3    |    11   |    0
-    4    |     5   |    0
-    5    |     1   |    0
-    6    |     7   |    0
-    7    |     4   |    0
+ 2       |     2   |    0
+ 3       |    11   |    0
+ 4       |     5   |    0
+ 5       |     1   |    0
+ 6       |     7   |    0
+ 7       |     4   |    0
  **Tot** |    30   |    0
