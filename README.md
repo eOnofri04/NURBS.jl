@@ -16,3 +16,4 @@ IN480 - Calcolo Parallelo e Distribuito - 2018/19
 ## Bibliography Link
  - An Introduction to NURBS, David F. Rogers
  - [Book Website](http://www.nar-associates.com/nurbs/)
+ - [Pro Git](https://git-scm.com/book/en/v2)
