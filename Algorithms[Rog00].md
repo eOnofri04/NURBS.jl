@@ -2,9 +2,15 @@
 
 Here we present the Algorithm list of the C code in [Rog00].
 
+---
+
 Modifier [-] stands for an algorithm defined in a previoous chapter;
+
 Modifier [+] stands for an optional algorithm;
+
 Modifier [?] stands for a missing pseudocode algorithm.
+
+---
 
 ### Chapter 2: Bezier Curves
 
@@ -63,6 +69,7 @@ Modifier [?] stands for a missing pseudocode algorithm.
  - [ ] `rbspsurf_` Calculates a rational B-spline (NURBS) surface. Call `knot, basis, sumrbas`.
  - [ ] `sumrbas__` [+] Calculate the sum of the nonrational basis functions.
 
+## Summary
 
  **Chap** | **No.** | **Done**
 ----------|---------|----------
