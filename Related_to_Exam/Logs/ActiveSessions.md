@@ -5,3 +5,4 @@
 #### 15-November-18
 
  - Elia: Creating the `.jl` files containing the functions.
+ - Elia: Session Closed.
