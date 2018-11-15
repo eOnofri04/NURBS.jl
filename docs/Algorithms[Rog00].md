@@ -64,7 +64,7 @@ Modifier [?] stands for a missing pseudocode algorithm.
 ### Chapter 7: Rational B-spline (NURBS) Surfaces
 
  - [ ] `basis____` [-] Calculates the B-spline basis functions.
- - [ ] `_________` [?] Calculates and test the fast B-spline surface algorithm.
+ - [ ] `frbsurf__` [?] Calculates and test the fast B-spline surface algorithm. Call `basis, knot, sumrbas`
  - [ ] `knot_____` [-] Calculates an open knot vector.
  - [ ] `rbspsurf_` Calculates a rational B-spline (NURBS) surface. Call `knot, basis, sumrbas`.
  - [ ] `sumrbas__` [+] Calculate the sum of the nonrational basis functions.

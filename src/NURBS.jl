@@ -4,11 +4,17 @@ module NURBS
 	export knot, knotu, knotc
 	export basis, dbasis, dbasisu
 	export bspline, bsplineu, dbspline, dbsplineu
-	# more to go
+	export rbasis, rbspline, rbsplinu
+	export bezsurf, mbezsurf
+	export bsplsurf, bspsurfu, dbsurf
+	export frbsurf, rbspsurf
 
 	include("bezier.jl")
 	include("knot.jl")
 	include("basis.jl")
 	include("bspline.jl")
-	# more to go
+	include("rbspline.jl")
+	include("beziersurfaces.jl")
+	include("bsurfaces.jl")
+	include("rbsurfaces.jl")
 end

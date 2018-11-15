@@ -12,15 +12,19 @@ function bezier(npts::Int64, b::Array{Float64}, cpts::Int64)::Array{Float64}
 }
 end
 
+#-----------------------------------------------------------------------
 
 """
+	dbezier(npts, b, cpts)
 
+Calculate a B~zier curve and its first and second derivatives.
 """
 
 function dbezier(npts::Int64, b::Array{Float64}, cpts::Int64)::tuple{Array{Float64}, Array{Float64}, Array{Float64}}
 	[...]
 end
 
+#-----------------------------------------------------------------------
 
 """
 	bern_basis(n, i, t)

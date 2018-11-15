@@ -56,6 +56,7 @@ function basis(c::Int64, t::Float64, npts::Int64, x::Array{Int64})::Array{Float6
     return n;
 end
 
+#-----------------------------------------------------------------------
 
 """
 	dbasis(c, t, npts, x)
@@ -159,6 +160,7 @@ function dbasis(c::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Array
     return (n, d1, d2);
 end
 
+#-----------------------------------------------------------------------
 
 """
 	dbasisu(c, t, npts, x)
