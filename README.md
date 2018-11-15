@@ -3,7 +3,13 @@ IN480 - Calcolo Parallelo e Distribuito - 2018/19
 
 ## Structure of the Repository
 
- - Logs: Contains the Log files of our meetings
+ - docs: Contains all the documents related to this package
+ - Examples: Contains some Sample to test the function of the package
+ - Related to Exam: This folder will be deleated at the end of the submitting.
+   - FastReferences: Some fast collection of utility infos.
+   - Logs: Contains the Log files of our meetings
+   - Tests: Here will be any kind of tests ongoing by the group
+ - src: Source folder of the `.jl` files.
 
 
 ## Authors
