@@ -6,6 +6,12 @@ export knot, knotc, knotu
 
 Generate a B-spline open knot vector with multiplicity k at the ends.
 
+An open uniform knot vector has multiplicity of knot values
+ at the ends equals to the order `k` of the B-Spline basis function.
+Internal knot values are evenly spaced.
+The resulting open uniform basis functions yield curves
+that behave most nearly like Bézier curves.
+
 # Examples
 
 ```jldoctest
@@ -51,9 +57,15 @@ end
 #-----------------------------------------------------------------------
 
 """
-	knotu(n, c)
+    knotu(n, c)
+Generate a B-spline periodic uniform knot vector over `n` control vertices.
 
-Generate a B-spline periodic uniform knot vector.
+In a periodic uniform knot vector the knot values are evenly spaced.
+Moreover each base is a translate of the others as it could be defined like:
+```tex
+N_{i, k}(t) = N_{i-1, k}(t-1) = N_{i+1, k}(t+1)
+```
+
 ```jldoctest
 julia> knotu(5, 2)
 7-element Array{Int64,1}:
