@@ -20,7 +20,7 @@ Calculate a Cartesian product B-spline surface using periodic uniform knot vecto
 """
 
 function bspsurfu()
-	[...]
+	[...]ciao
 end
 
 #-----------------------------------------------------------------------
