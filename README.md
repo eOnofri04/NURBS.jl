@@ -13,11 +13,14 @@ IN480 - Calcolo Parallelo e Distribuito - 2018/19
 
 
 ## Authors
- - [Elia Onofri](https://www.linkedin.com/in/elia-onofri-80b403173/) (elia.onofri4@gmail.com)
- - Gianmarco Caramitti (g.caramitti@gmail.com)
- - Luigi Novelli (gigiluigi97@live.it)
- - Paolo Macciacchera (polmacra@outlook.it)
- - Giuseppe Santorelli (giu.santorelli15@gmail.com)
+ - [Elia Onofri](https://github.com/eOnofri04) - [Ln](https://www.linkedin.com/in/elia-onofri-80b403173/) (elia.onofri4@gmail.com)
+ - [Gianmarco Caramitti](https://github.com/cgianmarco) (g.caramitti@gmail.com)
+ - [Paolo Macciacchera](https://github.com/pmacciacchera) (polmacra@outlook.it)
+ - [Giuseppe Santorelli](https://github.com/giusantorelli) (giu.santorelli15@gmail.com)
+
+## Project Managers
+ - [Alberto Paoluzzi](https://github.com/apaoluzzi)
+ - [Roberto D'Autilia](https://github.com/rdautilia)
  
 ## Bibliography Link
  - An Introduction to NURBS, David F. Rogers [Rog00]
