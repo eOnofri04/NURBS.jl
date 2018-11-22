@@ -44,8 +44,17 @@ end
 Generate a nonuniform open knot vector proportional to the chord lengths between defining polygon vertices.
 """
 
-function knotc(n::Int64, c::Int64)::Array{Float64}
-    [...]
+function knot(n::Int64,c::Int64,x::Array{Float64})
+    nplusc=n+c
+    nplus2=n+2
+    x[1]=0
+    for i=2:nplusc
+        if i>c && i<nplus2
+            x[i]=x[i-1]+1
+        else
+            x[i]=x[i-1]
+        end
+    end
 end
 
 #-----------------------------------------------------------------------
@@ -67,12 +76,7 @@ julia> knotu(5, 2)
 ```
 """
 
-function knotu(n::Int64, c::Int64)::Array{Int64}
-    x=Int64[];
-    nplusc=n+c;
-    nplus2=n+2;
-    for i=1:nplusc
-        push!(x, i-1);
-    end
-    return x;
+function knotu(n::Int64,c::Int64,x::Array{Float64})
+    nplusc=n+c
+    for i=1:nplusc  x[i]=i-1 end
 end
