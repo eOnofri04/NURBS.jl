@@ -32,10 +32,7 @@ function basis(k::Int64, t::Float64, n1::Int64, x::Array{Float64})::Array{Float6
     local fdep::Float64 = 0.0   # Forward Dependency partial sum
     
     # Local check of the knot vector correctness
-    if (length(x) != n1+k)
-        print("ERROR: incompatibile knot vector with given parameters n+1 = $(n1), k = $(k)")
-        return N
-    end
+    @assert length(x) == n1+k ("ERROR: incompatibile knot vector with given parameters n+1 = $(n1), k = $(k)")
     
     # Eval N_{i,1} for i = 1:max_B
     for i=1:max_N
