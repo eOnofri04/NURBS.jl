@@ -1,7 +1,7 @@
 export basis, dbasis, dbasisu
 
 """
-    basis(k, t, n1, x[])
+    basis(ord, t, npts, x[])
 
 Generate a B-spline basis functions `N[]` for a given open knot vectors `x[]`.
 
@@ -14,9 +14,9 @@ The basis is computed with _Cox-de Boor_ recursive function applied to the
 ---
 
 # Arguments
-- `k::Int64`: the order of the B-Spline (degree `k-1`).
+- `ord::Int64`: the order of the B-Spline (`deg = ord-1`).
 - `t::Float64`: the parameter value of the parametric curve.
-- `n1::Int64`: the number of the points of the controll polygon.
+- `npts::Int64`: the number of the points of the controll polygon.
 - `x::Array{Float64}`: the knot vector.
 
 ---
@@ -24,18 +24,18 @@ The basis is computed with _Cox-de Boor_ recursive function applied to the
 _By Elia Onofri_
 """
 
-function basis(k::Int64, t::Float64, n1::Int64, x::Array{Float64})::Array{Float64}
+function basis(ord::Int64, t::Float64, npts::Int64, x::Array{Float64})::Array{Float64}
     local tmp = Float64[]       # Basis progressive vector
     local N = Float64[]         # Output vector
-    local max_N = n1-1+k        # Needs i+(k-1)|i=n+1 = n+k trivial basis
+    local max_N = npts-1+ord    # Needs i+(ord-1)|i=npts = npts-1+ord trivial basis
     local ddep::Float64 = 0.0   # Direct Dependency partial sum
     local fdep::Float64 = 0.0   # Forward Dependency partial sum
     
     # Local check of the knot vector correctness
-    @assert length(x) == n1+k ("ERROR: incompatibile knot vector with given parameters n+1 = $(n1), k = $(k)")
+    @assert length(x) == npts+ord ("ERROR: incompatibile knot vector with given parameters n+1 = $(npts), k = $(ord)")
     
     # Eval N_{i,1} for i = 1:max_B
-    for i=1:max_N
+    for i = 1:max_N
         if (t>=x[i]) && (t<x[i+1])
             append!(tmp, 1)
         else
@@ -43,8 +43,8 @@ function basis(k::Int64, t::Float64, n1::Int64, x::Array{Float64})::Array{Float6
         end
     end
     
-    # Eval higher basis N_{i,deg} for deg = 2:k and i = 1:max_B-deg
-    for deg = 2:k
+    # Eval higher basis N_{i,deg} for deg = 2:ord and i = 1:max_B-deg
+    for deg = 2:ord
         for i = 1:max_N+1-deg
             # Eval of the direct dependency
             if tmp[i]==0
@@ -64,12 +64,12 @@ function basis(k::Int64, t::Float64, n1::Int64, x::Array{Float64})::Array{Float6
     end
     
     # Otherwise last point is zero
-    if t == x[n1+k]
-        tmp[n1] = 1
+    if t == x[npts+ord]
+        tmp[npts] = 1
     end
     
-    # Collect N{1,k} to N{n+1,k} in B
-    for i=1:n1
+    # Collect N{1,ord} to N{npts,ord} in B
+    for i=1:npts
         push!(N, tmp[i]);
     end
     return N;
