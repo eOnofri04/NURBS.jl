@@ -1,266 +1,229 @@
-export basis, dbasis, dbasisu
+"""
+basis(ord,t,npts,x)
 
+# Arguments
+
+- `ord::Int64` : order of the bspline basis function.
+- `t::Float64` : parameter value
+- `npts::Int64` : the number of the contol polygon vertices.
+- `x::Array{Float64}` : knot vector
 
 """
-	basis(c, t, npts, x)
 
-Generate B-spline basis functions for open uniform knot vectors.
-"""
 
-function basis(c::Int64, t::Float64, npts::Int64, x::Array{Int64})::Array{Float64}
-    tempt = Array{Float64}(36)
-    n = Float64[];
-    nplusc = npts + c;
+function basis(ord::Int64,t::Float64,npts::Int64,x::Array{Float64})::Array{Float64}
     
-#    print(knot vector is );
-#    for i=1:nplusc
-#        print(& &, i, x[i]);
-#    end
-#    print(t is &, t);
+    @assert length(x) == npts + ord ("ERROR: incompatible knot vector")
+
+    m::Int64 = npts + ord
+    N::Array{Float64} = zeros(m)
     
-    # calculate the first order basis functions n[i][1]
-    
-    for i=1:nplusc-1
-        if (t>=x[i])&&(t<x[i+1])
-            temp[i] = 1;
+    #calculate the first order basis functions
+    for i = 1 : m - 1
+        if t >= x[i] && t < x[i+1]
+            N[i] = 1
         else
-            temp[i] = 0;
+            N[i] = 0
         end
     end
     
-    # calculate the higher order basis functions
-    for k=2:c
-        for i=1:nplusc-k
-            if temp[i] != 0    # if the lower order basis function is zero skip the calculation
-                d = ((t-x[i])*temp[i])/(x[i+k-1]-x[i]);
+    #calculate the higher order basis functions
+    for k = 2 : ord
+        for i = 1 : m - k
+            if N[i] != 0
+                d = ((t - x[i]) * N[i]) / (x[i+k-1] - x[i])
             else
-                d = 0;
+                d = 0
             end
-            if temp[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                e = ((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1]);
+            if N[i+1] != 0
+                e = ((x[i+k] - t) * N[i+1]) / (x[i+k] - x[i+1])
             else
-                e = 0;
+                e = 0
             end
-            temp[i] = d+e;
+            N[i] = d + e
         end
     end
     
-    if t == x[nplusc]    # pick the last point
-        temp[npts] = 1;
+    if t == x[m]
+        N[npts] = 1
     end
     
-    # put in n array
-    for i=1:npts
-        push!(n, temp[i]);
-    end
-    return n;
+    return N
 end
 
-#-----------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------------
+
 
 """
-	dbasis(c, t, npts, x)
+dbasis(ord,t,npts,x)
 
-Generate B-spline basis functions and their derivatives for uniform open knot vectors.
+# Arguments
+
+- `ord::Int64` : order of the bspline basis function.
+- `t::Float64` : parameter value
+- `npts::Int64` : the number of the contol polygon vertices.
+- `x::Array{Float64}` : knot vector
+
 """
 
-function dbasis(c::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Array{Float64}, Array{Float64}, Array{Float64}}
+function dbasis(ord::Int64,t::Float64,npts::Int64,x::Array{Float64})::Tuple{Array{Float64},Array{Float64},Array{Float64}}
     
-    #inizialization
-    
-    temp = zeros(36);    # allows for 35 defining polygon vertices
-    temp1 = zeros(36);
-    temp2 = zeros(36);
-    nplusc = npts+c;
-    
-    # calculate the first order basis functions n[i]
-    
-    for i=1:nplusc-1
-        if (t>=x[i])&&(t<x[i+1])
-            temp[i]=1;
+    m::Int64 = npts + ord
+    N::Array{Float64} = zeros(m)
+    D1::Array{Float64} = zeros(m)
+    D2::Array{Float64} = zeros(m)
+   
+    #calculate the first order basis functions
+    for i = 1 : m - 1
+        if t >= x[i] && t < x[i+1]
+            N[i] = 1
         else
-            temp[i]=0;
+            N[i] = 0
         end
     end
     
-    if t==x[nplusc]    # last(x)
-        temp[npts] = 1;
+    if t == x[m]
+        N[npts] = 1
     end
-    
-    # calculate the higher order basis functions
-    for k=2:c
-        for i=1:nplusc-k
-            if temp[i] != 0    # if the lower order basis function is zero skip the calculation
-                b1 = ((t-x[i])*temp[i])/(x[i+k-1]-x[i]);
+        
+    #calculate the higher order basis functions, first and second derivatve
+    for k = 2 : ord
+        for i = 1 : m - k
+            if N[i] != 0
+                b1 = ((t - x[i]) * N[i]) / (x[i+k-1] - x[i])
+                f1 = N[i] / (x[i+k-1] - x[i])
             else
-                b1 = 0;
+                b1 = 0
+                f1 = 0
             end
-            if temp[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                b2 = ((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1]);
+            if N[i+1] != 0
+                b2 = ((x[i+k] - t) * N[i+1]) / (x[i+k] - x[i+1])
+                f2 = - N[i+1] / (x[i+k] - x[i+1])
             else
-                b2 = 0;
-            end
-            
-            # calculate first derivative
-            if temp[i] != 0    # if the lower order basis function is zero skip the calculation
-                f1 = temp[i]/(x[i+k-1]-x[i]);
+                b2 = 0
+                f2 = 0
+            end                
+            if D1[i] != 0
+                f3 = ((t - x[i]) * D1[i]) / (x[i+k-1] - x[i])
+                s1 = (2 * D1[i]) / (x[i+k-1] - x[i])
             else
-                f1 = 0;
+                f3 = 0
+                s1 = 0
             end
-            if temp[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                f2 = -temp[i+1]/(x[i+k]-x[i+1]);
+            if D1[i+1] != 0
+                f4 = ((x[i+k] - t) * D1[i+1]) / (x[i+k] - x[i+1])
+                s2 = (-2 * D1[i+1]) / (x[i+k] - x[i+1])
             else
-                f2 = 0;
+                f4 = 0
+                s2 = 0
             end
-            if temp1[i] != 0    # if the lower order basis function is zero skip the calculation
-                f3 = ((t-x[i])*temp1[i])/(x[i+k-1]-x[i]);
+            if D2[i] != 0
+                s3 = ((t - x[i]) * D2[i]) / (x[i+k-1] - x[i])
             else
-                f3 = 0;
+                s3 = 0
             end
-            if temp1[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                f4 = ((x[i+k]-t)*temp1[i+1])/(x[i+k]-x[i+1]);
+            if D2[i+1] != 0
+                s4 = ((x[i+k] - t) * D2[i+1]) / (x[i+k] - x[i+1])
             else
-                f4 = 0;
+                s4 = 0
             end
-            
-            # calculate second derivative
-            if temp1[i] != 0    # if the lower order basis function is zero skip the calculation
-                s1 = (2*temp1[i])/(x[i+k-1]-x[i]);
-            else
-                s1 = 0;
-            end
-            if temp1[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                s2 = (-2*temp1[i+1])/(x[i+k]-x[i+1]);
-            else
-                s2 = 0;
-            end
-            if temp2[i] != 0    # if the lower order basis function is zero skip the calculation
-                s3 = ((t-x[i])*temp2[i])/(x[i+k-1]-x[i]);
-            else
-                s3 = 0;
-            end
-            if temp2[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                s4 = ((x[i+k]-t)*temp2[i+1])/(x[i+k]-x[i+1]);
-            else
-                s4 = 0;
-            end
-            
-            temp[i] = b1 + b2;
-            temp1[i] = f1 + f2 + f3 + f4;
-            temp2[i] = s1 + s2 + s3 + s4;
+                    
+            N[i] = b1 + b2
+            D1[i] = f1 + f2 + f3 + f4
+            D2[i] = s1 + s2 + s3 + s4
         end
     end
+        
+    return N, D1, D2
     
-    # prepare output
-    for i=1:npts
-        push!(n, temp[i]);
-        push!(d1, temp1[i]);
-        push!(d2, temp2[i]);
-    end
-    return (n, d1, d2);
 end
 
-#-----------------------------------------------------------------------
+
+#------------------------------------------------------------------------------------
+
 
 """
-	dbasisu(c, t, npts, x)
+dbasisu(ord,t,npts,x)
 
-Generate B-spline basis functions and their derivatives for uniform periodic knot vectors.
+# Arguments
+
+- `ord::Int64` : order of the bspline basis function.
+- `t::Float64` : parameter value
+- `npts::Int64` : the number of the contol polygon vertices.
+- `x::Array{Float64}` : knot vector
+
 """
 
-function dbasisu(c::Int64, t::Float64, npts::Int64, x::Array{Int64})::tuple{Array{Float64}, Array{Float64}, Array{Float64}}
-
-    #inizialization
+function dbasisu(ord::Int64,t::Float64,npts::Int64,x::Array{Float64})::Tuple{Array{Float64},Array{Float64},Array{Float64}}
     
-    temp = zeros(36);    # allows for 35 defining polygon vertices
-    temp1 = zeros(36);
-    temp2 = zeros(36);
-    nplusc = npts+c;
+    m::Int64 = npts + ord
+    N::Array{Float64} = zeros(m)
+    D1::Array{Float64} = zeros(m)
+    D2::Array{Float64} = zeros(m)
     
-    # calculate the first order basis functions n[i]
-    
-    for i=1:nplusc-1
-        if (t>=x[i])&&(t<x[i+1])
-            temp[i]=1;
+    #calculate the first order basis functions
+    for i = 1 : m - 1
+        if t >= x[i] && t < x[i+1]
+            N[i]=1
         else
-            temp[i]=0;
+            N[i]=0
         end
     end
     
-    if t==x[npts+1]    # handle the end specially
-        temp[npts] = 1;    # resetting the first order basis functions.
-        temp[npts+1]=0;
+    if t == x[npts+1]
+        N[npts]=1
+        N[npts+1]=0  #the only difference with dbasis function
     end
     
-    # calculate the higher order basis functions
-    for k=2:c
-        for i=1:nplusc-k
-            if temp[i] != 0    # if the lower order basis function is zero skip the calculation
-                b1 = ((t-x[i])*temp[i])/(x[i+k-1]-x[i]);
+    #calculate the higher order basis function,first and second derivatives
+    for k = 2 : ord
+        for i = 1 : m - k
+            if N[i] != 0
+                b1 = ((t - x[i]) * N[i]) / (x[i+k-1] - x[i])
+                f1 = N[i] / (x[i+k-1] - x[i])
             else
-                b1 = 0;
+                b1 = 0
+                f1 = 0
             end
-            if temp[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                b2 = ((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1]);
+            if N[i+1] != 0
+                b2 = ((x[i+k] - t) * N[i+1]) / (x[i+k] - x[i+1])
+                f2 = -N[i+1] / (x[i+k] - x[i+1])
             else
-                b2 = 0;
+                b2 = 0
+                f2 = 0
             end
-            
-            # calculate first derivative
-            if temp[i] != 0    # if the lower order basis function is zero skip the calculation
-                f1 = temp[i]/(x[i+k-1]-x[i]);
+            if D1[i] != 0
+                f3 = ((t - x[i]) * D1[i]) / (x[i+k-1] - x[i])
+                s1 = (2 * D1[i]) / (x[i+k-1] - x[i])
             else
-                f1 = 0;
+                f3 = 0
+                s1 = 0
             end
-            if temp[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                f2 = -temp[i+1]/(x[i+k]-x[i+1]);
+            if D1[i+1] != 0
+                f4 = ((x[i+k] - t) * D1[i+1]) / (x[i+k] - x[i+1])
+                s2 = (-2 * D1[i+1]) / (x[i+k] - x[i+1])
             else
-                f2 = 0;
+                f4 = 0
+                s2 = 0
             end
-            if temp1[i] != 0    # if the lower order basis function is zero skip the calculation
-                f3 = ((t-x[i])*temp1[i])/(x[i+k-1]-x[i]);
+            if D2[i] != 0
+                s3 = ((t - x[i]) * D2[i]) / (x[i+k-1] - x[i])
             else
-                f3 = 0;
+                s3 = 0
             end
-            if temp1[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                f4 = ((x[i+k]-t)*temp1[i+1])/(x[i+k]-x[i+1]);
+            if D2[i+1] != 0
+                s4 = ((x[i+k] - t) * D2[i+1]) / (x[i+k] - x[i+1])
             else
-                f4 = 0;
+                s4 = 0
             end
-            
-            # calculate second derivative
-            if temp1[i] != 0    # if the lower order basis function is zero skip the calculation
-                s1 = (2*temp1[i])/(x[i+k-1]-x[i]);
-            else
-                s1 = 0;
-            end
-            if temp1[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                s2 = (-2*temp1[i+1])/(x[i+k]-x[i+1]);
-            else
-                s2 = 0;
-            end
-            if temp2[i] != 0    # if the lower order basis function is zero skip the calculation
-                s3 = ((t-x[i])*temp2[i])/(x[i+k-1]-x[i]);
-            else
-                s3 = 0;
-            end
-            if temp2[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                s4 = ((x[i+k]-t)*temp2[i+1])/(x[i+k]-x[i+1]);
-            else
-                s4 = 0;
-            end
-            
-            temp[i] = b1 + b2;
-            temp1[i] = f1 + f2 + f3 + f4;
-            temp2[i] = s1 + s2 + s3 + s4;
+
+            N[i] = b1 + b2
+            D1[i] = f1 + f2 + f3 + f4
+            D2[i] = s1 + s2 + s3 + s4
         end
     end
     
-    # prepare output
-    for i=1:npts
-        push!(n, temp[i]);
-        push!(d1, temp1[i]);
-        push!(d2, temp2[i]);
-    end
-    return (n, d1, d2);
+    return N, D1, D2
+
 end

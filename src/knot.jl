@@ -1,78 +1,136 @@
-export knot, knotc, knotu
+"""
+knot(npts,ord,center=false,step=1.0)
 
+# Arguments
+
+- `npts::Int64` : the number of the contol polygon vertices.
+- `ord::Int64` : order of the basis function.
+- `center::Bool` : if the vector is centered in zero.
+- `step::Float64` : knot distance
 
 """
-	knot(n, c)
 
-Generate a B-spline open knot vector with multiplicity k at the ends.
+function knot(npts::Int64,ord::Int64,center::Bool=false,step::Float64=1.0)::Array{Float64}
+    
+    @assert npts >= ord ("ERROR: ord > npts")
 
-# Examples
+    m::Int64 = npts + ord
+    backstep::Float64 = 0.0
+    x::Array{Float64} = Array{Float64}(m)
+    
+    if center
+        @assert m % 2 == 1 ("ERROR: knot vector contains even number of points")
+        backstep = step * (npts - ord + 1) / 2
+    end
 
-```jldoctest
-julia> knot(5, 2)
-7-element Array{Int64,1}:
- 0
- 0
- 1
- 2
- 3
- 4
- 4
-```
-"""
-
-function knot(n::Int64,c::Int64)::Array{Int64}
-    x=Int64[];
-    nplusc::Int64 = n+c;
-    nplus2::Int64 = n+2;
-    push!(x, 0);
-    for i = 2:nplusc
-        if i>c && i<nplus2
-            push!(x, last(x)+1);
+    x[1] = 0 - backstep
+    
+    for i = 2 : m
+        if i > ord && i < npts + 2
+            x[i] = x[i-1] + step
         else
-            push!(x, last(x));
+            x[i] = x[i-1]
         end
     end
+    
     return x
 end
 
-#-----------------------------------------------------------------------
+
+
+#-------------------------------------------------------------------------------------
+
 
 """
-	knotc(n, c)
+knotc(npts,ord,b)
 
 Generate a nonuniform open knot vector proportional to the chord lengths between defining polygon vertices.
+
+# Arguments
+
+- `npts::Int64` : the number of the contol polygon vertices.
+- `ord::Int64` : order of the basis function.
+- `b::Array{Float64}` : array containing the contol polygon vertices.
+
 """
 
-function knotc(n::Int64, c::Int64)::Array{Float64}
-    [...]
+function knotc(npts::Int64,ord::Int64,b::Array{Float64})::Array{Float64}
+    
+    @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
+    @assert npts >= ord ("ERROR: ord > npts")
+
+    chord::Array{Float64} = Array{Float64}(31)
+    m::Int64 = npts + ord
+    n::Int64 = npts - 1
+    x::Array{Float64} = Array{Float64}(m)
+        
+    maxchord = 0
+    icount = 0
+    
+    # determine chord distance between defining polygon vertices and their sum
+    for i = 4 : 3 :3*npts
+        icount = icount + 1
+        xchord = b[i] - b[i - 3]
+        ychord = b[i + 1] - b[i - 2]
+        zchord = b[i + 2] - b[i - 1]
+        chord[icount] = sqrt(xchord * xchord + ychord * ychord + zchord * zchord)
+        maxchord = maxchord + chord[icount]
+    end
+    
+    # multiplicity of c=order zeros at the beginning of the open knot vector
+    for i = 1 : ord
+        x[i] = 0
+    end
+    
+    # generate the internal knot values
+    for i = 1 : npts - ord
+        csum = 0
+        
+        for j = 1 : i
+            csum = csum + chord[j]
+        end
+        
+        numerator = i / (npts - ord + 1) * chord[i + 1] + csum
+        x[ord + i] = (numerator / maxchord) * (npts - ord + 1)
+    end
+    
+    # multiplicity of c=order zeros at the end of the open knot vector
+    for i = npts + 1 : m
+        x[i] = npts - ord + 1
+    end
+    
+    return x
+    
 end
 
-#-----------------------------------------------------------------------
+
+#------------------------------------------------------------------------------------
+
 
 """
-	knotu(n, c)
+knotu(npts,ord,step=1.0)
 
-Generate a B-spline periodic uniform knot vector.
-```jldoctest
-julia> knotu(5, 2)
-7-element Array{Int64,1}:
- 0
- 1
- 2
- 3
- 4
- 5
- 6
-```
+# Arguments
+
+- `npts::Int64` : the number of the contol polygon vertices.
+- `ord::Int64` : order of the basis function.
+- `step::Float64` : knot distance
+
 """
 
-function knotu(n::Int64, c::Int64)::Array{Int64}
-    x=Int64[];
-    nplusc=n+c;
-    nplus2=n+2;
-    for i=1:nplusc
-        push!(x, i-1);
+
+function knotu(npts::Int64,ord::Int64,step::Float64=1.0)::Array{Float64}
+    
+    @assert npts >= ord ("ERROR: ord > npts")
+
+    m::Int64 = npts + ord
+    x::Array{Float64} = Array{Int64}(m)
+    
+    x[1] = 0
+    
+    for i = 2 : m
+        x[i] = x[i - 1] + step
     end
-    return x;
+
+    return x
 end
