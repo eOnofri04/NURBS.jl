@@ -69,6 +69,8 @@ dbasis(ord,t,npts,x)
 
 function dbasis(ord::Int64,t::Float64,npts::Int64,x::Array{Float64})::Tuple{Array{Float64},Array{Float64},Array{Float64}}
     
+    @assert length(x) == npts + ord ("ERROR: incompatible knot vector")
+    
     m::Int64 = npts + ord
     N::Array{Float64} = zeros(m)
     D1::Array{Float64} = zeros(m)
@@ -156,6 +158,8 @@ dbasisu(ord,t,npts,x)
 """
 
 function dbasisu(ord::Int64,t::Float64,npts::Int64,x::Array{Float64})::Tuple{Array{Float64},Array{Float64},Array{Float64}}
+    
+    @assert length(x) == npts + ord ("ERROR: incompatible knot vector")
     
     m::Int64 = npts + ord
     N::Array{Float64} = zeros(m)
