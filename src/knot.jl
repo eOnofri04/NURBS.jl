@@ -21,18 +21,26 @@ julia> knot(5, 2)
 ```
 """
 
-function knot(n::Int64,c::Int64)::Array{Int64}
-    x=Int64[];
-    nplusc::Int64 = n+c;
-    nplus2::Int64 = n+2;
-    push!(x, 0);
+function knot(n,c)
+    
+    nplusc = n + c
+    nplus2 = n + 2
+
+    x::Array{Float64} = Array{Float64}(nplusc)
+
+    x[1] = 0
+    
     for i = 2:nplusc
-        if i>c && i<nplus2
-            push!(x, last(x)+1);
+        if i > c  &&  i < nplus2
+            
+            x[i] = x[i - 1] + 1
+        
         else
-            push!(x, last(x));
+
+            x[i] = x[i - 1]
         end
     end
+
     return x
 end
 
@@ -67,12 +75,16 @@ julia> knotu(5, 2)
 ```
 """
 
-function knotu(n::Int64, c::Int64)::Array{Int64}
-    x=Int64[];
-    nplusc=n+c;
-    nplus2=n+2;
-    for i=1:nplusc
-        push!(x, i-1);
+function knotu(n,c)
+
+    nplusc = n + c
+    nplus2 = n + 2
+
+    x = Array{Float64}(nplusc)
+    
+    for i = 1:nplusc
+        x[i] = i - 1
     end
-    return x;
+
+    return x
 end

@@ -7,53 +7,51 @@ export basis, dbasis, dbasisu
 Generate B-spline basis functions for open uniform knot vectors.
 """
 
-function basis(c::Int64, t::Float64, npts::Int64, x::Array{Int64})::Array{Float64}
-    tempt = Array{Float64}(36)
-    n = Float64[];
-    nplusc = npts + c;
-    
-#    print(knot vector is );
-#    for i=1:nplusc
-#        print(& &, i, x[i]);
-#    end
-#    print(t is &, t);
-    
-    # calculate the first order basis functions n[i][1]
-    
-    for i=1:nplusc-1
-        if (t>=x[i])&&(t<x[i+1])
-            temp[i] = 1;
+function basis(c, t, npts, x)
+    temp = Array{Float32}(20)
+    n = Array{Float32}(20)
+
+    nplusc = npts + c
+
+    for i = 1:nplusc - 1
+        if t >= x[i] && t < x[i+1]
+            temp[i] = 1
         else
-            temp[i] = 0;
+            temp[i] = 0
         end
     end
-    
-    # calculate the higher order basis functions
+
     for k=2:c
         for i=1:nplusc-k
-            if temp[i] != 0    # if the lower order basis function is zero skip the calculation
-                d = ((t-x[i])*temp[i])/(x[i+k-1]-x[i]);
+            if temp[i] != 0
+                d = ((t-x[i])*temp[i])/(x[i+k-1]-x[i])
             else
-                d = 0;
+                d = 0
             end
-            if temp[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                e = ((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1]);
+
+            if temp[i+1] != 0
+                e = ((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1])
             else
-                e = 0;
+                e = 0
             end
-            temp[i] = d+e;
+
+            temp[i] = d + e
         end
     end
-    
-    if t == x[nplusc]    # pick the last point
-        temp[npts] = 1;
+
+    if t == x[nplusc]
+        temp[npts] = 1
     end
-    
-    # put in n array
+
     for i=1:npts
-        push!(n, temp[i]);
+        n[i] = temp[i]
     end
-    return n;
+
+    if t == x[nplusc]
+        n[npts] = 1
+    end
+
+    return n
 end
 
 #-----------------------------------------------------------------------
