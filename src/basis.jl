@@ -28,7 +28,7 @@ function basis(ord::Int64, t::Float64, npts::Int64, x::Array{Float64})::Array{Fl
     local tmp = Float64[]       # Basis progressive vector
     local N = Float64[]         # Output vector
     local max_N = npts-1+ord    # Needs i+(ord-1)|i=npts = npts-1+ord trivial basis
-	local m::Int64 = npts+ord	# Dimension of the knot vector
+    local m::Int64 = npts+ord	# Dimension of the knot vector
     local ddep::Float64 = 0.0   # Direct Dependency partial sum
     local fdep::Float64 = 0.0   # Forward Dependency partial sum
     
@@ -109,10 +109,10 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
     local tmp1 = Float64[]      		# First Derivate progressive vector
     local tmp2 = Float64[]     			# Second Derivate progressive vector
     local N = Float64[]        			# Basis vector
-	local d1 = Float64[]        		# First derivative vector
-	local d2 = Float64[]        		# Second derivative vector
+    local d1 = Float64[]        		# First derivative vector
+    local d2 = Float64[]        		# Second derivative vector
     local max_N::Int64 = npts-1+ord		# Needs i+(ord-1)|i=npts = npts-1+ord trivial basis
-	local m::Int64 = npts+ord			# Dimension of the knot vector
+    local m::Int64 = npts+ord			# Dimension of the knot vector
     local ddep::Float64 = 0.0   		# Direct Dependency partial sum
     local fdep::Float64 = 0.0   		# Forward Dependency partial sum
     
@@ -132,25 +132,25 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
         temp[npts] = 1;
     end
     
-	# Eval higher basis N_{i,deg} for deg = 2:ord and i = 1:max_B-deg
+    # Eval higher basis N_{i,deg} for deg = 2:ord and i = 1:max_B-deg
     for deg = 2:ord
         for i = 1:m-deg
             
-			# ----Eval of the direct dependency----
+            # ----Eval of the direct dependency----
             if tmp[i] == 0
                 ddep = 0.0
             else
                 ddep = ((t - x[i]) * tmp[i]) / (x[i+deg-1] - x[i])
             end
             
-			# ----Eval of the forward dependency----
+            # ----Eval of the forward dependency----
             if tmp[i+1] == 0
                 fdep = 0.0
             else
                 fdep = ((x[i+deg] - t) * tmp[i+1]) / (x[i+deg] - x[i+1])
             end
-			
-			#----calculate first derivative----
+
+            #----calculate first derivative----
             if tmp[i] != 0    # if the lower order basis function is zero skip the calculation
                 f1 = tmp[i] / (x[i+deg-1] - x[i]);
             else
@@ -171,9 +171,9 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
             else
                 f4 = 0.0;
             end
-			
-			#----calculate second derivative----
-			if tmp1[i] != 0    # if the lower order basis function is zero skip the calculation
+		
+            #----calculate second derivative----
+            if tmp1[i] != 0    # if the lower order basis function is zero skip the calculation
                 s1 = (2 * tmp1[i]) / (x[i+deg-1] - x[i]);
             else
                 s1 = 0;
@@ -196,7 +196,7 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
 			
             # Collection of the dependencies
             tmp[i] = ddep + fdep
-			tmp1[i] = f1 + f2 + f3 + f4;
+            tmp1[i] = f1 + f2 + f3 + f4;
             tmp2[i] = s1 + s2 + s3 + s4;
         end
     end
@@ -243,10 +243,10 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
     local tmp1 = Float64[]      		# First Derivate progressive vector
     local tmp2 = Float64[]     			# Second Derivate progressive vector
     local N = Float64[]        			# Basis vector
-	local d1 = Float64[]        		# First derivative vector
-	local d2 = Float64[]        		# Second derivative vector
+    local d1 = Float64[]        		# First derivative vector
+    local d2 = Float64[]        		# Second derivative vector
     local max_N::Int64 = npts-1+ord		# Needs i+(ord-1)|i=npts = npts-1+ord trivial basis
-	local m::Int64 = npts+ord			# Dimension of the knot vector
+    local m::Int64 = npts+ord			# Dimension of the knot vector
     local ddep::Float64 = 0.0   		# Direct Dependency partial sum
     local fdep::Float64 = 0.0   		# Forward Dependency partial sum
     
@@ -267,25 +267,25 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
         tmp[npts+1] = 0;
     end
     
-	# Eval higher basis N_{i,deg} for deg = 2:ord and i = 1:max_B-deg
+    # Eval higher basis N_{i,deg} for deg = 2:ord and i = 1:max_B-deg
     for deg = 2:ord
         for i = 1:m-deg
             
-			# ----Eval of the direct dependency----
+            # ----Eval of the direct dependency----
             if tmp[i] == 0
                 ddep = 0.0
             else
                 ddep = ((t - x[i]) * tmp[i]) / (x[i+deg-1] - x[i])
             end
-            
-			# ----Eval of the forward dependency----
+           
+            # ----Eval of the forward dependency----
             if tmp[i+1] == 0
                 fdep = 0.0
             else
                 fdep = ((x[i+deg] - t) * tmp[i+1]) / (x[i+deg] - x[i+1])
             end
 			
-			#----calculate first derivative----
+            #----calculate first derivative----
             if tmp[i] != 0    # if the lower order basis function is zero skip the calculation
                 f1 = tmp[i] / (x[i+deg-1] - x[i]);
             else
@@ -306,9 +306,9 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
             else
                 f4 = 0.0;
             end
-			
-			#----calculate second derivative----
-			if tmp1[i] != 0    # if the lower order basis function is zero skip the calculation
+		
+            #----calculate second derivative----
+            if tmp1[i] != 0    # if the lower order basis function is zero skip the calculation
                 s1 = (2 * tmp1[i]) / (x[i+deg-1] - x[i]);
             else
                 s1 = 0;
@@ -331,7 +331,7 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
 			
             # Collection of the dependencies
             tmp[i] = ddep + fdep
-			tmp1[i] = f1 + f2 + f3 + f4;
+            tmp1[i] = f1 + f2 + f3 + f4;
             tmp2[i] = s1 + s2 + s3 + s4;
         end
     end
