@@ -25,42 +25,43 @@ _By Elia Onofri_
 """
 
 function basis(ord::Int64, t::Float64, npts::Int64, x::Array{Float64})::Array{Float64}
-    local tmp = Float64[]       # Basis progressive vector
-    local N = Float64[]         # Output vector
-    local max_N = npts-1+ord    # Needs i+(ord-1)|i=npts = npts-1+ord trivial basis
-    local m::Int64 = npts+ord	# Dimension of the knot vector
-    local ddep::Float64 = 0.0   # Direct Dependency partial sum
-    local fdep::Float64 = 0.0   # Forward Dependency partial sum
+    local max_N = npts-1+ord        # Needs i+(ord-1)|i=npts = npts-1+ord trivial basis
+    local m::Int64 = npts+ord	    # Dimension of the knot vector
+    local ddep::Float64 = 0.0       # Direct Dependency partial sum
+    local fdep::Float64 = 0.0       # Forward Dependency partial sum
+    
+    local tmp::Array{Float64} = Array{Float64}(max_N)   # Basis progressive vector
+    local N::Array{Float64} = Array{Float64}(npts)      # Base vector
     
     # Local check of the knot vector correctness
     @assert length(x) == m ("ERROR: incompatibile knot vector with given parameters n+1 = $(npts), k = $(ord)")
     
     # Eval N_{i,1} for i = 1:max_B
-    for i = 1:max_N
-        if (t>=x[i]) && (t<x[i+1])
-            append!(tmp, 1)
+    for i = 1 : max_N
+        if (t >= x[i]) && (t < x[i+1])
+            tmp[i] = 1
         else
-            append!(tmp, 0)
+            tmp[i] = 0
         end
     end
     
     # Eval higher basis N_{i,deg} for deg = 2:ord and i = 1:max_B-deg
-    for deg = 2:ord
-        for i = 1:m-deg
+    for deg = 2 : ord
+        for i = 1 : m-deg
             # Eval of the direct dependency
-            if tmp[i]==0
+            if tmp[i] == 0
                 ddep = 0.0
             else
-                ddep = ((t-x[i])*tmp[i])/(x[i+deg-1]-x[i])
+                ddep = ((t - x[i]) * tmp[i]) / (x[i+deg-1] - x[i])
             end
             # Eval of the forward dependency
-            if tmp[i+1]==0
+            if tmp[i+1] == 0
                 fdep = 0.0
             else
-                fdep = ((x[i+deg]-t)*tmp[i+1])/(x[i+deg]-x[i+1])
+                fdep = ((x[i+deg] - t) * tmp[i+1]) / (x[i+deg] - x[i+1])
             end
             # Collection of the dependencies
-            tmp[i] = ddep+fdep
+            tmp[i] = ddep + fdep
         end
     end
     
@@ -70,10 +71,11 @@ function basis(ord::Int64, t::Float64, npts::Int64, x::Array{Float64})::Array{Fl
     end
     
     # Collect N{1,ord} to N{npts,ord} in B
-    for i=1:npts
-        push!(N, tmp[i]);
+    for i = 1 : npts
+        N[i] = tmp[i]
     end
-    return N;
+    
+    return N
 end
 
 
