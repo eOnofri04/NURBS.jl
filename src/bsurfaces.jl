@@ -7,10 +7,10 @@ export bsplsurf, bspsurfu, dbsurf
 Calculate a Cartesian product B-spline surface using open uniform knot vectors.
 """
 
-function bsplsurf(B::Array{Float64},k::Int64,l::Int64,npts::Int64,mpts::Int64,p1::Int64,p2::Int64)::Arrayy{Float64}
+function bsplsurf(B::Array{Float64},ordx::Int64,ordy::Int64,npts::Int64,mpts::Int64,p1::Int64,p2::Int64)::Array{Float64}
     
-    nplusc = npts + k
-    mplusc = mpts+l
+    nplusc = npts + ordx
+    mplusc = mpts + ordy
     x = zeros(nplusc)
     y = zeros(mplusc)
     nbasis = zeros(1,npts)
@@ -18,17 +18,17 @@ function bsplsurf(B::Array{Float64},k::Int64,l::Int64,npts::Int64,mpts::Int64,p1
     q = zeros(p1*p2,3)
     
     #generate the open uniform knot vectors
-    knot(npts,k,x)
-    knot(mpts,l,y)
+    x = knot(npts,ordx)
+    y = knot(mpts,ordy)
    
     icount = 0
     #calculate the points on the B-spline surface
     stepu = x[nplusc]/(p1-1)
     stepw = y[mplusc]/(p2-1)
     for u = 0:stepu:x[nplusc]
-        basis(k,u,npts,x,nbasis)
+        nbasis = basis(ordx,u,npts,x)
         for w = 0:stepw:y[mplusc]
-            basis(l,w,mpts,y,mbasis)
+            mbasis = basis(ordy,w,mpts,y)
             icount = icount+1
             for i = 1:npts
                 for j = 1:mpts
@@ -51,10 +51,10 @@ end
 Calculate a Cartesian product B-spline surface using periodic uniform knot vectors.
 """
 
-function bsplsurfu(B::Array{Float64},k::Int64,l::Int64,npts::Int64,mpts::Int64,p1::Int64,p2::Int64)::Arrayy{Float64}
+function bsplsurfu(B::Array{Float64},ordx::Int64,ordy::Int64,npts::Int64,mpts::Int64,p1::Int64,p2::Int64)::Array{Float64}
     
-    nplusc = npts+k
-    mplusc = mpts+l
+    nplusc = npts + ordx
+    mplusc = mpts + ordy
     x = zeros(nplusc)
     y = zeros(mplusc)
     nbasis = zeros(1,npts)
@@ -62,17 +62,17 @@ function bsplsurfu(B::Array{Float64},k::Int64,l::Int64,npts::Int64,mpts::Int64,p
     q = zeros(p1*p2,3)
     
     #generate the open uniform knot vectors
-    knotu(npts,k,x)
-    knotu(mpts,l,y)
+    x = knotu(npts,ordx)
+    y = knotu(mpts,ordy)
    
     icount = 0
     #calculate the points on the B-spline surface
     stepu = (npts-k+1) / (p1-1)
     stepw = (mpts-k+1) / (p2-1)
-    for u = k-1:stepu:npts
-        basis(k,u,npts,x,nbasis)
-        for w = k-1:stepw:mpts
-            basis(l,w,mpts,y,mbasis)
+    for u = ordx-1:stepu:npts
+        nbasis = basis(ordx,u,npts,x)
+        for w = ordy-1:stepw:mpts
+            mbasis = basis(ordy,w,mpts,y)
             icount = icount+1
             for i = 1:npts
                 for j = 1:mpts
@@ -95,9 +95,9 @@ end
 Calculate a Cartesian product B-spline surface and its derivatives using open uniform knot vectors.
 """
 
-function dbsurf(B::Array{Float64},k::Int64,l::Int64,npts::Int64,mpts::Int64,p1::Int64,p2::Int64)::Array{Float64}
-    nplusc = npts + k
-    mplusc = mpts+l
+function dbsurf(B::Array{Float64},ordx::Int64,ordy::Int64,npts::Int64,mpts::Int64,p1::Int64,p2::Int64)::Array{Float64}
+    nplusc = npts + ordx
+    mplusc = mpts + ordy
     x = zeros(nplusc)
     y = zeros(mplusc)
     nbasis = zeros(1,npts)
@@ -113,17 +113,17 @@ function dbsurf(B::Array{Float64},k::Int64,l::Int64,npts::Int64,mpts::Int64,p1::
     quw = zeros(p1*p2,3)
     qww = zeros(p1*p2,3)
     
-    knot(npts,k,x)
-    knot(mpts,l,y)
+    x = knot(npts,ordx)
+    y = knot(mpts,ordy)
     
     icount = 0
     #calculate the points on the B-spline surface
     stepu = x[nplusc]/(p1-1)
     stepw = y[mplusc]/(p2-1)
     for u = 0:stepu:x[nplusc]
-        dbasis(k,u,npts,x,nbasis,d1nbasis,d2nbasis)
+        nbasis = dbasis(k,u,npts,x,d1nbasis,d2nbasis)
         for w = 0:stepw:y[mplusc]
-            dbasis(l,w,mpts,y,mbasis,d1mbasis,d2mbasis)
+            mbasis = dbasis(l,w,mpts,y,d1mbasis,d2mbasis)
             icount = icount+1
             for i = 1:npts
                 for j = 1:mpts                    
