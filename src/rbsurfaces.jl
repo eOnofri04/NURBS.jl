@@ -23,10 +23,10 @@ Calculate a Cartesian product rational B-spline surface (NURBS) using an open un
 Call: basis, knot, sumrbas
 """
 
-function rbspsurf(B::Array{Float64},k::Int64,l::Int64,npts::Int64,mpts::Int64,p1::Int64,p2::Int64)::Array{Float64}
+function rbspsurf(B::Array{Float64},ordx::Int64,ordy::Int64,npts::Int64,mpts::Int64,p1::Int64,p2::Int64)::Array{Float64}
     
-    nplusc = npts + k
-    mplusc = mpts+l
+    nplusc = npts + ordx
+    mplusc = mpts + ordy
     x = zeros(nplusc)
     y = zeros(mplusc)
     nbasis = zeros(1,npts)
@@ -34,18 +34,18 @@ function rbspsurf(B::Array{Float64},k::Int64,l::Int64,npts::Int64,mpts::Int64,p1
     q = zeros(p1*p2,3)
     
     #generate the open uniform knot vectors
-    knot(npts,k,x)
-    knot(mpts,l,y)
+    x = knot(npts,ordx)
+    y = knot(mpts,ordy)
    
     icount = 0
     #calculate the points on the B-spline surface
     stepu = x[nplusc]/(p1-1)
     stepw = y[mplusc]/(p2-1)
     for u = 0:stepu:x[nplusc]
-        basis(k,u,npts,x,nbasis)
+        nbasis = basis(ordx,u,npts,x,nbasis)
         for w = 0:stepw:y[mplusc]
-            basis(l,w,mpts,y,mbasis)
-            sumrbas(B,nbasis,mbasis,npts,mpts)
+            mbasis = basis(ordy,w,mpts,y,mbasis)
+            sum = sumrbas(B,nbasis,mbasis,npts,mpts)
             icount = icount+1
             for i = 1:npts
                 for j = 1:mpts
