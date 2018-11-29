@@ -1,39 +1,65 @@
 export basis, dbasis, dbasisu
 
-
 """
-	basis(c, t, npts, x)
+    basis(ord, t, npts, x[])
 
-Generate B-spline basis functions for open uniform knot vectors.
+Generate a B-spline basis functions `N[]` for a given open knot vectors `x[]`.
+
+A B-Spline basis is a collection of functions of a parameter `t` wich form
+ a basis for the vectorial space of functions. The conformation of this set
+ higly depends on the choosing of the knots `x[]` the curve is bound to.
+The basis is computed with _Cox-de Boor_ recursive function applied to the
+ basis dependency tree in order to optimise the computation.
+
+---
+
+# Arguments
+- `ord::Int64`: the order of the B-Spline (`deg = ord-1`).
+- `t::Float64`: the parameter value of the parametric curve.
+- `npts::Int64`: the number of the points of the controll polygon.
+- `x::Array{Float64}`: the knot vector.
+
+---
+
+_By Elia Onofri_
 """
 
-function basis(c::Int64,t::Float64,npts::Int64,x::Array{Float64},n::Array{Float64})
-    nplusc=npts+c    
-    temp=zeros(nplusc)
+function basis(ord::Int64, t::Float64, npts::Int64, x::Array{Float64})::Array{Float64}
+    local tmp = Float64[]       # Basis progressive vector
+    local N = Float64[]         # Output vector
+    local max_N = npts-1+ord    # Needs i+(ord-1)|i=npts = npts-1+ord trivial basis
+    local ddep::Float64 = 0.0   # Direct Dependency partial sum
+    local fdep::Float64 = 0.0   # Forward Dependency partial sum
     
+    # Local check of the knot vector correctness
+    @assert length(x) == npts+ord ("ERROR: incompatibile knot vector with given parameters n+1 = $(npts), k = $(ord)")
     
-#calculate the first-order basis functions Ni,1
-for i=1:nplusc-1
-    if t>=x[i] && t<x[i+1]
-        temp[i]=1
-    else
-        temp[i]=0
-    end
-end
-
-    
-##calculate the higher-order basis functions
-for k=2:c
-    for i=1:nplusc-k
-        if temp[i]!=0   #if basis function is zero skip the calculation
-            d=((t-x[i])*temp[i])/(x[i+k-1]-x[i])
+    # Eval N_{i,1} for i = 1:max_B
+    for i = 1:max_N
+        if (t>=x[i]) && (t<x[i+1])
+            append!(tmp, 1)
         else
-            d=0
+            append!(tmp, 0)
         end
-        if temp[i+1]!=0   #if basis function is zero skip the calculation
-            e=((x[i+k]-t)*temp[i+1])/(x[i+k]-x[i+1])
-        else
-            e=0
+    end
+    
+    # Eval higher basis N_{i,deg} for deg = 2:ord and i = 1:max_B-deg
+    for deg = 2:ord
+        for i = 1:max_N+1-deg
+            # Eval of the direct dependency
+            if tmp[i]==0
+                ddep = 0.0
+            else
+                ddep = ((t-x[i])*tmp[i])/(x[i+deg-1]-x[i])
+            end
+            # Eval of the forward dependency
+            if tmp[i+1]==0
+                fdep = 0.0
+            else
+                fdep = ((x[i+deg]-t)*tmp[i+1])/(x[i+deg]-x[i+1])
+            end
+            # Collection of the dependencies
+            tmp[i] = ddep+fdep
         end
         temp[i]=d+e
     end
@@ -44,24 +70,31 @@ if t==x[nplusc]  #pick up last point
 end
 
     
-#put in n array
-for i=1:npts
-    n[i]=temp[i]
+    # Otherwise last point is zero
+    if t == x[npts+ord]
+        tmp[npts] = 1
+    end
+    
+    # Collect N{1,ord} to N{npts,ord} in B
+    for i=1:npts
+        push!(N, tmp[i]);
+    end
+    return N;
+
 end
 
 
-if t==x[nplusc]    #pick up last point
-    n[npts]=1
-end
+#--------------------------------------------------------------------------------------------------------------------------------
 
-end
-
-#-----------------------------------------------------------------------
 
 """
 	dbasis(c, t, npts, x)
 
 Generate B-spline basis functions and their derivatives for uniform open knot vectors.
+
+---
+
+_By Elia Onofri_
 """
 
 function dbasis(c::Int64,t::Float64,npts::Int64,x::Array{Float64},n::Array{Float64},d1::Array{Float64},d2::Array{Float64})
@@ -157,12 +190,18 @@ function dbasis(c::Int64,t::Float64,npts::Int64,x::Array{Float64},n::Array{Float
             
     
 end
-#-----------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------------------------------------------------
+
 
 """
 	dbasisu(c, t, npts, x)
 
 Generate B-spline basis functions and their derivatives for uniform periodic knot vectors.
+
+---
+
+_By Elia Onofri_
 """
 
 function dbasisu(c::Int64,t::Float64,npts::Int64,x::Array{Float64},n::Array{Float64},d1::Array{Float64},d2::Array{Float64})
@@ -258,6 +297,5 @@ function dbasisu(c::Int64,t::Float64,npts::Int64,x::Array{Float64},n::Array{Floa
         d1[i]=temp1[i]
         d2[i]=temp2[i]
     end
-            
-    
+    return (n, d1, d2);
 end
