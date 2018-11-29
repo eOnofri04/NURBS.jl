@@ -67,6 +67,7 @@ julia> knot(5, 2, true)
 ---
 
 _By Elia Onofri, Paolo Macciacchera_
+
 """
 
 function knot(npts::Int64, ord::Int64, centre::Bool=false, step::Float64=1.0)::Array{Float64}
@@ -191,4 +192,5 @@ function knotu(npts::Int64, ord::Int64, step::Float64=1.0)::Array{Float64}
     end
 
     return x;
+
 end

@@ -342,5 +342,6 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
         push!(d1, tmp1[i]);
         push!(d2, tmp2[i]);
     end
+  
     return (N, d1, d2);
 end
