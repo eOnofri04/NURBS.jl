@@ -21,7 +21,7 @@ The basis is computed with _Cox-de Boor_ recursive function applied to the
 
 ---
 
-_By Elia Onofri_
+_By Elia Onofri, Giuseppe Santorelli_
 """
 
 function basis(ord::Int64, t::Float64, npts::Int64, x::Array{Float64})::Array{Float64}
@@ -103,7 +103,7 @@ The basis is computed with _Cox-de Boor_ recursive function applied to the
 
 ---
 
-_By Elia Onofri_
+_By Elia Onofri, Giuseppe Santorelli_
 """
 
 function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Array{Float64}, Array{Float64}, Array{Float64}}
@@ -231,7 +231,7 @@ The basis is computed with _Cox-de Boor_ recursive function applied to the
 
 ---
 
-_By Elia Onofri_
+_By Elia Onofri, Giuseppe Santorelli_
 """
 
 function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Array{Float64}, Array{Float64}, Array{Float64}}
