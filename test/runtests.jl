@@ -1,7 +1,7 @@
 using NURBS
 
 #include("bezier.jl")
-#include("knot.jl")
+include("knot.jl")
 #include("basis.jl")
 #include("bspline.jl")
 #include("rbspline.jl")
