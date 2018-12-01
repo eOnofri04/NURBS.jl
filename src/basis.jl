@@ -30,8 +30,7 @@ function basis(ord::Int64, t::Float64, npts::Int64, x::Array{Float64})::Array{Fl
     local ddep::Float64 = 0.0       # Direct Dependency partial sum
     local fdep::Float64 = 0.0       # Forward Dependency partial sum
     
-    local tmp::Array{Float64} = Array{Float64}(max_N)   # Basis progressive vector
-    local N::Array{Float64} = Array{Float64}(npts)      # Base vector
+    local N::Array{Float64} = Array{Float64}(max_N)   # Basis progressive vector
     
     # Local check of the knot vector correctness
     @assert length(x) == m ("ERROR: incompatibile knot vector with given parameters n+1 = $(npts), k = $(ord)")
@@ -39,9 +38,9 @@ function basis(ord::Int64, t::Float64, npts::Int64, x::Array{Float64})::Array{Fl
     # Eval N_{i,1} for i = 1:max_B
     for i = 1 : max_N
         if (t >= x[i]) && (t < x[i+1])
-            tmp[i] = 1
+            N[i] = 1
         else
-            tmp[i] = 0
+            N[i] = 0
         end
     end
     
@@ -49,33 +48,28 @@ function basis(ord::Int64, t::Float64, npts::Int64, x::Array{Float64})::Array{Fl
     for deg = 2 : ord
         for i = 1 : m-deg
             # Eval of the direct dependency
-            if tmp[i] == 0
+            if N[i] == 0
                 ddep = 0.0
             else
-                ddep = ((t - x[i]) * tmp[i]) / (x[i+deg-1] - x[i])
+                ddep = ((t - x[i]) * N[i]) / (x[i+deg-1] - x[i])
             end
             # Eval of the forward dependency
-            if tmp[i+1] == 0
+            if N[i+1] == 0
                 fdep = 0.0
             else
-                fdep = ((x[i+deg] - t) * tmp[i+1]) / (x[i+deg] - x[i+1])
+                fdep = ((x[i+deg] - t) * N[i+1]) / (x[i+deg] - x[i+1])
             end
             # Collection of the dependencies
-            tmp[i] = ddep + fdep
+            N[i] = ddep + fdep
         end
     end
     
     # Otherwise last point is zero
     if t == x[m]
-        tmp[npts] = 1
+        N[npts] = 1
     end
     
-    # Collect N{1,ord} to N{npts,ord} in B
-    for i = 1 : npts
-        N[i] = tmp[i]
-    end
-    
-    return N
+    return N[1:npts]
 end
 
 
@@ -112,12 +106,9 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
     local ddep::Float64 = 0.0   		# Direct Dependency partial sum
     local fdep::Float64 = 0.0   		# Forward Dependency partial sum
     
-    local tmp::Array{Float64} = Array{Float64}(max_N)   # Basis progressive vector
-    local tmp1::Array{Float64} = Array{Float64}(max_N)  # First Derivative progressive vector
-    local tmp2::Array{Float64} = Array{Float64}(max_N)  # Second Derivative progressive vector
-    local N::Array{Float64} = Array{Float64}(npts)      # Base vector
-    local d1::Array{Float64} = Array{Float64}(npts)     # First Derivative vector
-    local d2::Array{Float64} = Array{Float64}(npts)     # Second Derivative vector
+    local N::Array{Float64} = Array{Float64}(max_N)   # Basis progressive vector
+    local d1::Array{Float64} = Array{Float64}(max_N)  # First Derivative progressive vector
+    local d2::Array{Float64} = Array{Float64}(max_N)  # Second Derivative progressive vector
     
     # Local check of the knot vector correctness
     @assert length(x) == m ("ERROR: incompatibile knot vector with given parameters n+1 = $(npts), k = $(ord)")
@@ -125,14 +116,14 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
     # Eval N_{i,1} for i = 1:max_B
     for i = 1 : max_N
         if (t >= x[i]) && (t < x[i+1])
-            tmp[i] = 1
+            N[i] = 1
         else
-            tmp[i] = 0
+            N[i] = 0
         end
     end
     
     if t == x[m]    # last(x)
-        temp[npts] = 1
+        N[npts] = 1
     end
     
     # Eval higher basis N_{i,deg} for deg = 2:ord and i = 1:max_B-deg
@@ -140,70 +131,63 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
         for i = 1 : m-deg
             
             # ----Eval of the direct dependency----
-            if tmp[i] == 0
+            if N[i] == 0
                 ddep = 0.0
                 f1 = 0.0
             else
-                ddep = ((t - x[i]) * tmp[i]) / (x[i+deg-1] - x[i])
-                f1 = tmp[i] / (x[i+deg-1] - x[i])
+                ddep = ((t - x[i]) * N[i]) / (x[i+deg-1] - x[i])
+                f1 = N[i] / (x[i+deg-1] - x[i])
             end
             
             # ----Eval of the forward dependency----
-            if tmp[i+1] == 0
+            if N[i+1] == 0
                 fdep = 0.0
                 f2 = 0.0
             else
-                fdep = ((x[i+deg] - t) * tmp[i+1]) / (x[i+deg] - x[i+1])
-                f2 = -tmp[i+1] / (x[i+deg] - x[i+1])
+                fdep = ((x[i+deg] - t) * N[i+1]) / (x[i+deg] - x[i+1])
+                f2 = -N[i+1] / (x[i+deg] - x[i+1])
             end
 
             #----Eval of the direct first derivative dependency----
-            if tmp1[i] != 0    # if the lower order basis function is zero skip the calculation
-                f3 = ((t - x[i]) * tmp1[i]) / (x[i+deg-1] - x[i])
-                s1 = (2 * tmp1[i]) / (x[i+deg-1] - x[i])
+            if d1[i] != 0    # if the lower order basis function is zero skip the calculation
+                f3 = ((t - x[i]) * d1[i]) / (x[i+deg-1] - x[i])
+                s1 = (2 * d1[i]) / (x[i+deg-1] - x[i])
             else
                 f3 = 0.0
                 s1 = 0.0
             end
             
             #----Eval of the forward first derivative dependency----
-            if tmp1[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                f4 = ((x[i+deg] - t) * tmp1[i+1]) / (x[i+deg] - x[i+1])
-                s2 = ((-2) * tmp1[i+1]) / (x[i+deg] - x[i+1])
+            if d1[i+1] != 0    # if the lower order basis function is zero skip the calculation
+                f4 = ((x[i+deg] - t) * d1[i+1]) / (x[i+deg] - x[i+1])
+                s2 = ((-2) * d1[i+1]) / (x[i+deg] - x[i+1])
             else
                 f4 = 0.0
                 s2 = 0.0
             end
 		
             #----Eval of the direct second derivative dependency----
-            if tmp2[i] != 0    # if the lower order basis function is zero skip the calculation
-                s3 = ((t - x[i]) * tmp2[i] ) / (x[i+deg-1]-x[i])
+            if d2[i] != 0    # if the lower order basis function is zero skip the calculation
+                s3 = ((t - x[i]) * d2[i] ) / (x[i+deg-1]-x[i])
             else
                 s3 = 0.0
             end
             
             #----Eval of the forward second derivative dependency----
-            if tmp2[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                s4 = ((x[i+deg] - t) * tmp2[i+1]) / (x[i+deg] - x[i+1])
+            if d2[i+1] != 0    # if the lower order basis function is zero skip the calculation
+                s4 = ((x[i+deg] - t) * d2[i+1]) / (x[i+deg] - x[i+1])
             else
                 s4 = 0.0
             end
 			
             # Collection of the dependencies
-            tmp[i] = ddep + fdep
-            tmp1[i] = f1 + f2 + f3 + f4
-            tmp2[i] = s1 + s2 + s3 + s4
+            N[i] = ddep + fdep
+            d1[i] = f1 + f2 + f3 + f4
+            d2[i] = s1 + s2 + s3 + s4
         end
     end
     
-    # prepare output
-    for i = 1 : npts
-        N[i] = tmp[i]
-        d1[i] = tmp1[i]
-        d2[i] = tmp2[i]
-    end
-    
-    return (N, d1, d2)
+    return (N[1:npts], d1[1:npts], d2[1:npts])
 end
 
 
@@ -240,12 +224,9 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
     local ddep::Float64 = 0.0   		# Direct Dependency partial sum
     local fdep::Float64 = 0.0   		# Forward Dependency partial sum
     
-    local tmp::Array{Float64} = Array{Float64}(max_N)   # Basis progressive vector
-    local tmp1::Array{Float64} = Array{Float64}(max_N)  # First Derivative progressive vector
-    local tmp2::Array{Float64} = Array{Float64}(max_N)  # Second Derivative progressive vector
-    local N::Array{Float64} = Array{Float64}(npts)      # Base vector
-    local d1::Array{Float64} = Array{Float64}(npts)     # First Derivative vector
-    local d2::Array{Float64} = Array{Float64}(npts)     # Second Derivative vector
+    local N::Array{Float64} = Array{Float64}(max_N)   # Basis progressive vector
+    local d1::Array{Float64} = Array{Float64}(max_N)  # First Derivative progressive vector
+    local d2::Array{Float64} = Array{Float64}(max_N)  # Second Derivative progressive vector
     
     # Local check of the knot vector correctness
     @assert length(x) == m ("ERROR: incompatibile knot vector with given parameters n+1 = $(npts), k = $(ord)")
@@ -253,15 +234,15 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
     # Eval N_{i,1} for i = 1:max_B
     for i = 1 : max_N
         if (t >= x[i]) && (t < x[i+1])
-            tmp[i] = 1
+            N[i] = 1
         else
-            tmp[i] = 0
+            N[i] = 0
         end
     end
     
     if t == x[npts+1]    # handle the end specially
-        tmp[npts] = 1    # resetting the first order basis functions.
-        tmp[npts+1] = 0
+        N[npts] = 1   	 # resetting the first order basis functions.
+        N[npts+1] = 0
     end
     
    
@@ -270,68 +251,61 @@ function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Arr
         for i = 1 : m-deg
             
             # ----Eval of the direct dependency----
-            if tmp[i] == 0
+            if N[i] == 0
                 ddep = 0.0
                 f1 = 0.0
             else
-                ddep = ((t - x[i]) * tmp[i]) / (x[i+deg-1] - x[i])
-                f1 = tmp[i] / (x[i+deg-1] - x[i])
+                ddep = ((t - x[i]) * N[i]) / (x[i+deg-1] - x[i])
+                f1 = N[i] / (x[i+deg-1] - x[i])
             end
             
             # ----Eval of the forward dependency----
-            if tmp[i+1] == 0
+            if N[i+1] == 0
                 fdep = 0.0
                 f2 = 0.0
             else
-                fdep = ((x[i+deg] - t) * tmp[i+1]) / (x[i+deg] - x[i+1])
-                f2 = -tmp[i+1] / (x[i+deg] - x[i+1])
+                fdep = ((x[i+deg] - t) * N[i+1]) / (x[i+deg] - x[i+1])
+                f2 = -N[i+1] / (x[i+deg] - x[i+1])
             end
 
             #----Eval of the direct first derivative dependency----
-            if tmp1[i] != 0    # if the lower order basis function is zero skip the calculation
-                f3 = ((t - x[i]) * tmp1[i]) / (x[i+deg-1] - x[i])
-                s1 = (2 * tmp1[i]) / (x[i+deg-1] - x[i])
+            if d1[i] != 0    # if the lower order basis function is zero skip the calculation
+                f3 = ((t - x[i]) * d1[i]) / (x[i+deg-1] - x[i])
+                s1 = (2 * d1[i]) / (x[i+deg-1] - x[i])
             else
                 f3 = 0.0
                 s1 = 0.0
             end
             
             #----Eval of the forward first derivative dependency----
-            if tmp1[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                f4 = ((x[i+deg] - t) * tmp1[i+1]) / (x[i+deg] - x[i+1])
-                s2 = ((-2) * tmp1[i+1]) / (x[i+deg] - x[i+1])
+            if d1[i+1] != 0    # if the lower order basis function is zero skip the calculation
+                f4 = ((x[i+deg] - t) * d1[i+1]) / (x[i+deg] - x[i+1])
+                s2 = ((-2) * d1[i+1]) / (x[i+deg] - x[i+1])
             else
                 f4 = 0.0
                 s2 = 0.0
             end
 		
             #----Eval of the direct second derivative dependency----
-            if tmp2[i] != 0    # if the lower order basis function is zero skip the calculation
-                s3 = ((t - x[i]) * tmp2[i] ) / (x[i+deg-1]-x[i])
+            if d2[i] != 0    # if the lower order basis function is zero skip the calculation
+                s3 = ((t - x[i]) * d2[i] ) / (x[i+deg-1]-x[i])
             else
                 s3 = 0.0
             end
             
             #----Eval of the forward second derivative dependency----
-            if tmp2[i+1] != 0    # if the lower order basis function is zero skip the calculation
-                s4 = ((x[i+deg] - t) * tmp2[i+1]) / (x[i+deg] - x[i+1])
+            if d2[i+1] != 0    # if the lower order basis function is zero skip the calculation
+                s4 = ((x[i+deg] - t) * d2[i+1]) / (x[i+deg] - x[i+1])
             else
                 s4 = 0.0
             end
 			
             # Collection of the dependencies
-            tmp[i] = ddep + fdep
-            tmp1[i] = f1 + f2 + f3 + f4
-            tmp2[i] = s1 + s2 + s3 + s4
+            N[i] = ddep + fdep
+            d1[i] = f1 + f2 + f3 + f4
+            d2[i] = s1 + s2 + s3 + s4
         end
     end
     
-    # prepare output
-    for i = 1 : npts
-        N[i] = tmp[i]
-        d1[i] = tmp1[i]
-        d2[i] = tmp2[i]
-    end
-    
-    return (N, d1, d2)
+    return (N[1:npts], d1[1:npts], d2[1:npts])
 end
