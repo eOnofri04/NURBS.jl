@@ -100,7 +100,7 @@ The basis is computed with _Cox-de Boor_ recursive function applied to the
 _By Elia Onofri, Giuseppe Santorelli_
 """
 
-function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Array{Float64}, Array{Float64}, Array{Float64}}
+function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Float64})::Tuple{Array{Float64}, Array{Float64}, Array{Float64}}
     local max_N::Int64 = npts-1+ord		# Needs i+(ord-1)|i=npts = npts-1+ord trivial basis
     local m::Int64 = npts+ord			# Dimension of the knot vector
     local ddep::Float64 = 0.0   		# Direct Dependency partial sum
@@ -218,7 +218,7 @@ The basis is computed with _Cox-de Boor_ recursive function applied to the
 _By Elia Onofri, Giuseppe Santorelli_
 """
 
-function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Int64})::Tuple{Array{Float64}, Array{Float64}, Array{Float64}}
+function dbasis(ord::Int64, t::Float64, npts::Int64, x::Array{Float64})::Tuple{Array{Float64}, Array{Float64}, Array{Float64}}
     local max_N::Int64 = npts-1+ord		# Needs i+(ord-1)|i=npts = npts-1+ord trivial basis
     local m::Int64 = npts+ord			# Dimension of the knot vector
     local ddep::Float64 = 0.0   		# Direct Dependency partial sum
