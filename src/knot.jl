@@ -66,13 +66,12 @@ julia> knot(5, 2, true)
 
 ---
 
-_By Elia Onofri, Paolo Macciacchera_
-
+_By Elia Onofri, Giuseppe Santorelli_
 """
 
 function knot(npts::Int64, ord::Int64, centre::Bool=false, step::Float64=1.0)::Array{Float64}
     # Input Data Check
-    @assert npts>=ord ("ERROR: ord > npts")
+    @assert npts >= ord ("ERROR: ord > npts")
 	
     local m::Int64 = npts+ord      		   # knot vector dimension
     local backstep::Float64 = 0.0   		   # backstep is the affine transition parameter for 0-central knots
@@ -85,8 +84,8 @@ function knot(npts::Int64, ord::Int64, centre::Bool=false, step::Float64=1.0)::A
     end
     
     x[1] = 0 - backstep
-    for i = 2:m
-        if i > ord && i <= npts+1
+    for i = 2 : m
+        if i > ord && i <= npts + 1
             x[i] = x[i-1] + step
         else
             x[i] = x[i-1]
@@ -100,29 +99,82 @@ end
 
 
 """
-	knotc(n, c)
+UNTESTED::knotc(npts, ord, b)
 
 Generate a nonuniform open knot vector proportional to the chord lengths between defining polygon vertices.
 
----
-
 # Arguments
-- `npts::Int64`: the number of the `n+1` points of the controll polygon.
-- `ord::Int64`: the order of the B-Spline (`degree k-1`).
-- `b::Array{Float64}`: .
+
+- `npts::Int64`: the number of the contol polygon vertices.
+- `ord::Int64`: order of the basis function.
+- `b::Array{Float64}`: array containing the contol polygon vertices.
 
 ---
 
+# Examples
+```jldoctest
+julia> 
+```
+
+```jldoctest
+julia> 
+```
+
+```jldoctest
+julia> 
+```
+
+---
+_Giuseppe Santorelli_
 """
 
-function knotc(npts::Int64,ord::Int64,b::Array{Float64})::Array{Float64}
-     # Input Data Check
-    @assert npts>=ord ("ERROR: ord > npts")
-	
-    local m::Int64 = npts+ord      		           # knot vector dimension
-    local x::Array{Float64} = Array{Float64}(m)    # knot vector output 
-    #[...]
+function knotc(npts::Int64, ord::Int64, b::Array{Float64})::Array{Float64}
+    
+    @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
+    @assert npts >= ord ("ERROR: ord > npts")
+
+    chord::Array{Float64} = Array{Float64}(31)
+    m::Int64 = npts + ord
+    n::Int64 = npts - 1
+    x::Array{Float64} = Array{Float64}(m)
+        
+    maxchord = 0
+    icount = 0
+    
+    # determine chord distance between defining polygon vertices and their sum
+    for i = 4 : 3 : 3*npts
+        icount = icount + 1
+        xchord = b[i] - b[i - 3]
+        ychord = b[i + 1] - b[i - 2]
+        zchord = b[i + 2] - b[i - 1]
+        chord[icount] = sqrt(xchord * xchord + ychord * ychord + zchord * zchord)
+        maxchord = maxchord + chord[icount]
+    end
+    
+    # multiplicity of c=order zeros at the beginning of the open knot vector
+    for i = 1 : ord
+        x[i] = 0
+    end
+    
+    # generate the internal knot values
+    for i = 1 : npts - ord
+        csum = 0
+        
+        for j = 1 : i
+            csum = csum + chord[j]
+        end
+        
+        numerator = i / (npts - ord + 1) * chord[i + 1] + csum
+        x[ord + i] = (numerator / maxchord) * (npts - ord + 1)
+    end
+    
+    # multiplicity of c=order zeros at the end of the open knot vector
+    for i = npts + 1 : m
+        x[i] = npts - ord + 1
+    end
+    
     return x
+    
 end
 
 
@@ -177,20 +229,19 @@ julia> knotu(5, 4, 0.25)
 ```
 
 ---
-_By Elia Onofri, Paolo Macciacchera_
+_By Elia Onofri, Giuseppe Santorelli_
 """
 
 function knotu(npts::Int64, ord::Int64, step::Float64=1.0)::Array{Float64}
     # Input Data Check
-    @assert npts>=ord ("ERROR: ord > npts")
+    @assert npts >= ord ("ERROR: ord > npts")
 	
-    local m::Int64 = npts+ord      		           # knot vector dimension
+    local m::Int64 = npts + ord      		   # knot vector dimension
     local x::Array{Float64} = Array{Float64}(m)    # knot vector output
 
-    for i=1:m
-        x[i] = (i-1)*step
+    for i = 1 : m
+        x[i] = (i-1) * step
     end
 
-    return x;
-
+    return x
 end
