@@ -86,32 +86,55 @@ end
 
 
 """
-	nmatrix(k)
+UNTESTED	nmatrix(k)
 
 Calculate the general B-spline periodic basis matrix.
 
 This function is used in matpbspl.
+
+---
+
+# Arguments
+- `k::Int64`: order of the periodic basis function.
+
+---
+
+# Examples
+```jldoctest
+julia> 
+
+```
+```jldoctest
+julia> 
+
+```
+```jldoctest
+julia> 
+
+```
+---
+_By Paolo Macciacchera, Elia Onofri_
 """
 
-function namtrix(k::Int64)::tuple{Float64, Array{Int64}}
+function nmatrix(k::Int64)::tuple{Float64, Array{Int64}}
     Ni = (n,i) -> factorial(n) / (factorial(i) * factorial(n-i)) 
     n::Array{Int64} = Array{Int64}(zeros(ord,ord))
-    fcoeff = 1 / Factoril(ord-1)
+    fcoeff = 1 / factorial(ord - 1)
     
-    for i = 0:ord-1
-        temp = Ni[ord-1,i]
-        for j = 0:ord-1
+    for i = 0 : ord-1
+        temp = Ni(ord-1, i)
+        for j = 0 : ord-1
             sum = 0
-            for k = j:ord-1
-                sum1 = ( ord - ( k + 1 ) ) ^ i
+            for k = j : ord-1
+                sum1 = (ord - (k + 1)) ^ i
                 sum2 = (-1) ^ (k - j)
-                sum3 = Ni(ord,k - j)
+                sum3 = Ni(ord, k - j)
                 sum = sum + sum1 * sum2 * sum3
             end
-            n[i+1,j+1] = temp * sum
+            n[i+1, j+1] = temp * sum
         end
     end
-    return(fcoeff,n)            
+    return(fcoeff, n)            
 end
 
 
@@ -120,9 +143,33 @@ end
 
 
 """
-	param(dpts, d)
+UNTESTED	param(dpts, d[])
 
 Calculate parameter values based on chord distances.
+
+---
+
+# Arguments
+- `dpts::Int64`: Number of Data Points.
+- `d::Array{Float64}`: Array of Data Points.
+
+---
+
+# Examples
+```jldoctest
+julia> 
+
+```
+```jldoctest
+julia> 
+
+```
+```jldoctest
+julia> 
+
+```
+---
+_By Paolo Macciacchera, Elia Onofri_
 """
 
 function param(dpts::Int64, d::Array{Float64})::Array{Float64}
@@ -130,13 +177,13 @@ function param(dpts::Int64, d::Array{Float64})::Array{Float64}
     isum::Float64 = 0
     tparm::Array{Float64} = Array{Float64}(zeros(dpts))
     #calculate the sum of the chord distances for all the data points
-    for i=2:dpts
+    for i = 2 : dpts
         sum = sum + sqrt((d[i,1] - d[i-1,1]) ^ 2 + (d[i,2] - d[i-1,2]) ^ 2)
     end
     #calculate the parameter values
-    for i=2:dpts
+    for i = 2 : dpts
         isum = isum + sqrt((d[i,1] - d[i-1,1]) ^ 2 + (d[i,2] - d[i-1,2]) ^ 2)
-        tparm[i] = isum/sum
+        tparm[i] = isum / sum
     end
     return(tparm)
 end
