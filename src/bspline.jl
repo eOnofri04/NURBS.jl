@@ -1,3 +1,5 @@
+export bspline, bsplineu, dbspline, dbsplineu
+
 """
 bspline(npts, ord, p1, b)
 
@@ -263,7 +265,7 @@ end
 
 
 """
-dbspline(npts, ord, p1, b)
+	dbsplineu(npts, ord, p1, b)
 
 # Arguments
 
