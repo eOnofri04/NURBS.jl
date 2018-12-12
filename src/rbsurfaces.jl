@@ -26,12 +26,12 @@ Call: basis, knot, sumrbas
 
 # Arguments
 - `B::Array{Float64}`: .
-- `ordx::Int64`: .
-- `ordy::Int64`: .
-- `npts::Int64`: .
-- `mpts::Int64`: .
-- `p1::Int64`: .
-- `p2::Int64`: .
+- `ordx::Int64`: order in the x direction
+- `ordy::Int64`: order in the y direction
+- `npts::Int64`: the number of control net vertices in x direction
+- `mpts::Int64`: the number of control net vertices in y direction
+- `p1::Int64`: number of parametric lines in the x direction
+- `p2::Int64`: number of parametric lines in the y direction
 
 ---
 
@@ -101,11 +101,11 @@ Calculate the sum of the nonrational basis functions.
 ---
 
 # Arguments
-- `B::Array{Float64}`: .
-- `nbasis::Array{Float64}`: .
-- `mbasis::Array{Float64}`: .
-- `npts::Int64`: .
-- `mpts::Int64`: .
+- `B::Array{Float64}`: array containing the control net vertices
+- `nbasis::Array{Float64}`: array containing the nonrational basis functions for x
+- `mbasis::Array{Float64}`: array containing the nonrational basis functions for y
+- `npts::Int64`: the number of control net vertices in x direction
+- `mpts::Int64`: the number of control net vertices in y direction
 
 ---
 

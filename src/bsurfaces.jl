@@ -9,13 +9,13 @@ Calculate a Cartesian product B-spline surface using open uniform knot vectors.
 ---
 
 # Arguments
-- `B::Array{Float64}`: .
-- `ordx::Int64`: .
-- `ordy::Int64`: .
-- `npts::Int64`: .
-- `mpts::Int64`: .
-- `p1::Int64`: .
-- `p2::Int64`: .
+- `B::Array{Float64}`: array containing the control net vertices
+- `ordx::Int64`: order in the x direction
+- `ordy::Int64`: order in the y direction
+- `npts::Int64`: the number of control net vertices in x direction
+- `mpts::Int64`: the number of control net vertices in y direction
+- `p1::Int64`: number of parametric lines in the x direction
+- `p2::Int64`: number of parametric lines in the y direction
 
 ---
 
@@ -83,13 +83,13 @@ Calculate a Cartesian product B-spline surface using periodic uniform knot vecto
 ---
 
 # Arguments
-- `B::Array{Float64}`: .
-- `ordx::Int64`: .
-- `ordy::Int64`: .
-- `npts::Int64`: .
-- `mpts::Int64`: .
-- `p1::Int64`: .
-- `p2::Int64`: .
+- `B::Array{Float64}`: array containing the control net vertices
+- `ordx::Int64`: order in the x direction
+- `ordy::Int64`: order in the y direction
+- `npts::Int64`: the number of control net vertices in x direction
+- `mpts::Int64`: the number of control net vertices in y direction
+- `p1::Int64`: number of parametric lines in the x direction
+- `p2::Int64`: number of parametric lines in the y direction
 
 ---
 
@@ -157,13 +157,14 @@ Calculate a Cartesian product B-spline surface and its derivatives using open un
 ---
 
 # Arguments
-- `B::Array{Float64}`: .
-- `ordx::Int64`: .
-- `ordy::Int64`: .
-- `npts::Int64`: .
-- `mpts::Int64`: .
-- `p1::Int64`: .
-- `p2::Int64`: .
+- `B::Array{Float64}`: array containing the control net vertices
+- `ordx::Int64`: order in the x direction
+- `ordy::Int64`: order in the y direction
+- `npts::Int64`: the number of control net vertices in x direction
+- `mpts::Int64`: the number of control net vertices in y direction
+- `p1::Int64`: number of parametric lines in the x direction
+- `p2::Int64`: number of parametric lines in the y direction
+
 
 ---
 
