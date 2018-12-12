@@ -91,24 +91,72 @@ end
 Calculate the general B-spline periodic basis matrix.
 
 This function is used in matpbspl.
+
+---
+
+# Arguments
+- `k::Int64`: order of the periodic basis function.
+
+---
+
+# Examples
+```jldoctest
+julia> 
+
+```
+```jldoctest
+julia> 
+
+```
+```jldoctest
+julia> 
+
+```
+---
+_By Paolo Macciacchera, Elia Onofri_
 """
 
-function namtrix(k::Int64)::tuple{Float64, Array{Int64}}
-	[...]
+function nmatrix(k::Int64)::tuple{Float64, Array{Int64}}
+    [...]           
 end
+
 
 
 #--------------------------------------------------------------------------------------------------------------------------------
 
 
 """
-	param(dpts, d)
+	param(dpts, d[])
 
 Calculate parameter values based on chord distances.
+
+---
+
+# Arguments
+- `dpts::Int64`: Number of Data Points.
+- `d::Array{Float64}`: Array of Data Points.
+
+---
+
+# Examples
+```jldoctest
+julia> 
+
+```
+```jldoctest
+julia> 
+
+```
+```jldoctest
+julia> 
+
+```
+---
+_By Paolo Macciacchera, Elia Onofri_
 """
 
 function param(dpts::Int64, d::Array{Float64})::Array{Float64}
-	[...]
+    [...]
 end
 
 
