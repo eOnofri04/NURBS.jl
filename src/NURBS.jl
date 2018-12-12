@@ -8,6 +8,7 @@ module NURBS
 	export bezsurf, mbezsurf
 	export bsplsurf, bspsurfu, dbsurf
 	export frbsurf, rbspsurf
+	export raise23, raise45
 
 	include("bezier.jl")
 	include("knot.jl")
@@ -17,4 +18,5 @@ module NURBS
 	include("beziersurfaces.jl")
 	include("bsurfaces.jl")
 	include("rbsurfaces.jl")
+	include("raise.jl")
 end
