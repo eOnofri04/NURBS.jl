@@ -22,14 +22,14 @@ function bsplfit(dpts::Int64, d::Array{Float64}, npts::Int64, ord::Int64)::Array
 	
 
 	# Generate the matrix of basis functions
-	for i = 1:dpts
+	for i = 1 : dpts
 
 		t = tpar[i] * x[m]
 		nbasis = basis(ord, t, npts, x)
 
-		for j = 1:npts
+		for j = 1 : npts
 
-			n[i, j] = nbasis[j]
+			n[i,j] = nbasis[j]
 
 		end
 
@@ -132,12 +132,12 @@ function param(dpts::Int64, d::Array{Float64})::Array{Float64}
 	tparm::Array{Float64} = zeros(dpts)
 
     # calculate the chord distances for all the data points
-    arc_lengths::Array{Float64} = [ sqrt((d[i,1] - d[i - 1,1])^2 + (d[i,2] - d[i - 1 ,2])^2) for i=2:dpts ]
+    arc_lengths::Array{Float64} = [sqrt((d[i,1] - d[i-1,1])^2 + (d[i,2] - d[i-1,2])^2) for i = 2 : dpts]
 
     tparm[1] = 0
 
-    for i = 2:dpts
-        tparm[i] = tparm[i - 1] + arc_lengths[i-1] 
+    for i = 2 : dpts
+        tparm[i] = tparm[i-1] + arc_lengths[i-1] 
     end
 
     return tparm / sum(arc_lengths)
