@@ -45,7 +45,7 @@ function bsplsurf(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpts
     y = zeros(mplusc)
     nbasis = zeros(1, npts)
     mbasis = zeros(1, mpts)
-    q = zeros(p1*p2, 3)
+    q = zeros(3, p1*p2)
     
     #generate the open uniform knot vectors
     x = knot(npts, ordx)
@@ -64,7 +64,7 @@ function bsplsurf(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpts
                 for j = 1 : mpts
                     j1 = mpts * (i - 1) + j
                     for s = 1 : 3
-                        q[icount, s] = q[icount, s] + B[j1, s] * nbasis[i] * mbasis[j]
+                        q[s, icount] = q[s, icount] + B[s, j1] * nbasis[i] * mbasis[j]
                     end
                 end
             end
@@ -119,7 +119,7 @@ function bsplsurfu(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpt
     y = zeros(mplusc)
     nbasis = zeros(1, npts)
     mbasis = zeros(1, mpts)
-    q = zeros(p1 * p2, 3)
+    q = zeros(3, p1 * p2)
     
     #generate the open uniform knot vectors
     x = knotu(npts, ordx)
@@ -138,7 +138,7 @@ function bsplsurfu(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpt
                 for j = 1 : mpts
                     for s = 1 : 3
                         j1 = mpts * (i - 1) + j
-                        q[icount, s] = q[icount, s] + B[j1, s] * nbasis[i] * mbasis[j]
+                        q[s, icount] = q[s, icount] + B[s, j1] * nbasis[i] * mbasis[j]
                     end
                 end
             end
@@ -186,7 +186,7 @@ julia>
 _By Paolo Macciacchera, Elia Onofri_
 """
 
-function dbsurf(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Tuple{Array{Float64}, Array{Float64}, Array{float64}, Array{Float64}, Array{Float64}, Array{float64}}
+function dbsurf(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Tuple{Array{Float64}, Array{Float64}, Array{Float64}, Array{Float64}, Array{Float64}, Array{Float64}}
     nplusc = npts + ordx
     mplusc = mpts + ordy
     x = zeros(nplusc)
@@ -197,12 +197,12 @@ function dbsurf(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpts::
     d1mbasis = zeros(1, mpts)
     d2nbasis = zeros(1, npts)
     d2mbasis = zeros(1, mpts)
-    q = zeros(p1 * p2, 3)
-    qu = zeros(p1 * p2, 3)
-    qw = zeros(p1 * p2, 3)
-    quu = zeros(p1 * p2, 3)
-    quw = zeros(p1 * p2, 3)
-    qww = zeros(p1 * p2, 3)
+    q = zeros(3, p1 * p2)
+    qu = zeros(3, p1 * p2)
+    qw = zeros(3, p1 * p2)
+    quu = zeros(3, p1 * p2)
+    quw = zeros(3, p1 * p2)
+    qww = zeros(3, p1 * p2)
     
     x = knot(npts, ordx)
     y = knot(mpts, ordy)
@@ -212,20 +212,20 @@ function dbsurf(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpts::
     stepu = x[nplusc] / (p1 - 1)
     stepw = y[mplusc] / (p2 - 1)
     for u = 0 : stepu : x[nplusc]
-        nbasis = dbasis(k, u, npts, x, d1nbasis, d2nbasis)
+        nbasis, d1nbasis, d2nbasis = dbasis(k, u, npts, x)
         for w = 0 : stepw : y[mplusc]
-            mbasis = dbasis(l, w, mpts, y, d1mbasis, d2mbasis)
+            mbasis, d1mbasis, d2mbasis = dbasis(l, w, mpts, y)
             icount = icount + 1
             for i = 1 : npts
                 for j = 1 : mpts                    
                     for s = 1 : 3
                         j1 = mpts * (i - 1) + j
-                        q[icount, s] = q[icount, s] + B[j1, s] * nbasis[i] * mbasis[j]
-                        qu[icount, s] = qu[icount, s] + B[j1, s] * d1nbasis[i] * mbasis[j]
-                        qw[icount, s] = qw[icount, s] + B[j1, s] * nbasis[i] * d1mbasis[j]
-                        quu[icount, s] = quu[icount, s] + B[j1, s] * d1nbasis[i] * d1mbasis[j]
-                        quw[icount, s] = quw[icount, s] + B[j1, s] * d2nbasis[i] * mbasis[j]
-                        qww[icount, s] = qww[icount, s] + B[j1, s] * nbasis[i] * d2mbasis[j]
+                        q[s, icount] = q[s, icount] + B[s, j1] * nbasis[i] * mbasis[j]
+                        qu[s, icount] = qu[s, icount] + B[s, j1] * d1nbasis[i] * mbasis[j]
+                        qw[s, icount] = qw[s, icount] + B[s, j1] * nbasis[i] * d1mbasis[j]
+                        quu[s, icount] = quu[s, icount] + B[s, j1] * d1nbasis[i] * d1mbasis[j]
+                        quw[s, icount] = quw[s, icount] + B[s, j1] * d2nbasis[i] * mbasis[j]
+                        qww[s, icount] = qww[s, icount] + B[s, j1] * nbasis[i] * d2mbasis[j]
                     end
                 end
             end
