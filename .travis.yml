@@ -1,0 +1,15 @@
+language: julia
+
+os:
+  - linux
+  - osx
+
+branches:
+  only:
+  - master
+  
+julia:
+  - 0.6
+
+notifications:
+  email: false
