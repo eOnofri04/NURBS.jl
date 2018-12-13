@@ -1,4 +1,4 @@
-export bspline, bsplineu, dbspline, dbsplineu
+export bspline, bsplineu, dbspline, dbsplineu, matpbspl, nmatrix
 
 
 """
@@ -83,7 +83,7 @@ Generate a B-spline curve using an open uniform knot vector.
 """
 
 function bspline(npts::Int64, k::Int64, p1::Int64, b::Array{Float64})::Array{Float64}
-	[...]
+	
 end
 
 
@@ -97,7 +97,7 @@ Generate a B-spline curve using a periodic uniform knot vector.
 """
 
 function bsplineu(npts::Int64, k::Int64, p1::Int64, b::Array{Float64})::Array{Float64}
-	[...]
+	
 end
 
 
@@ -111,7 +111,7 @@ Generate a B-spline curve and its derivatives using an open uniform knot vector.
 """
 
 function dbspline(npts::Int64, k::Int64, p1::Int64, b::Array{Float64})::tuple{Array{Float64}, Array{Float64}, Array{Float64}}
-	[...]
+	
 end
 
 
@@ -125,7 +125,7 @@ Generate a B-spline curve and its derivatives using an open uniform knot vector 
 """
 
 function dbsplineu(npts::Int64, k::Int64, p1::Int64, b::Array{Float64})::tuple{Array{Float64}, Array{Float64}, Array{Float64}}
-	[...]
+	
 end
 
 

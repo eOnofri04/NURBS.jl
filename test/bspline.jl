@@ -9,8 +9,8 @@ using Base.Test
 	
         res = [4.0 3.66667 2.0 0.333333 0.0 0.333333 1.66667 2.33333 3.66667; 2.0 3.66667 4.0 3.66667 2.0 0.333333 0.0 0.0 0.333333; 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0]
 
-        @test typeof(matpbspl(4, 9, 2,vector)) == Array{Float64,2}
-        @test isapprox(matpbspl(4, 9, 2,vector), res; atol=1e-4)
+        @test typeof(matpbspl(4, 9, 200,vector)) == Array{Float64,2}
+        @test isapprox(matpbspl(4, 9, 1,vector), res; atol=1e-3)
         end
     
     @testset "B-spline periodic basis matrix" begin
