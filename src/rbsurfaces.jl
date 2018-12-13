@@ -53,7 +53,7 @@ julia>
 _By Paolo Macciacchera, Elia Onofri_
 """
 
-function rbspsurf(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Array{Float64}
+function rbspsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Array{Float64,2}
     
     nplusc = npts + ordx
     mplusc = mpts + ordy
@@ -61,7 +61,7 @@ function rbspsurf(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpts
     y = zeros(mplusc)
     nbasis = zeros(1, npts)
     mbasis = zeros(1, mpts)
-    q = zeros(p1 * p2, 3)
+    q = zeros(3, p1 * p2)
     
     #generate the open uniform knot vectors
     x = knot(npts, ordx)
@@ -81,8 +81,8 @@ function rbspsurf(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpts
                 for j = 1 : mpts
                     for s = 1 : 3
                         j1 = mpts * (i - 1) + j
-                        qtemp = (B[j1, 4] * B[j1, s] * nbasis[i] * mbasis[j]) / sum
-                        q[icount, s] = q[icount, s] + qtemp
+                        qtemp = (B[4, j1] * B[s, j1] * nbasis[i] * mbasis[j]) / sum
+                        q[s, icount] = q[s, icount] + qtemp
                     end
                 end
             end
@@ -127,12 +127,12 @@ julia>
 _By Paolo Macciacchera, Elia Onofri_
 """
 
-function sumrbas(B::Array{Float64}, nbasis::Array{Float64}, mbasis::Array{Float64}, npts::Int64, mpts::Int64)::Float64
+function sumrbas(B::Array{Float64,2}, nbasis::Array{Float64}, mbasis::Array{Float64}, npts::Int64, mpts::Int64)::Float64
     sum = 0
     for i = 1 : npts
         for j = 1 : mpts
             j1 = mpts * (i - 1) + j
-            sum = sum + B[j1, n] * nbasis[i] * mbasis[j]
+            sum = sum + B[4, j1] * nbasis[i] * mbasis[j]
         end
     end
     return(sum)

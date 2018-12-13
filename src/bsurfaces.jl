@@ -37,7 +37,7 @@ julia>
 _By Paolo Macciacchera, Elia Onofri_
 """
 
-function bsplsurf(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Array{Float64}
+function bsplsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Array{Float64,2}
     
     nplusc = npts + ordx
     mplusc = mpts + ordy
@@ -111,7 +111,7 @@ julia>
 _By Paolo Macciacchera, Elia Onofri_
 """
 
-function bsplsurfu(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Array{Float64}
+function bsplsurfu(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Array{Float64,2}
     
     nplusc = npts + ordx
     mplusc = mpts + ordy
@@ -186,7 +186,7 @@ julia>
 _By Paolo Macciacchera, Elia Onofri_
 """
 
-function dbsurf(B::Array{Float64}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Tuple{Array{Float64}, Array{Float64}, Array{Float64}, Array{Float64}, Array{Float64}, Array{Float64}}
+function dbsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Tuple{Array{Float64,2}, Array{Float64,2}, Array{Float64,2}, Array{Float64,2}, Array{Float64,2}, Array{Float64,2}}
     nplusc = npts + ordx
     mplusc = mpts + ordy
     x = zeros(nplusc)
