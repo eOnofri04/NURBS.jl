@@ -10,7 +10,8 @@ Call: basis, knot, sumrbas
 """
 
 function frbsurf(b::Array{Float64}, k::Int64, l::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64, p_itest, ibnum::Int64, bold::Array{Float64}, niku::Array{Float64}, mjlw::Array{Float64}, rsumij::Array{Float64}, savrsumij::Array{Float64})::Array{Float64}
-	[...]
+	#[...]
+	return [0.0 0.0]
 end
 
 #-----------------------------------------------------------------------
