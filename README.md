@@ -1,4 +1,7 @@
 # NURBS.jl
+[![Build Status](https://travis-ci.org/eOnofri04/NURBS.jl.svg?branch=master)](https://travis-ci.org/eOnofri04/NURBS.jl)
+
+
 This library, developed during the course of (**IN480** - _Parallel and Distributed Computing_ - 2018/19) has the purpose to project and encode the base elements of **_Non Uniform Rational B_Spline_** theory.
 
 In a proper manner, this should be the starting point toward a future collaboration with a larger project wich is **LAR** - [_Linear Algebraic Representation_](https://github.com/cvdlab/LinearAlgebraicRepresentation.jl).
