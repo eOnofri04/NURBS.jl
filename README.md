@@ -1,5 +1,6 @@
 # NURBS.jl
 [![Build Status](https://travis-ci.org/eOnofri04/NURBS.jl.svg?branch=master)](https://travis-ci.org/eOnofri04/NURBS.jl)
+[![Coverage Status](https://coveralls.io/repos/github/eOnofri04/NURBS.jl/badge.svg?branch=master)](https://coveralls.io/github/eOnofri04/NURBS.jl?branch=master)
 
 
 This library, developed during the course of (**IN480** - _Parallel and Distributed Computing_ - 2018/19) has the purpose to project and encode the base elements of **_Non Uniform Rational B_Spline_** theory.
