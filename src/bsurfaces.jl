@@ -127,8 +127,8 @@ function bsplsurfu(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, m
    
     icount = 0
     #calculate the points on the B-spline surface
-    stepu = (npts - k + 1) / (p1 - 1)
-    stepw = (mpts - k + 1) / (p2 - 1)
+    stepu = (npts - ordx + 1) / (p1 - 1)
+    stepw = (mpts - ordy + 1) / (p2 - 1)
     for u = ordx-1 : stepu : npts
         nbasis = basis(ordx, u, npts, x)
         for w = ordy-1 : stepw : mpts
@@ -212,9 +212,9 @@ function dbsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mpts
     stepu = x[nplusc] / (p1 - 1)
     stepw = y[mplusc] / (p2 - 1)
     for u = 0 : stepu : x[nplusc]
-        nbasis, d1nbasis, d2nbasis = dbasis(k, u, npts, x)
+        nbasis, d1nbasis, d2nbasis = dbasis(ordx, u, npts, x)
         for w = 0 : stepw : y[mplusc]
-            mbasis, d1mbasis, d2mbasis = dbasis(l, w, mpts, y)
+            mbasis, d1mbasis, d2mbasis = dbasis(ordy, w, mpts, y)
             icount = icount + 1
             for i = 1 : npts
                 for j = 1 : mpts                    
