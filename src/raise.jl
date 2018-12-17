@@ -1,6 +1,6 @@
 export raise23, raise45
 """
-raise23(b, x, npts)
+raise23(b[], x[], npts)
 
 Subroutine that increases a second-order B-spline curve to a third-order B-spline curve.
 Returns the new control polygon vertices array and the number of its points.
@@ -92,7 +92,7 @@ end
 
 """
 
-raise45(b, x, npts)
+raise45(b[], x[], npts)
 
 Subroutine that increases a cubic B-spline curve to a quartic B-spline curve.
 Returns the new control polygon vertices array and the number of its points.
@@ -237,6 +237,6 @@ function raise45(b::Array{Float64}, x::Array{Float64}, npts::Int64)::Tuple{Array
     
     bstar = reshape(bstar,3,:)  #transforms 1-dimensional bstar array in a 3 x mpts array 
     
-    return bstar, mpts
+    return (bstar, mpts)
     
 end
