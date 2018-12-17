@@ -99,7 +99,7 @@ end
 
 
 """
-UNTESTED::knotc(npts, ord, b)
+knotc(npts, ord, b)
 
 Generate a nonuniform open knot vector proportional to the chord lengths between defining polygon vertices.
 
@@ -107,46 +107,53 @@ Generate a nonuniform open knot vector proportional to the chord lengths between
 
 - `npts::Int64`: the number of the contol polygon vertices.
 - `ord::Int64`: order of the basis function.
-- `b::Array{Float64}`: array containing the contol polygon vertices.
+- `b::Array{Float64}`: 2-dimensional array containing the contol polygon vertices, every column represents a point.
 
 ---
 
 # Examples
-```jldoctest
-julia> 
-```
 
 ```jldoctest
-julia> 
-```
+julia> b = [0. 2 4 6 8; 0 6 3 6 6; 0 0 0 0 0]
+3×5 Array{Float64,2}:
+ 0.0  2.0  4.0  6.0  8.0
+ 0.0  6.0  3.0  6.0  6.0
+ 0.0  0.0  0.0  0.0  0.0
 
-```jldoctest
-julia> 
+julia> knotc(5, 3, b)
+8-element Array{Float64,1}:
+ 0.0    
+ 0.0    
+ 0.0    
+ 1.45338
+ 2.38171
+ 3.0    
+ 3.0    
+ 3.0    
 ```
 
 ---
 _Giuseppe Santorelli_
 """
 
-function knotc(npts::Int64, ord::Int64, b::Array{Float64})::Array{Float64}
+function knotc(npts::Int64, ord::Int64, b::Array{Float64,2})::Array{Float64}
     
     @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
     @assert npts >= ord ("ERROR: ord > npts")
 
-    chord::Array{Float64} = Array{Float64}(31)
     m::Int64 = npts + ord
-    n::Int64 = npts - 1
     x::Array{Float64} = Array{Float64}(m)
-        
+    chord::Array{Float64} = Array{Float64}(npts - 1)
+    
     maxchord = 0
     icount = 0
     
     # determine chord distance between defining polygon vertices and their sum
-    for i = 4 : 3 : 3*npts
+    for i = 2 : npts
         icount = icount + 1
-        xchord = b[i] - b[i - 3]
-        ychord = b[i + 1] - b[i - 2]
-        zchord = b[i + 2] - b[i - 1]
+        xchord = b[1, i] - b[1, i - 1]
+        ychord = b[2, i] - b[2, i - 1]
+        zchord = b[3, i] - b[3, i - 1]
         chord[icount] = sqrt(xchord * xchord + ychord * ychord + zchord * zchord)
         maxchord = maxchord + chord[icount]
     end
@@ -157,13 +164,9 @@ function knotc(npts::Int64, ord::Int64, b::Array{Float64})::Array{Float64}
     end
     
     # generate the internal knot values
+    csum = 0
     for i = 1 : npts - ord
-        csum = 0
-        
-        for j = 1 : i
-            csum = csum + chord[j]
-        end
-        
+        csum = csum + chord[i]
         numerator = i / (npts - ord + 1) * chord[i + 1] + csum
         x[ord + i] = (numerator / maxchord) * (npts - ord + 1)
     end
@@ -176,6 +179,7 @@ function knotc(npts::Int64, ord::Int64, b::Array{Float64})::Array{Float64}
     return x
     
 end
+
 
 
 #--------------------------------------------------------------------------------------------------------------------------------
