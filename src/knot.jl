@@ -113,8 +113,6 @@ Generate a nonuniform open knot vector proportional to the chord lengths between
 
 # Examples
 
-- Example 3.5 pag. 67
-
 ```jldoctest
 julia> b = [0. 2 4 6 8; 0 6 3 6 6; 0 0 0 0 0]
 3×5 Array{Float64,2}:
@@ -122,7 +120,7 @@ julia> b = [0. 2 4 6 8; 0 6 3 6 6; 0 0 0 0 0]
  0.0  6.0  3.0  6.0  6.0
  0.0  0.0  0.0  0.0  0.0
 
-julia> knotc(5,3,b)
+julia> knotc(5, 3, b)
 8-element Array{Float64,1}:
  0.0    
  0.0    
@@ -138,7 +136,7 @@ julia> knotc(5,3,b)
 _Giuseppe Santorelli_
 """
 
-function knotc(npts::Int64,ord::Int64,b::Array{Float64,2})::Array{Float64}
+function knotc(npts::Int64, ord::Int64, b::Array{Float64,2})::Array{Float64}
     
     @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
     @assert npts >= ord ("ERROR: ord > npts")
@@ -153,9 +151,9 @@ function knotc(npts::Int64,ord::Int64,b::Array{Float64,2})::Array{Float64}
     # determine chord distance between defining polygon vertices and their sum
     for i = 2 : npts
         icount = icount + 1
-        xchord = b[1,i] - b[1,i - 1]
-        ychord = b[2,i] - b[2,i - 1]
-        zchord = b[3,i] - b[3,i - 1]
+        xchord = b[1, i] - b[1, i - 1]
+        ychord = b[2, i] - b[2, i - 1]
+        zchord = b[3, i] - b[3, i - 1]
         chord[icount] = sqrt(xchord * xchord + ychord * ychord + zchord * zchord)
         maxchord = maxchord + chord[icount]
     end

@@ -1,45 +1,47 @@
+export bspline, bsplineu, dbspline, dbsplineu
+
 """
-bspline(npts,ord,p1,b)
+bspline(npts, ord, p1, b)
 
 # Arguments
 
 - `npts::Int64` : the number of the contol polygon vertices.
 - `ord::Int64` : order of the bspline basis function.
-- `p1::Int64` : number of the points to be calculated on the curve
-- `b::Array{Float64}` : Array containing the control polygon vertices
+- `p1::Int64` : number of the points to be calculated on the curve.
+- `b::Array{Float64}` : Array containing the control polygon vertices.
 
 """
 
 
-function bspline(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64})::Array{Float64}
+function bspline(npts::Int64, ord::Int64, p1::Int64, b::Array{Float64})::Array{Float64}
     
     @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
     @assert npts >= ord ("ERROR: ord > npts")
 
     m::Int64 = npts + ord
-    P::Array{Float64} = zeros(3*p1)
+    P::Array{Float64} = zeros(3 * p1)
     
-    x::Array{Float64} = knot(npts,ord)
+    x::Array{Float64} = knot(npts, ord)
     
     icount::Int64 = 0
     t::Float64 = 0.0
     
-    step::Float64 = x[m] / (p1-1)
+    step::Float64 = x[m] / (p1 - 1)
     
     for i1 = 1 : p1
         if x[m] - t < 5e-6
             t = x[m]
         end
         
-        nbasis::Array{Float64} = basis(ord,t,npts,x)
+        nbasis::Array{Float64} = basis(ord, t, npts, x)
         
         for j = 1 : 3
             jcount = j
-            P[icount+j] = 0
+            P[icount + j] = 0
             for i = 1 : npts
                 temp = nbasis[i] * b[jcount]
-                P[icount+j] = P[icount+j] + temp
-                jcount = jcount+3
+                P[icount + j] = P[icount + j] + temp
+                jcount = jcount + 3
             end
         end
         
@@ -61,28 +63,28 @@ end
 
 
 """
-bsplineu(npts,ord,p1,b)
+bsplineu(npts, ord, p1, b)
 
 # Arguments
 
 - `npts::Int64` : the number of the contol polygon vertices.
 - `ord::Int64` : order of the bspline basis function.
-- `p1::Int64` : number of the points to be calculated on the curve
-- `b::Array{Float64}` : Array containing the control polygon vertices
+- `p1::Int64` : number of the points to be calculated on the curve.
+- `b::Array{Float64}` : Array containing the control polygon vertices.
 
 """
 
-function bsplineu(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64})::Array{Float64}
+function bsplineu(npts::Int64, ord::Int64, p1::Int64, b::Array{Float64})::Array{Float64}
     
     @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
     @assert npts >= ord ("ERROR: ord > npts")
 
     m::Int64 = npts + ord
-    P::Array{Float64} = zeros(3*p1)
+    P::Array{Float64} = zeros(3 * p1)
     x::Array{Float64} = zeros(m)
     nbasis::Array{Float64} = zeros(npts) 
         
-    x = knotu(npts,ord)
+    x = knotu(npts, ord)
     
     icount::Int64 = 0
     t::Float64 = ord - 1
@@ -94,7 +96,7 @@ function bsplineu(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64})::Array{Flo
             t = npts
         end
         
-        nbasis = basis(ord,t,npts,x)
+        nbasis = basis(ord, t, npts, x)
         
         for j = 1 : 3
             jcount = j
@@ -200,33 +202,33 @@ Calculate parameter values based on chord distances.
 
 
 """
-dbspline(npts,ord,p1,b)
+dbspline(npts, ord, p1, b)
 
 # Arguments
 
 - `npts::Int64` : the number of the contol polygon vertices.
 - `ord::Int64` : order of the bspline basis function.
-- `p1::Int64` : number of the points to be calculated on the curve
-- `b::Array{Float64}` : Array containing the control polygon vertices
+- `p1::Int64` : number of the points to be calculated on the curve.
+- `b::Array{Float64}` : Array containing the control polygon vertices.
 
 """
 
-function dbspline(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64})::Tuple{Array{Float64},Array{Float64},Array{Float64}}
+function dbspline(npts::Int64, ord::Int64, p1::Int64, b::Array{Float64})::Tuple{Array{Float64}, Array{Float64}, Array{Float64}}
     
     @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
     @assert npts >= ord ("ERROR: ord > npts")
 
     m = npts + ord
 
-    P::Array{Float64} = zeros(3*p1)
-    D1::Array{Float64} = zeros(3*p1)
-    D2::Array{Float64} = zeros(3*p1)
+    P::Array{Float64} = zeros(3 * p1)
+    D1::Array{Float64} = zeros(3 * p1)
+    D2::Array{Float64} = zeros(3 * p1)
     x::Array{Float6464} = zeros(m)
     nbasis::Array{Float64} = zeros(npts)
     d1nbasis::Array{Float64} = zeros(npts)
     d2nbasis::Array{Float64} = zeros(npts)
     
-    x = knot(npts,ord)
+    x = knot(npts, ord)
     
     icount::Int64 = 0
     t::Float64 = 0.0
@@ -237,7 +239,7 @@ function dbspline(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64})::Tuple{Arr
             t = x[nplusc]
         end
         
-        nbasis, d1nbasis, d2nbasis = dbasis(ord,t,npts,x)
+        nbasis, d1nbasis, d2nbasis = dbasis(ord, t, npts, x)
         
         for j = 0 : 3
             jcount = j
@@ -263,33 +265,33 @@ end
 
 
 """
-dbspline(npts,ord,p1,b)
+	dbsplineu(npts, ord, p1, b)
 
 # Arguments
 
 - `npts::Int64` : the number of the contol polygon vertices.
 - `ord::Int64` : order of the bspline basis function.
-- `p1::Int64` : number of the points to be calculated on the curve
-- `b::Array{Float64}` : Array containing the control polygon vertices
+- `p1::Int64` : number of the points to be calculated on the curve.
+- `b::Array{Float64}` : Array containing the control polygon vertices.
 
 """
 
-function dbsplineu(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64})::Tuple{Array{Float64},Array{Float64},Array{Float64}}
+function dbsplineu(npts::Int64, ord::Int64, p1::Int64, b::Array{Float64})::Tuple{Array{Float64}, Array{Float64}, Array{Float64}}
     
     @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
     @assert npts >= ord ("ERROR: ord > npts")
 
     m::Int64 = npts + ord
 
-    P::Array{Float64} = zeros(3*p1)
-    D1::Array{Float64} = zeros(3*p1)
-    D2::Array{Float64} = zeros(3*p1)
+    P::Array{Float64} = zeros(3 * p1)
+    D1::Array{Float64} = zeros(3 * p1)
+    D2::Array{Float64} = zeros(3 * p1)
     x::Array{Int64} = zeros(m)
     nbasis::Array{Float64} = zeros(npts)
     d1nbasis::Array{Float64} = zeros(npts)
     d2nbasis::Array{Float64} = zeros(npts)
         
-    x = knotu(npts,ord)
+    x = knotu(npts, ord)
     
     icount::Int64 = 0
     t::Float64 = ord - 1
@@ -300,7 +302,7 @@ function dbsplineu(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64})::Tuple{Ar
             t = npts
         end
         
-        nbasis, d1nbasis, d2nbasis = dbasisu(ord,t,npts,x)
+        nbasis, d1nbasis, d2nbasis = dbasisu(ord, t, npts, x)
         
         for j = 0 : 3
             jcount = j
