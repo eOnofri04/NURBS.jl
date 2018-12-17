@@ -108,7 +108,6 @@ julia>
 _By Giuseppe Santorelli, Elia Onofri_
 """
 
-
 function bspline(npts::Int64, ord::Int64, p1::Int64, b::Array{Float64})::Array{Float64}
     
     @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
@@ -224,7 +223,6 @@ function bsplineu(npts::Int64, ord::Int64, p1::Int64, b::Array{Float64})::Array{
     end
     
     return P
-    
 end
 
 
@@ -259,9 +257,7 @@ julia>
 julia> 
 
 ```
-
 ---
-
 _By Giuseppe Santorelli, Elia Onofri_
 """
 
@@ -308,8 +304,7 @@ function dbspline(npts::Int64, ord::Int64, p1::Int64, b::Array{Float64})::Tuple{
         t = t + step
     end
     
-    return P, D1, D2
-    
+    return (P, D1, D2)
 end
 
 
@@ -344,9 +339,7 @@ julia>
 julia> 
 
 ```
-
 ---
-
 _By Giuseppe Santorelli, Elia Onofri_
 """
 
@@ -393,7 +386,7 @@ function dbsplineu(npts::Int64, ord::Int64, p1::Int64, b::Array{Float64})::Tuple
         t = t + step
     end
     
-    return P, D1, D2
+    return (P, D1, D2)
     
 end
 
