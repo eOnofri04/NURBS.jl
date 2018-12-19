@@ -1,3 +1,5 @@
+export raise23, raise45
+
 """
 
 raise23(b,x,npts)
@@ -16,7 +18,7 @@ Returns the new control polygon vertices array and the number of its points.
 - Example 3.10 pag 98
 
 ```jldoctest
->julia x = knot(4,2)
+julia> x = knot(4,2)
 6-element Array{Float64,1}:
  0.0
  0.0
@@ -25,19 +27,19 @@ Returns the new control polygon vertices array and the number of its points.
  3.0
  3.0
 
->julia b = [1. 2 3 4;1 2 2 1;1 1 1 1]
+julia> b = [1. 2 3 4;1 2 2 1;1 1 1 1]
 3×4 Array{Float64,2}:
  1.0  2.0  3.0  4.0
  1.0  2.0  2.0  1.0
  1.0  1.0  1.0  1.0
 
->julia raise23(b,x,4)[1]
+julia> raise23(b,x,4)[1]
 3×7 Array{Float64,2}:
  1.0  1.5  2.0  2.5  3.0  3.5  4.0
  1.0  1.5  2.0  2.0  2.0  1.5  1.0
  1.0  1.0  1.0  1.0  1.0  1.0  1.0
 
->julia raise23(b,x,4)[2]
+julia> raise23(b,x,4)[2]
  7
 ```
 """
@@ -108,7 +110,7 @@ Returns the new control polygon vertices array and the number of its points.
 
 - Example 3.11 pag 100 
 ```jldoctest
->julia x = knot(4,4)
+julia> x = knot(4,4)
 8-element Array{Float64,1}:
  0.0
  0.0
@@ -119,13 +121,13 @@ Returns the new control polygon vertices array and the number of its points.
  1.0
  1.0
 
->julia b = [1. 2 3 4 ; 1 2 2 1 ; 1 1 1 1]
+julia> b = [1. 2 3 4 ; 1 2 2 1 ; 1 1 1 1]
 3×4 Array{Float64,2}:
  1.0  2.0  3.0  4.0
  1.0  2.0  2.0  1.0
  1.0  1.0  1.0  1.0
 
->julia raise45(b,x,4)[1]
+julia> raise45(b,x,4)[1]
 3×5 Array{Float64,2}:
  1.0  1.75  2.5  3.25  4.0
  1.0  1.75  2.0  1.75  1.0
@@ -133,7 +135,7 @@ Returns the new control polygon vertices array and the number of its points.
 ```
 - Example 3.12 pag 100
 ```jldoctest
->julia k = knot(7,4)
+julia> k = knot(7,4)
 11-element Array{Float64,1}:
  0.0
  0.0
@@ -147,13 +149,13 @@ Returns the new control polygon vertices array and the number of its points.
  4.0
  4.0
 
->julia b = [1. 2 3 4 5 6 7; 1 2 2 1 0 0 1; 1 1 1 1 1 1 1]
+julia> b = [1. 2 3 4 5 6 7; 1 2 2 1 0 0 1; 1 1 1 1 1 1 1]
 3×7 Array{Float64,2}:
  1.0  2.0  3.0  4.0  5.0  6.0  7.0
  1.0  2.0  2.0  1.0  0.0  0.0  1.0
  1.0  1.0  1.0  1.0  1.0  1.0  1.0
 
->julia raise45(b,k,7)[1] #the result in position (2,8) is 2/24 and it is correct. On the book it is 20/24 (WRONG!)
+julia> raise45(b,k,7)[1] #the result in position (2,8) is 2/24 and it is correct. On the book it is 20/24 (WRONG!)
 3×11 Array{Float64,2}:
  1.0  1.75  2.25  2.95833  3.5  4.0  4.5  5.04167    5.75  6.25  7.0
  1.0  1.75  2.0   1.91667  1.5  1.0  0.5  0.0833333  0.0   0.25  1.0
