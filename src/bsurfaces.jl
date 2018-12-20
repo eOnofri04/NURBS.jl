@@ -37,7 +37,7 @@ julia>
 _By Paolo Macciacchera, Elia Onofri_
 """
 
-function bsplsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Array{Float64,2}
+function bsplsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Tuple{Array{Float64, 2}, Array{Array{Int64, 1}, 1}, Array{Array{Int64, 1}, 1}}
     
     nplusc = npts + ordx
     mplusc = mpts + ordy
@@ -56,9 +56,9 @@ function bsplsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mp
     stepu = x[nplusc] / (p1 - 1)
     stepw = y[mplusc] / (p2 - 1)
     for u = 0 : stepu : x[nplusc]
-        nbasis = basis(ordx, u, npts, x)
+        nbasis = basis(npts, ordx, u, x)
         for w = 0 : stepw : y[mplusc]
-            mbasis = basis(ordy, w, mpts, y)
+            mbasis = basis(mpts, ordy, w, y)
             icount = icount + 1
             for i = 1 : npts
                 for j = 1 : mpts
@@ -70,7 +70,36 @@ function bsplsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mp
             end
         end
     end
-    return(q)
+
+    EV = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
+
+    for i = 1 : p1 * p2 - 1
+        C = Array{Int64}(2)
+        C[1] = i
+        C[2] = i+1
+        push!(EV,C) 
+    end
+    
+    for i = 1 : p2 * (p1 - 1)
+        C = Array{Int64}(2)
+        C[1] = i
+        C[2] = i+p2
+        push!(EV,C) 
+    end
+
+    FV = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
+
+    for j = 0 : p1 - 2
+        for i = 1 : p2 - 1
+            C = Array{Int64}(4)
+            C[1] = j * p2 + i
+            C[2] = j * p2 + i + 1
+            C[3] = (j + 1) * p2 + i
+            C[4] = (j + 1) * p2 + i + 1
+            push!(FV,C) 
+        end
+    end    
+    return(q, EV, FV)
 end
 
 #-----------------------------------------------------------------------
@@ -111,7 +140,7 @@ julia>
 _By Paolo Macciacchera, Elia Onofri_
 """
 
-function bsplsurfu(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Array{Float64,2}
+function bsplsurfu(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Tuple{Array{Float64, 2}, Array{Array{Int64, 1}, 1}, Array{Array{Int64, 1}, 1}}
     
     nplusc = npts + ordx
     mplusc = mpts + ordy
@@ -130,9 +159,9 @@ function bsplsurfu(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, m
     stepu = (npts - ordx + 1) / (p1 - 1)
     stepw = (mpts - ordy + 1) / (p2 - 1)
     for u = ordx-1 : stepu : npts
-        nbasis = basis(ordx, u, npts, x)
+        nbasis = basis(npts, ordx, u, x)
         for w = ordy-1 : stepw : mpts
-            mbasis = basis(ordy, w, mpts, y)
+            mbasis = basis(mpts, ordy, w, y)
             icount = icount + 1
             for i = 1 : npts
                 for j = 1 : mpts
@@ -144,7 +173,36 @@ function bsplsurfu(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, m
             end
         end
     end
-    return(q)
+
+    EV = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
+
+    for i = 1 : p1 * p2 - 1
+        C = Array{Int64}(2)
+        C[1] = i
+        C[2] = i+1
+        push!(EV,C) 
+    end
+    
+    for i = 1 : p2 * (p1 - 1)
+        C = Array{Int64}(2)
+        C[1] = i
+        C[2] = i+p2
+        push!(EV,C) 
+    end
+
+    FV = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
+
+    for j = 0 : p1 - 2
+        for i = 1 : p2 - 1
+            C = Array{Int64}(4)
+            C[1] = j * p2 + i
+            C[2] = j * p2 + i + 1
+            C[3] = (j + 1) * p2 + i
+            C[4] = (j + 1) * p2 + i + 1
+            push!(FV,C) 
+        end
+    end    
+    return(q, EV, FV)
 end
 
 #-----------------------------------------------------------------------
@@ -186,7 +244,7 @@ julia>
 _By Paolo Macciacchera, Elia Onofri_
 """
 
-function dbsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Tuple{Array{Float64,2}, Array{Float64,2}, Array{Float64,2}, Array{Float64,2}, Array{Float64,2}, Array{Float64,2}}
+function dbsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64)::Tuple{Array{Float64,2}, Array{Float64,2}, Array{Float64,2}, Array{Float64,2}, Array{Float64,2}, Array{Float64,2}, Array{Array{Int64, 1}, 1}, Array{Array{Int64, 1}, 1}}
     nplusc = npts + ordx
     mplusc = mpts + ordy
     x = zeros(nplusc)
@@ -212,9 +270,9 @@ function dbsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mpts
     stepu = x[nplusc] / (p1 - 1)
     stepw = y[mplusc] / (p2 - 1)
     for u = 0 : stepu : x[nplusc]
-        nbasis, d1nbasis, d2nbasis = dbasis(ordx, u, npts, x)
+        nbasis, d1nbasis, d2nbasis = dbasis(npts, ordx, u, x)
         for w = 0 : stepw : y[mplusc]
-            mbasis, d1mbasis, d2mbasis = dbasis(ordy, w, mpts, y)
+            mbasis, d1mbasis, d2mbasis = dbasis(mpts, ordy, w, y)
             icount = icount + 1
             for i = 1 : npts
                 for j = 1 : mpts                    
@@ -231,6 +289,36 @@ function dbsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mpts
             end
         end
     end
-    return(q, qu, qw, quu, quw, qww)
+
+    EV = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
+
+    for i = 1 : p1 * p2 - 1
+        C = Array{Int64}(2)
+        C[1] = i
+        C[2] = i+1
+        push!(EV,C) 
+    end
+    
+    for i = 1 : p2 * (p1 - 1)
+        C = Array{Int64}(2)
+        C[1] = i
+        C[2] = i+p2
+        push!(EV,C) 
+    end
+
+    FV = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
+
+    for j = 0 : p1 - 2
+        for i = 1 : p2 - 1
+            C = Array{Int64}(4)
+            C[1] = j * p2 + i
+            C[2] = j * p2 + i + 1
+            C[3] = (j + 1) * p2 + i
+            C[4] = (j + 1) * p2 + i + 1
+            push!(FV,C) 
+        end
+    end    
+
+    return(q, qu, qw, quu, quw, qww, EV, FV)
 
 end
