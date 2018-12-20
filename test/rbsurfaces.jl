@@ -9,6 +9,6 @@ using Base.Test
 
     @testset "rational B-spline surface using an open uniform knot vector" begin
         @test typeof(rbspsurf(vec,4,4,5,5,100,100)) == Tuple{Array{Float64, 2}, Array{Array{Int64, 1}, 1}, Array{Array{Int64, 1}, 1}}
-        @test isapprox(rbspsurf(vec,4,4,5,5,4,4), res; atol=1e-3)
+        @test isapprox(rbspsurf(vec,4,4,5,5,4,4)[1], res; atol=1e-3)
     end
 end

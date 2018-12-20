@@ -9,7 +9,7 @@ using Base.Test
 
     @testset "B-spline surface using open uniform knot vectors" begin
         @test typeof(bsplsurf(arr,4,4,5,5,100,100)) == Tuple{Array{Float64, 2}, Array{Array{Int64, 1}, 1}, Array{Array{Int64, 1}, 1}}
-        @test isapprox(bsplsurf(arr,4,4,5,5,4,4), res; atol=1e-3)
+        @test isapprox(bsplsurf(arr,4,4,5,5,4,4)[1], res; atol=1e-3)
     end
         
     @testset "B-spline surface and its derivatives using open uniform knot vectors" begin
