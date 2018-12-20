@@ -5,20 +5,17 @@ using Documenter, NURBS
 makedocs(
 	format = :html,
 	sitename = "NonUniformRationalBSplines.jl",
-	assets = ["assets/nurbs.css", "assets/logo.png"],
+	assets = ["assets/nurbs.css", "assets/logo1.png"],
 	pages = [
 		"Home" => "index.md",
-		"L.A.R. Intro" => "lar.md",
-		"Interface" => "interface.md",
-		"Arrangement" => "arrangement.md",
-		"Parametric primitives" => [
-			"Mapper" => "mapper.md",
-			"Assemblies" => "struct.md"
+		"NURBS Intro" => "nurbs.md",
+		"Structure" => [
+			"Bezier Curves" => "bezierC.md",
+			"B-Spline Curves" => "splineC.md",
+			"Rational B-Spline Curves" => "rSplineC.md",
+			"Bezier Surfaces" => "bezierS.md",
+			"B-Spline Surfaces" => "splineS.md",
+			"Rational B-Spline Surfaces" => "rSplineS.md"
 		],
-		"Grid generation" => [
-			"Cuboidal grids" => "largrid.md",
-			"Simplicial grids" => "simplexn.md"
-		],
-		"Domain integration" => "integr.md",
 	]
 )
