@@ -1,4 +1,3 @@
-import knot, knotu, basis, dbasis, dbasisu
 export bspline, bsplineu, dbspline, dbsplineu, matpbspl, nmatrix
 
 """
