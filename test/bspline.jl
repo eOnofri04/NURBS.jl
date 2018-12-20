@@ -1,21 +1,41 @@
 using NURBS
 using Base.Test
 
-@testset "B-spline Building" begin
-        
-    @testset "B-spline curve using matrix methods and a periodic uniform knot vector" begin
-
-        vector = [2.0 4.0 4.0 4.0 2.0 0.0 0.0 0.0 2.0; 0.0 0.0 2.0 4.0 4.0 4.0 2.0 0.0 0.0; 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0]
-	
-        res = [4.0 3.66667 2.0 0.333333 0.0 0.333333 1.66667 2.33333 3.66667; 2.0 3.66667 4.0 3.66667 2.0 0.333333 0.0 0.0 0.333333; 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0]
-
-        @test typeof(matpbspl(4, 9, 200,vector)) == Array{Float64,2}
-        @test isapprox(matpbspl(4, 9, 1,vector), res; atol=1e-3)
-        end
-    
-    @testset "B-spline periodic basis matrix" begin
-        @test typeof(nmatrix(4)) == Tuple{Array{Float64,2}, Float64}
-        @test nmatrix(4) == ([-1.0 3.0 -3.0 1.0; 3.0 -6.0 3.0 0.0; -3.0 0.0 3.0 0.0; 1.0 4.0 1.0 0.0], 0.16666666666666666)
-        @test nmatrix(5) == ([1.0 -4.0 6.0 -4.0 1.0; -4.0 12.0 -12.0 4.0 0.0; 6.0 -6.0 -6.0 6.0 0.0; -4.0 -12.0 12.0 4.0 0.0; 1.0 11.0 11.0 1.0 0.0], 0.041666666666666664)
+@testset "B-Spline curve generator" begin
+   
+    @testset "bspline" begin
+        b = [1. 2 4 3; 1 3 3 1; 0 0 0 0]
+        @test typeof(bspline(4,4,5,b)[1]) == Array{Float64,2}
+        @test typeof(bspline(4,4,5,b)[2]) == Array{Array{Int64,1},1}
+        @test isapprox(bspline(4,4,5,b)[1],[1.0 1.875 2.75 3.25 3.0; 1.0 2.125 2.5 2.125 1.0; 0.0 0.0 0.0 0.0 0.0],atol=1e-5)
     end
-end 
+    
+    @testset "bsplineu" begin
+        b = [0. 3 6 9; 0 10 3 6; 0 0 0 0]
+        @test typeof(bsplineu(4,3,5,b)[1]) == Array{Float64,2}
+        @test typeof(bsplineu(4,3,5,b)[2]) == Array{Array{Int64,1},1}
+        @test isapprox(bsplineu(4,3,5,b)[1],[1.5 3.0 4.5 6.0 7.5; 5.0 7.875 6.5 4.25 4.5; 0.0 0.0 0.0 0.0 0.0],atol=1e-5)
+    end
+    
+    @testset "dbspline" begin
+        b = [1. 2 4 3; 1 3 3 1; 0 0 0 0]
+        @test typeof(dbspline(4,4,5,b)[1]) == Array{Float64,2}
+        @test typeof(dbspline(4,4,5,b)[2]) == Array{Float64,2}
+        @test typeof(dbspline(4,4,5,b)[3]) == Array{Float64,2}
+        @test typeof(dbspline(4,4,5,b)[4]) == Array{Array{Int64,1},1}
+        @test isapprox(dbspline(4,4,5,b)[1],[1.0 1.875 2.75 3.25 3.0; 1.0 2.125 2.5 2.125 1.0; 0.0 0.0 0.0 0.0 0.0],atol=1e-5)
+        @test isapprox(dbspline(4,4,5,b)[2],[3.0 3.75 3.0 0.75 -3.0; 6.0 3.0 0.0 -3.0 -6.0; 0.0 0.0 0.0 0.0 0.0],atol=1e-5)
+        @test isapprox(dbspline(4,4,5,b)[3],[6.0 0.0 -6.0 -12.0 -18.0; -12.0 -12.0 -12.0 -12.0 -12.0; 0.0 0.0 0.0 0.0 0.0],atol=1e-5)
+    end
+    
+    @testset "dbsplineu" begin
+        b = [0. 3 6 9; 0 10 3 6; 0 0 0 0]
+        @test typeof(dbsplineu(4,3,5,b)[1]) == Array{Float64,2}
+        @test typeof(dbsplineu(4,3,5,b)[2]) == Array{Float64,2}
+        @test typeof(dbsplineu(4,3,5,b)[3]) == Array{Float64,2}
+        @test typeof(dbsplineu(4,3,5,b)[4]) == Array{Array{Int64,1},1}
+        @test isapprox(dbsplineu(4,3,5,b)[1],[1.5 3.0 4.5 6.0 7.5; 5.0 7.875 6.5 4.25 4.5; 0.0 0.0 0.0 0.0 0.0],atol=1e-5)
+        @test isapprox(dbsplineu(4,3,5,b)[2],[3.0 3.0 3.0 3.0 3.0; 10.0 1.5 -7.0 -2.0 3.0; 0.0 0.0 0.0 0.0 0.0],atol=1e-5)
+        @test isapprox(dbsplineu(4,3,5,b)[3],[0.0 0.0 0.0 0.0 0.0; -17.0 -17.0 10.0 10.0 10.0; 0.0 0.0 0.0 0.0 0.0],atol=1e-5)
+    end
+end
