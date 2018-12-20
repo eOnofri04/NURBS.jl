@@ -37,7 +37,7 @@ _By Elia Onofri, Giuseppe Santorelli_
 
 function basis(npts::Int64, ord::Int64, t::Float64, x::Array{Float64})::Array{Float64}
    
-    local m::Int64 = npts+ord	    # Dimension of the knot vector
+    local m::Int64 = npts + ord	    # Dimension of the knot vector
     
     local N::Array{Float64} = zeros(m)   # Basis progressive vector
     
@@ -45,7 +45,7 @@ function basis(npts::Int64, ord::Int64, t::Float64, x::Array{Float64})::Array{Fl
     @assert length(x) == m ("ERROR: incompatibile knot vector with given parameters n+1 = $(npts), k = $(ord)")
     
     # Eval N_{i,1} for i = 1:max_B
-    for i = 1 : m-1
+    for i = 1 : m - 1
         if (t >= x[i]) && (t < x[i+1])
             N[i] = 1
         else
@@ -55,7 +55,7 @@ function basis(npts::Int64, ord::Int64, t::Float64, x::Array{Float64})::Array{Fl
     
     # Eval higher basis N_{i,deg} for deg = 2:ord and i = 1:max_B-deg
     for deg = 2 : ord
-        for i = 1 : m-deg
+        for i = 1 : m - deg
             # Eval of the direct dependency
             if N[i] == 0
                 ddep = 0.0
@@ -138,7 +138,7 @@ _By Elia Onofri, Giuseppe Santorelli_
 
 function dbasis(npts::Int64, ord::Int64, t::Float64, x::Array{Float64})::Tuple{Array{Float64}, Array{Float64}, Array{Float64}}
    
-    local m::Int64 = npts+ord			# Dimension of the knot vector
+    local m::Int64 = npts + ord			# Dimension of the knot vector
     
     local N::Array{Float64} = zeros(m)   # Basis progressive vector
     local D1::Array{Float64} = zeros(m)  # First Derivative progressive vector
@@ -148,7 +148,7 @@ function dbasis(npts::Int64, ord::Int64, t::Float64, x::Array{Float64})::Tuple{A
     @assert length(x) == m ("ERROR: incompatibile knot vector with given parameters n+1 = $(npts), k = $(ord)")
     
     # Eval N_{i,1} for i = 1:max_B
-    for i = 1 : m-1
+    for i = 1 : m - 1
         if (t >= x[i]) && (t < x[i+1])
             N[i] = 1
         else
@@ -162,7 +162,7 @@ function dbasis(npts::Int64, ord::Int64, t::Float64, x::Array{Float64})::Tuple{A
     
     # Eval higher basis N_{i,deg} for deg = 2:ord and i = 1:max_B-deg
     for deg = 2 : ord
-        for i = 1 : m-deg
+        for i = 1 : m - deg
             
             # ----Eval of the direct dependency----
             if N[i] == 0
@@ -283,7 +283,6 @@ _By Elia Onofri, Giuseppe Santorelli_
 
 function dbasisu(npts::Int64, ord::Int64, t::Float64, x::Array{Float64})::Tuple{Array{Float64}, Array{Float64}, Array{Float64}}
     local m::Int64 = npts+ord			# Dimension of the knot vector
-    
     local N::Array{Float64} = zeros(m)   # Basis progressive vector
     local D1::Array{Float64} = zeros(m)  # First Derivative progressive vector
     local D2::Array{Float64} = zeros(m)  # Second Derivative progressive vector
