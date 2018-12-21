@@ -4,8 +4,8 @@ using Documenter, NURBS
 
 makedocs(
 	format = :html,
-	sitename = "NonUniformRationalBSplines.jl",
-	assets = ["assets/nurbs.css", "assets/logo1.png"],
+	sitename = "NURBS.jl",
+	assets = ["assets/nurbs.css", "assets/logo.png"],
 	pages = [
 		"Home" => "index.md",
 		"NURBS Intro" => "nurbs.md",
