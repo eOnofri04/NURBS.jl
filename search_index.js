@@ -97,9 +97,9 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "splineC.html#Funzioni-delle-Basi-per-le-B-Spline-1",
+    "location": "splineC.html#B-Spline-Basis-Functions-1",
     "page": "B-Spline Curves",
-    "title": "Funzioni delle Basi per le B-Spline",
+    "title": "B-Spline Basis Functions",
     "category": "section",
     "text": "As the function N_{i,k} is defined by _Cox-de Boor_ formulas in a recursive way, the evaluation of a basis set could be optimized by saving the previous evaluation. The dependency tree is: $     \\begin{matrix}         N_{i, k}\\\n        N_{i, k-1} & N_{i+1, k-1}\\\n        N_{i, k-2} & N_{i+1, k-2} & N_{i+2, k-2}\\\n        \\vdots & \\vdots & \\vdots & \\ddots\\\n        N_{i, 1} & N_{i+1, 1} & N_{i+2, 1} & \\dots & N_{i+k-1, 1}     \\end{matrix}     \\begin{matrix}         N_{i-k+1, k} & \\dots & N_{i-1, k} & N_{i, k} & N_{i+1, k} & \\dots & N_{i+k-1, k}\\\n                    & \\ddots & \\vdots     & \\vdots   & \\vdots     &       &             \\\n                     &       & N_{i-1, 2} & N_{i, 2} & N_{i+1, 2} \\\n                     &       &            & N_{i, 1}      \\end{matrix} $"
 },
