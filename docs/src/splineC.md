@@ -1,5 +1,6 @@
 # B-Spline Curves
 
+
 A B-Spline is the representation of a curve (_i.e_ a function) build from the interpolation of the elements of a normalized base of the analytic functions space.
 
 The interpolation is build between a vector of points (called _knots_) positioned inside a controll polygon (delimited by a family of controll points $B$).
@@ -23,7 +24,8 @@ $$
     \end{cases}
 $$
 
-
+---
+---
 ## B-Spline Properties
 
 The following are properties hold by B-Splines:
@@ -36,9 +38,9 @@ The following are properties hold by B-Splines:
  - A curve could be modified by an affine function $f$ by applying the function to the controll points of the polygon.
  - The curve is located inside the convex hull of the controll polygon.
 
-
-## Knots
 ---
+---
+## Knots
 
 Knots choise is very important.
 
@@ -68,8 +70,9 @@ We have so four classes of knots:
  - **Open Non-Uniform**
  - **Periodic Non-Uniform**
 
-
-## Funzioni delle Basi per le B-Spline
+---
+---
+## B-Spline Basis Functions
 
 As the function `N_{i,k}` is defined by _Cox-de Boor_ formulas in a recursive way, the evaluation of a basis set could be optimized by saving the previous evaluation. The dependency tree is:
 $$
