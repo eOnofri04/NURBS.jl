@@ -61,7 +61,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Bezier Curves",
     "title": "Bezier Curves",
     "category": "section",
-    "text": "Bezier Curves are a special kind of NURBS curves build upon a controll polygon B and a Bernstein basis J_{n,i}.Mathematically, a parametric Bézier curve is defined by P(t) = sum_i=0^n B_iJ_ni(t) quad 0 leq t leq 1 Where the Bernstein Basis is defined as J_n i(t) = binom ni t^i(1-t)^n-i where the convention (0)^0 = 1 and 0! = 1 have been made.In particular J_{n,i} is the i-th base function of order n, while n is also the number of segments of the the controll polygon (number of points minus one)."
+    "text": "Bezier Curves are a special kind of NURBS curves build upon a controll polygon B and a Bernstein basis J_ni.Mathematically, a parametric Bézier curve is defined byP(t) = sum_i=0^n B_iJ_ni(t) quad 0 leq t leq 1Where the Bernstein Basis is defined asJ_n i(t) = binom ni t^i(1-t)^n-iwhere the convention (0)^0 = 1 and 0 = 1 have been made.In particular J_ni is the i-th base function of order n, while n is also the number of segments of the the controll polygon (number of points minus one)."
 },
 
 {
@@ -77,7 +77,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Bezier Curves",
     "title": "Matrix Representation",
     "category": "section",
-    "text": "The equation of a Bézier Curve could also be implemented as a Matrix Multiplication (particulary usefull in GPU computations). P(t) = FG where F = J_n0 dots J_n n	qquad	G^t = B_0 dots B_nMoreover is possible to collect the coefficient of the Basis in a square matrix N \\in \\mathcal M_{n,n}(\\mathbb R) obtaining: P(t) = t^n t^n-1 dots t 1 N G = TNG where ``[N] = \\begin{bmatrix} 	\\binom n0\\binom nn (-1)^n & \\binom n1 \\binom{n-1}{n-1}(-1)^{n-1} & \\dots & \\binom nn \\binom{n-n}{n-n}(-1)^0\\\n	\\binom n0\\binom n{n-1} (-1)^{n-1} & \\binom n1 \\binom{n-1}{n-2}(-1)^{n-2} & \\dots & 0\\\n	\\vdots & \\vdots & \\iddots & \\vdots\\\n	\\binom n0\\binom n1 (-1)^1 & \\binom n1 \\binom{n-1}0(-1)^0 & \\dots & 0\\\n	\\binom n0\\binom n0 (-1)^0 & 0 & \\dots & 0\\\n\\end{bmatrix}``It is also possible to decompose the matrix [N] even further in the product of two matrices: N = CD quad Rightarrow quad P(t) = TCDG where ``[N] = \\begin{bmatrix} 	\\binom nn (-1)^n & \\binom{n-1}{n-1}(-1)^{n-1} & \\dots & \\binom{n-n}{n-n}(-1)^0\\\n	\\binom n{n-1} (-1)^{n-1} & \\binom{n-1}{n-2}(-1)^{n-2} & \\dots & 0\\\n	\\vdots & \\vdots & \\iddots & \\vdots\\\n	\\binom n1 (-1)^1 & \\binom{n-1}0(-1)^0 & \\dots & 0\\\n	\\binom n0 (-1)^0 & 0 & \\dots & 0\\\n\\end{bmatrix}[N] = \\begin{bmatrix} 	\\binom n0 & 0 & \\dots & 0\\\n	0 & \\binom n1 & \\dots & 0\\\n	\\vdots & \\vdots & \\iddots & \\vdots\\\n	0 & 0 & \\dots & \\binom nn\\\n\\end{bmatrix}``"
+    "text": "The equation of a Bézier Curve could also be implemented as a Matrix Multiplication (particulary usefull in GPU computations).P(t) = FGwhereF = J_n0 dots J_n n	qquad	G^t = B_0 dots B_nMoreover is possible to collect the coefficient of the Basis in a square matrix N in mathcal M_nn(mathbb R) obtaining:P(t) = t^n t^n-1 dots t 1 N G = TNGwhereN = beginbmatrix\n	binom n0binom nn (-1)^n  binom n1 binomn-1n-1(-1)^n-1  dots  binom nn binomn-nn-n(-1)^0\n	binom n0binom nn-1 (-1)^n-1  binom n1 binomn-1n-2(-1)^n-2  dots  0\n	vdots  vdots  iddots  vdots\n	binom n0binom n1 (-1)^1  binom n1 binomn-10(-1)^0  dots  0\n	binom n0binom n0 (-1)^0  0  dots  0\nendbmatrixIt is also possible to decompose the matrix N even further in the product of two matrices:N = CD quad Rightarrow quad P(t) = TCDGwhereN = beginbmatrix\n	binom nn (-1)^n  binomn-1n-1(-1)^n-1  dots  binomn-nn-n(-1)^0\n	binom nn-1 (-1)^n-1  binomn-1n-2(-1)^n-2  dots  0\n	vdots  vdots  iddots  vdots\n	binom n1 (-1)^1  binomn-10(-1)^0  dots  0\n	binom n0 (-1)^0  0  dots  0\nendbmatrixN = beginbmatrix\n	binom n0  0  dots  0\n	0  binom n1  dots  0\n	vdots  vdots  iddots  vdots\n	0  0  dots  binom nn\nendbmatrix"
 },
 
 {
@@ -85,7 +85,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Bezier Curves",
     "title": "Bezier Derivatives",
     "category": "section",
-    "text": "The two derivatives could be obtained starting from the original function: P(t) = sum_i=0^n B_iJ_ni(t) P(t) = sum_i=0^n B_iJ_ni(t) where the two derivatives could be obtained with the following formulas: J_ni(t) = frac1-ntt(1-t)J_ni(t) J_ni(t) = frac(i-nt)^2-nt^2-i(1-2t)t^2(1-t)^2 J_ni(t)"
+    "text": "The two derivatives could be obtained starting from the original function:P(t) = sum_i=0^n B_iJ_ni(t)P(t) = sum_i=0^n B_iJ_ni(t)where the two derivatives could be obtained with the following formulas:J_ni(t) = frac1-ntt(1-t)J_ni(t)J_ni(t) = frac(i-nt)^2-nt^2-i(1-2t)t^2(1-t)^2 J_ni(t)"
 },
 
 {
