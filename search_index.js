@@ -61,7 +61,31 @@ var documenterSearchIndex = {"docs": [
     "page": "Bezier Curves",
     "title": "Bezier Curves",
     "category": "section",
-    "text": ""
+    "text": "Bezier Curves are a special kind of NURBS curves build upon a controll polygon B and a Bernstein basis J_{n,i}.Mathematically, a parametric Bézier curve is defined by P(t) = sum_i=0^n B_iJ_ni(t) quad 0 leq t leq 1 Where the Bernstein Basis is defined as J_n i(t) = binom ni t^i(1-t)^n-i where the convention (0)^0 = 1 and 0! = 1 have been made.In particular J_{n,i} is the i-th base function of order n, while n is also the number of segments of the the controll polygon (number of points minus one)."
+},
+
+{
+    "location": "bezierC.html#Bezier-Properties-1",
+    "page": "Bezier Curves",
+    "title": "Bezier Properties",
+    "category": "section",
+    "text": "Whe have a small variety of properties, descending directly from the definition:Base function are often real.\nThe degree of the polynomial curve is one less than the number of point of the controll polygon.\nThe curve generally follows the shape of the control polygon.\nThe edges of the curves are the edges of the control polygon.\nThe curve is located inside the convex hull of the controll polygon.\nThe curve is invariant under Affine transformation."
+},
+
+{
+    "location": "bezierC.html#Matrix-Representation-1",
+    "page": "Bezier Curves",
+    "title": "Matrix Representation",
+    "category": "section",
+    "text": "The equation of a Bézier Curve could also be implemented as a Matrix Multiplication (particulary usefull in GPU computations). P(t) = FG where F = J_n0 dots J_n n	qquad	G^t = B_0 dots B_nMoreover is possible to collect the coefficient of the Basis in a square matrix N \\in \\mathcal M_{n,n}(\\mathbb R) obtaining: P(t) = t^n t^n-1 dots t 1 N G = TNG where ``[N] = \\begin{bmatrix} 	\\binom n0\\binom nn (-1)^n & \\binom n1 \\binom{n-1}{n-1}(-1)^{n-1} & \\dots & \\binom nn \\binom{n-n}{n-n}(-1)^0\\\n	\\binom n0\\binom n{n-1} (-1)^{n-1} & \\binom n1 \\binom{n-1}{n-2}(-1)^{n-2} & \\dots & 0\\\n	\\vdots & \\vdots & \\iddots & \\vdots\\\n	\\binom n0\\binom n1 (-1)^1 & \\binom n1 \\binom{n-1}0(-1)^0 & \\dots & 0\\\n	\\binom n0\\binom n0 (-1)^0 & 0 & \\dots & 0\\\n\\end{bmatrix}``It is also possible to decompose the matrix [N] even further in the product of two matrices: N = CD quad Rightarrow quad P(t) = TCDG where ``[N] = \\begin{bmatrix} 	\\binom nn (-1)^n & \\binom{n-1}{n-1}(-1)^{n-1} & \\dots & \\binom{n-n}{n-n}(-1)^0\\\n	\\binom n{n-1} (-1)^{n-1} & \\binom{n-1}{n-2}(-1)^{n-2} & \\dots & 0\\\n	\\vdots & \\vdots & \\iddots & \\vdots\\\n	\\binom n1 (-1)^1 & \\binom{n-1}0(-1)^0 & \\dots & 0\\\n	\\binom n0 (-1)^0 & 0 & \\dots & 0\\\n\\end{bmatrix}[N] = \\begin{bmatrix} 	\\binom n0 & 0 & \\dots & 0\\\n	0 & \\binom n1 & \\dots & 0\\\n	\\vdots & \\vdots & \\iddots & \\vdots\\\n	0 & 0 & \\dots & \\binom nn\\\n\\end{bmatrix}``"
+},
+
+{
+    "location": "bezierC.html#Bezier-Derivatives-1",
+    "page": "Bezier Curves",
+    "title": "Bezier Derivatives",
+    "category": "section",
+    "text": "The two derivatives could be obtained starting from the original function: P(t) = sum_i=0^n B_iJ_ni(t) P(t) = sum_i=0^n B_iJ_ni(t) where the two derivatives could be obtained with the following formulas: J_ni(t) = frac1-ntt(1-t)J_ni(t) J_ni(t) = frac(i-nt)^2-nt^2-i(1-2t)t^2(1-t)^2 J_ni(t)"
 },
 
 {
@@ -77,7 +101,7 @@ var documenterSearchIndex = {"docs": [
     "page": "B-Spline Curves",
     "title": "B-Spline Curves",
     "category": "section",
-    "text": "A B-Spline is the representation of a curve (_i.e_ a function) build from the interpolation of the elements of a normalized base of the analytic functions space.The interpolation is build between a vector of points (called _knots_) positioned inside a controll polygon (delimited by a family of controll points B).The positioning vector (_i.e._ the parametric funtion) of a B-Spline is defined as follows: $     P(t) = \\sum_{i=1}^{n+1}B_iN_{i,k}(t), \\qquad 2 \\leq k \\leq n+1 $ where:B_i is the i-th point between the n+1 controll points (of the polygon)\nN_{i,k} is the function of the i-th basis of the B-Spline normalized with order k (_i.e_ degree k-1).A method to evaluate N_{i, k} is given by _Cox-de Boor_ recursive form. $     N_{i,k}(t) = \\frac{(t-x_i)N_{i,k-1}(t)}{x_{i+k-1}-x_i} + \\frac{(x_{i+k}-t)N_{i+1,k-1}(t)}{x_{i+k}-x_{i+1}},     \\qquad \\mbox{con} \\quad     N_{i,1}(t) =      \\begin{cases}         1  &  \\mbox{ if } x_i < t < x_{i+1}\\\n        0  &  \\mbox{ otherwise}     \\end{cases} $"
+    "text": "A B-Spline is the representation of a curve (i.e a function) build from the interpolation of the elements of a normalized base of the analytic functions space.The interpolation is build between a vector of points (called knots) positioned inside a controll polygon (delimited by a family of controll points B).The positioning vector (i.e. the parametric funtion) of a B-Spline is defined as follows: P(t) = sum_i=1^n+1B_iN_ik(t) qquad 2 leq k leq n+1 where:B_i is the i-th point between the n+1 controll points (of the polygon)\nN_{i,k} is the function of the i-th basis of the B-Spline normalized with order k (i.e degree k-1).A method to evaluate N_{i, k} is given by +Cox-de Boor* recursive form. ``     N_{i,k}(t) = \\frac{(t-x_i)N_{i,k-1}(t)}{x_{i+k-1}-x_i} + \\frac{(x_{i+k}-t)N_{i+1,k-1}(t)}{x_{i+k}-x_{i+1}},     \\qquad \\mbox{con} \\quad     N_{i,1}(t) =      \\begin{cases}         1  &  \\mbox{ if } x_i < t < x_{i+1}\\\n        0  &  \\mbox{ otherwise}     \\end{cases} ``"
 },
 
 {
@@ -85,7 +109,7 @@ var documenterSearchIndex = {"docs": [
     "page": "B-Spline Curves",
     "title": "B-Spline Properties",
     "category": "section",
-    "text": "The following are properties hold by B-Splines:The sum of the basis function in every point t is equal to one:$      \\sum_{i=1}^{n+1} N_{i,k} = 1  $Basis function are non-negative for each and every point t\nThe order of a curve is at most equals to the number n+1 of controll points (so the maximum degree is n).\nA curve could be modified by an affine function f by applying the function to the controll points of the polygon.\nThe curve is located inside the convex hull of the controll polygon."
+    "text": "The following are properties hold by B-Splines:The sum of the basis function in every point t is equal to one:sum_i=1^n+1 N_ik = 1Basis function are non-negative for each and every point t\nThe order of a curve is at most equals to the number n+1 of controll points (so the maximum degree is n).\nA curve could be modified by an affine function f by applying the function to the controll points of the polygon.\nThe curve is located inside the convex hull of the controll polygon."
 },
 
 {
@@ -93,7 +117,7 @@ var documenterSearchIndex = {"docs": [
     "page": "B-Spline Curves",
     "title": "Knots",
     "category": "section",
-    "text": "Knots choise is very important.There is an important relation between the number of controll polygon points m, the order of the function k and the number of knots m, wich is: $     m = k + n +1 $We have two kind of knots:periodics: The first and the last value has k multiplicity;\nopen: Each value has the same multiplicity.wich could be build in two manners:uniform: Knots are evenly spaced;\nnon uniform: there are different space between knots.We have so four classes of knots:Uniform Periodics: Wich are linked to a base d $     N_{i,k}(t) = N_{i-1,k}(t-1) = N_{i+1,k}(t+1) $\nOpen Uniform: They have an even space between knots and the multiplicity is k at the edges, for example: $     k = 3 \\qquad [0\\ 0\\ 0\\ 1\\ 2\\ 3\\ 3\\ 3] $ Follow from this definition that if the number of controll polygon points is equals to the order of the curve, than this curve is a Bézier curve: in fact the basis is build just like a Bernstein Basis.\nOpen Non-Uniform\nPeriodic Non-Uniform"
+    "text": "Knots choise is very important.There is an important relation between the number of controll polygon points m, the order of the function k and the number of knots m, wich is: m = k + n +1We have two kind of knots:periodics: The first and the last value has k multiplicity;\nopen: Each value has the same multiplicity.wich could be build in two manners:uniform: Knots are evenly spaced;\nnon uniform: there are different space between knots.We have so four classes of knots:Uniform Periodics: Wich are linked to a base d N_ik(t) = N_i-1k(t-1) = N_i+1k(t+1)\nOpen Uniform: They have an even space between knots and the multiplicity is k at the edges, for example: k = 3 qquad 0 0 0 1 2 3 3 3 Follow from this definition that if the number of controll polygon points is equals to the order of the curve, than this curve is a Bézier curve: in fact the basis is build just like a Bernstein Basis.\nOpen Non-Uniform\nPeriodic Non-Uniform"
 },
 
 {
@@ -101,7 +125,7 @@ var documenterSearchIndex = {"docs": [
     "page": "B-Spline Curves",
     "title": "B-Spline Basis Functions",
     "category": "section",
-    "text": "As the function N_{i,k} is defined by _Cox-de Boor_ formulas in a recursive way, the evaluation of a basis set could be optimized by saving the previous evaluation. The dependency tree is: $     \\begin{matrix}         N_{i, k}\\\n        N_{i, k-1} & N_{i+1, k-1}\\\n        N_{i, k-2} & N_{i+1, k-2} & N_{i+2, k-2}\\\n        \\vdots & \\vdots & \\vdots & \\ddots\\\n        N_{i, 1} & N_{i+1, 1} & N_{i+2, 1} & \\dots & N_{i+k-1, 1}     \\end{matrix}     \\begin{matrix}         N_{i-k+1, k} & \\dots & N_{i-1, k} & N_{i, k} & N_{i+1, k} & \\dots & N_{i+k-1, k}\\\n                    & \\ddots & \\vdots     & \\vdots   & \\vdots     &       &             \\\n                     &       & N_{i-1, 2} & N_{i, 2} & N_{i+1, 2} \\\n                     &       &            & N_{i, 1}      \\end{matrix} $"
+    "text": "As the function N_{i,k} is defined by Cox-de Boor formulas in a recursive way, the evaluation of a basis set could be optimized by saving the previous evaluation. The dependency tree is: ``     \\begin{matrix}         N_{i, k}\\\n        N_{i, k-1} & N_{i+1, k-1}\\\n        N_{i, k-2} & N_{i+1, k-2} & N_{i+2, k-2}\\\n        \\vdots & \\vdots & \\vdots & \\ddots\\\n        N_{i, 1} & N_{i+1, 1} & N_{i+2, 1} & \\dots & N_{i+k-1, 1}     \\end{matrix}     \\begin{matrix}         N_{i-k+1, k} & \\dots & N_{i-1, k} & N_{i, k} & N_{i+1, k} & \\dots & N_{i+k-1, k}\\\n                    & \\ddots & \\vdots     & \\vdots   & \\vdots     &       &             \\\n                     &       & N_{i-1, 2} & N_{i, 2} & N_{i+1, 2} \\\n                     &       &            & N_{i, 1}      \\end{matrix} ``"
 },
 
 {
