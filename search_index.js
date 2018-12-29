@@ -109,7 +109,7 @@ var documenterSearchIndex = {"docs": [
     "page": "B-Spline Curves",
     "title": "B-Spline Properties",
     "category": "section",
-    "text": "The following are properties hold by B-Splines:The sum of the basis function in every point t is equal to one:sum_i=1^n+1 N_ik = 1Basis function are non-negative for each and every point t\nThe order of a curve is at most equals to the number n+1 of controll points (so the maximum degree is n).\nA curve could be modified by an affine function f by applying the function to the controll points of the polygon.\nThe curve is located inside the convex hull of the controll polygon."
+    "text": "The following are properties hold by B-Splines:The sum of the basis function in every point t is equal to one (i.e. sum_i=1^n+1 N_ik = 1). \nBasis function are non-negative for each and every point t.\nThe order of a curve is at most equals to the number n+1 of controll points (so the maximum degree is n).\nA curve could be modified by an affine function f by applying the function to the controll points of the polygon.\nThe curve is located inside the convex hull of the controll polygon."
 },
 
 {
@@ -117,7 +117,15 @@ var documenterSearchIndex = {"docs": [
     "page": "B-Spline Curves",
     "title": "Knots",
     "category": "section",
-    "text": "Knots choise is very important.There is an important relation between the number of controll polygon points m, the order of the function k and the number of knots m, wich is:m = k + n +1We have two kind of knots:periodics: The first and the last value has k multiplicity;\nopen: Each value has the same multiplicity.wich could be build in two manners:uniform: Knots are evenly spaced;\nnon uniform: there are different space between knots.We have so four classes of knots:Uniform Periodics: Wich are linked to a base d N_ik(t) = N_i-1k(t-1) = N_i+1k(t+1)\n \n - **Open Uniform** They have an even space between knots and the multiplicity is k at the edges for example\n math\n k = 3 qquad 0 0 0 1 2 3 3 3\n \n   Follow from this definition that if the number of controll polygon points is equals to the order of the curve than this curve is a Bzier curve in fact the basis is build just like a Bernstein Basis\n - **Open Non-Uniform**\n - **Periodic Non-Uniform**\n\n---\n---\n B-Spline Basis Functions\n\nAs the function N_ik is defined by *Cox-de Boor* formulas in a recursive way the evaluation of a basis set could be optimized by saving the previous evaluation The dependency tree ismath     \\begin{matrix}         N_{i, k}\\\n        N_{i, k-1} & N_{i+1, k-1}\\\n        N_{i, k-2} & N_{i+1, k-2} & N_{i+2, k-2}\\\n        \\vdots & \\vdots & \\vdots & \\ddots\\\n        N_{i, 1} & N_{i+1, 1} & N_{i+2, 1} & \\dots & N_{i+k-1, 1}     \\end{matrix}     \\begin{matrix}         N_{i-k+1, k} & \\dots & N_{i-1, k} & N_{i, k} & N_{i+1, k} & \\dots & N_{i+k-1, k}\\\n                    & \\ddots & \\vdots     & \\vdots   & \\vdots     &       &             \\\n                     &       & N_{i-1, 2} & N_{i, 2} & N_{i+1, 2} \\\n                     &       &            & N_{i, 1}      \\end{matrix} ```"
+    "text": "Knots choise is very important.There is an important relation between the number of controll polygon points m, the order of the function k and the number of knots m, wich is:m = k + n +1We have two kind of knots:periodics: The first and the last value has k multiplicity;\nopen: Each value has the same multiplicity.wich could be build in two manners:uniform: Knots are evenly spaced;\nnon uniform: there are different space between knots.We have so four classes of knots:Uniform Periodics: Wich are linked to a base function in the following form: N_ik(t) = N_i-1k(t-1) = N_i+1k(t+1)\nOpen Uniform: They have an even space between knots and the multiplicity is k at the edges. Follow from this definition that if the number of controll polygon points is equals to the order of the curve, than this curve is a Bézier curve: in fact the basis is build just like a Bernstein Basis. An example is given by k = 3 qquad 0 0 0 1 2 3 3 3.\nOpen Non-Uniform\nPeriodic Non-Uniform"
+},
+
+{
+    "location": "splineC.html#B-Spline-Basis-Functions-1",
+    "page": "B-Spline Curves",
+    "title": "B-Spline Basis Functions",
+    "category": "section",
+    "text": "As the function N_ik is defined by Cox-de Boor formulas in a recursive way, the evaluation of a basis set could be optimized by saving the previous evaluation. The dependency tree is:    beginmatrix\n        N_i k\n        N_i k-1  N_i+1 k-1\n        N_i k-2  N_i+1 k-2  N_i+2 k-2\n        vdots  vdots  vdots  ddots\n        N_i 1  N_i+1 1  N_i+2 1  dots  N_i+k-1 1\n    endmatrix\n    beginmatrix\n        N_i-k+1 k  dots  N_i-1 k  N_i k  N_i+1 k  dots  N_i+k-1 k\n                     ddots  vdots      vdots    vdots                         \n                             N_i-1 2  N_i 2  N_i+1 2 \n                                         N_i 1 \n    endmatrix"
 },
 
 {
