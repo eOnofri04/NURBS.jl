@@ -54,7 +54,7 @@ where
 [N] = \begin{bmatrix}
 	\binom n0\binom nn (-1)^n & \binom n1 \binom{n-1}{n-1}(-1)^{n-1} & \dots & \binom nn \binom{n-n}{n-n}(-1)^0\\
 	\binom n0\binom n{n-1} (-1)^{n-1} & \binom n1 \binom{n-1}{n-2}(-1)^{n-2} & \dots & 0\\
-	\vdots & \vdots & \iddots & \vdots\\
+	\vdots & \vdots & \ddots & \vdots\\
 	\binom n0\binom n1 (-1)^1 & \binom n1 \binom{n-1}0(-1)^0 & \dots & 0\\
 	\binom n0\binom n0 (-1)^0 & 0 & \dots & 0\\
 \end{bmatrix}
@@ -72,7 +72,7 @@ where
 [N] = \begin{bmatrix}
 	\binom nn (-1)^n & \binom{n-1}{n-1}(-1)^{n-1} & \dots & \binom{n-n}{n-n}(-1)^0\\
 	\binom n{n-1} (-1)^{n-1} & \binom{n-1}{n-2}(-1)^{n-2} & \dots & 0\\
-	\vdots & \vdots & \iddots & \vdots\\
+	\vdots & \vdots & \ddots & \vdots\\
 	\binom n1 (-1)^1 & \binom{n-1}0(-1)^0 & \dots & 0\\
 	\binom n0 (-1)^0 & 0 & \dots & 0\\
 \end{bmatrix}
@@ -82,7 +82,7 @@ where
 [N] = \begin{bmatrix}
 	\binom n0 & 0 & \dots & 0\\
 	0 & \binom n1 & \dots & 0\\
-	\vdots & \vdots & \iddots & \vdots\\
+	\vdots & \vdots & \ddots & \vdots\\
 	0 & 0 & \dots & \binom nn\\
 \end{bmatrix}
 ```
