@@ -30,9 +30,9 @@ A method to evaluate ``N_{i, k}`` is given by +Cox-de Boor* recursive form.
 
 The following are properties hold by B-Splines:
  - The sum of the basis function in every point ``t`` is equal to one:
-  ```math
-  \sum_{i=1}^{n+1} N_{i,k} = 1
-  ```
+```math
+\sum_{i=1}^{n+1} N_{i,k} = 1
+```
  - Basis function are non-negative for each and every point ``t``
  - The order of a curve is at most equals to the number ``n+1`` of controll points (so the maximum degree is ``n``).
  - A curve could be modified by an affine function ``f`` by applying the function to the controll points of the polygon.
@@ -59,13 +59,13 @@ wich could be build in two manners:
 
 We have so four classes of knots:
  - **Uniform Periodics**: Wich are linked to a base d
-   ```math
-   N_{i,k}(t) = N_{i-1,k}(t-1) = N_{i+1,k}(t+1)
-   ```
+ ```math
+ N_{i,k}(t) = N_{i-1,k}(t-1) = N_{i+1,k}(t+1)
+ ```
  - **Open Uniform**: They have an even space between knots and the multiplicity is ``k`` at the edges, for example:
-   ```math
-   k = 3 \qquad [0\ 0\ 0\ 1\ 2\ 3\ 3\ 3]
-   ```
+ ```math
+ k = 3 \qquad [0\ 0\ 0\ 1\ 2\ 3\ 3\ 3]
+ ```
    Follow from this definition that if the number of controll polygon points is equals to the order of the curve, than this curve is a Bézier curve: in fact the basis is build just like a Bernstein Basis.
  - **Open Non-Uniform**
  - **Periodic Non-Uniform**
