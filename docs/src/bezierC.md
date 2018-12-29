@@ -69,7 +69,7 @@ It is also possible to decompose the matrix ``[N]`` even further in the product 
 where
 
 ```math
-[N] = \begin{bmatrix}
+[C] = \begin{bmatrix}
 	\binom nn (-1)^n & \binom{n-1}{n-1}(-1)^{n-1} & \dots & \binom{n-n}{n-n}(-1)^0\\
 	\binom n{n-1} (-1)^{n-1} & \binom{n-1}{n-2}(-1)^{n-2} & \dots & 0\\
 	\vdots & \vdots & \ddots & \vdots\\
@@ -79,7 +79,7 @@ where
 ```
 
 ```math
-[N] = \begin{bmatrix}
+[D] = \begin{bmatrix}
 	\binom n0 & 0 & \dots & 0\\
 	0 & \binom n1 & \dots & 0\\
 	\vdots & \vdots & \ddots & \vdots\\
