@@ -87,8 +87,8 @@ Returns a tuple `(P,EV)`. P is the coordinates matrix of the p1 points b-spline 
 
 - `npts::Int64`: the number of the contol polygon vertices.
 - `ord::Int64`: order of the bspline basis function.
-- `p1::Int64`: number of the points to be calculated on the curve
-- `b::Array{Float64}`: 2-dimensional Array containing the control polygon vertices
+- `p1::Int64`: number of the points to be calculated on the curve.
+- `b::Array{Float64, 2}`: 2-dimensional Array containing the control polygon vertices in the x, y, z coordinates for columns.
 
 # Example
 
@@ -125,7 +125,7 @@ julia> bspline(7,3,20,[0. 1 2 3 4 5 6; 1 2 1 2 1 2 3; 0 0 0 0 0 0 0])[2]
 _By Giuseppe Santorelli, Elia Onofri_
 """
 
-function bspline(npts::Int64, ord::Int64, p1::Int64, b::Array{Float64})::Tuple{Array{Float64,2},Array{Array{Int64,1},1}}
+function bspline(npts::Int64, ord::Int64, p1::Int64, b::Array{Float64,2})::Tuple{Array{Float64,2},Array{Array{Int64,1},1}}
     
     @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
     @assert npts >= ord ("ERROR: ord > npts")
@@ -187,7 +187,7 @@ Returns a tuple `(P,EV)`. P is the coordinates matrix of the p1 points b-spline 
 - `npts::Int64`: the number of the contol polygon vertices.
 - `ord::Int64`: order of the bspline basis function.
 - `p1::Int64`: number of the points to be calculated on the curve.
-- `b::Array{Float64}`: 2-dimensional array containing the control polygon vertices.
+- `b::Array{Float64, 2}`: 2-dimensional Array containing the control polygon vertices in the x, y, z coordinates for columns.
 
 # Example
 
@@ -224,7 +224,7 @@ julia> bspline(4,3,20,[0. 3 6 9; 0 10 3 6; 0 0 0 0])[2]
 _By Giuseppe Santorelli, Elia Onofri_
 """
 
-function bsplineu(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64})::Tuple{Array{Float64,2},Array{Array{Int64,1},1}}
+function bsplineu(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64,2})::Tuple{Array{Float64,2},Array{Array{Int64,1},1}}
     
     @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
     @assert npts >= ord ("ERROR: ord > npts")
@@ -285,8 +285,8 @@ Returns a tuple `(P,D1,D2,EV)`. P is the coordinates matrix of the p1 points b-s
 
 - `npts::Int64`: the number of the contol polygon vertices.
 - `ord::Int64`: order of the bspline basis function.
-- `p1::Int64`: number of the points to be calculated on the curve
-- `b::Array{Float64}`: 2-dimensional array containing the control polygon vertices
+- `p1::Int64`: number of the points to be calculated on the curve.
+- `b::Array{Float64, 2}`: 2-dimensional Array containing the control polygon vertices in the x, y, z coordinates for columns.
 
 # Example
 
@@ -334,7 +334,7 @@ julia> dbspline(7,3,20,[0. 1 2 3 4 5 6; 1 2 1 2 1 2 3; 0 0 0 0 0 0 0])[4]
 _By Giuseppe Santorelli, Elia Onofri_
 """
 
-function dbspline(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64})::Tuple{Array{Float64},Array{Float64},Array{Float64},Array{Array{Int64,1},1}}
+function dbspline(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64,2})::Tuple{Array{Float64},Array{Float64},Array{Float64},Array{Array{Int64,1},1}}
     
     @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
     @assert npts >= ord ("ERROR: ord > npts")
@@ -393,8 +393,8 @@ Returns a tuple `(P,D1,D2,EV)`. P is the coordinates matrix of the p1 points b-s
 
 - `npts::Int64`: the number of the contol polygon vertices.
 - `ord::Int64`: order of the bspline basis function.
-- `p1::Int64`: number of the points to be calculated on the curve
-- `b::Array{Float64}`: 2-dimensional array containing the control polygon vertices
+- `p1::Int64`: number of the points to be calculated on the curve.
+- `b::Array{Float64, 2}`: 2-dimensional Array containing the control polygon vertices in the x, y, z coordinates for columns
 
 # Example
 
@@ -442,7 +442,7 @@ julia> dbspline(4,3,20,[0. 3 6 9; 0 10 3 6; 0 0 0 0])[4]
 _By Giuseppe Santorelli, Elia Onofri_
 """
 
-function dbsplineu(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64})::Tuple{Array{Float64},Array{Float64},Array{Float64},Array{Array{Int64,1},1}}
+function dbsplineu(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64,2})::Tuple{Array{Float64},Array{Float64},Array{Float64},Array{Array{Int64,1},1}}
     
     @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
     @assert npts >= ord ("ERROR: ord > npts")
