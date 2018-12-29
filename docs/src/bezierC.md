@@ -54,3 +54,12 @@ where
 	\vdots & \vdots & \iddots & \vdots\\
 	0 & 0 & \dots & \binom nn\\
 \end{bmatrix}``
+
+## Bezier Derivatives
+
+The two derivatives could be obtained starting from the original function:
+``P'(t) = \sum_{i=0}^n B_iJ'_{n,i}(t)``
+``P''(t) = \sum_{i=0}^n B_iJ''_{n,i}(t)``
+where the two derivatives could be obtained with the following formulas:
+``J'_{n,i}(t) = \frac{1-nt}{t(1-t)}J_{n,i}(t)``
+``J''_{n,i}(t) = \frac{(i-nt)^2-nt^2-i(1-2t)}{t^2(1-t)^2} J_{n,i}(t)``
