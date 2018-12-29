@@ -27,6 +27,30 @@ The equation of a Bézier Curve could also be implemented as a Matrix Multiplica
 where
 ``[F] = [J_{n,0}, \dots, J_{n, n}]	\qquad	[G]^t = [B_0, \dots, B_n]``
 
-Moreover is possible to collect the coefficient of the Basis in a square matrix `N \in M_{n,n}(\mathbb R)` obtaining:
+Moreover is possible to collect the coefficient of the Basis in a square matrix `N \in \mathcal M_{n,n}(\mathbb R)` obtaining:
 ``P(t) = [t^n, t^{n-1}, \dots, t, 1] [N] [G] = [T][N][G] ``
-where 
+where
+``[N] = \begin{bmatrix}
+	\binom n0\binom nn (-1)^n & \binom n1 \binom{n-1}{n-1}(-1)^{n-1} & \dots & \binom nn \binom{n-n}{n-n}(-1)^0\\
+	\binom n0\binom n{n-1} (-1)^{n-1} & \binom n1 \binom{n-1}{n-2}(-1)^{n-2} & \dots & 0\\
+	\vdots & \vdots & \iddots & \vdots\\
+	\binom n0\binom n1 (-1)^1 & \binom n1 \binom{n-1}0(-1)^0 & \dots & 0\\
+	\binom n0\binom n0 (-1)^0 & 0 & \dots & 0\\
+\end{bmatrix}``
+
+It is also possible to decompose the matrix `[N]` even further in the product of two matrices:
+``[N] = [C][D] \quad \Rightarrow \quad P(t) = [T][C][D][G]``
+where
+``[N] = \begin{bmatrix}
+	\binom nn (-1)^n & \binom{n-1}{n-1}(-1)^{n-1} & \dots & \binom{n-n}{n-n}(-1)^0\\
+	\binom n{n-1} (-1)^{n-1} & \binom{n-1}{n-2}(-1)^{n-2} & \dots & 0\\
+	\vdots & \vdots & \iddots & \vdots\\
+	\binom n1 (-1)^1 & \binom{n-1}0(-1)^0 & \dots & 0\\
+	\binom n0 (-1)^0 & 0 & \dots & 0\\
+\end{bmatrix}``
+``[N] = \begin{bmatrix}
+	\binom n0 & 0 & \dots & 0\\
+	0 & \binom n1 & \dots & 0\\
+	\vdots & \vdots & \iddots & \vdots\\
+	0 & 0 & \dots & \binom nn\\
+\end{bmatrix}``
