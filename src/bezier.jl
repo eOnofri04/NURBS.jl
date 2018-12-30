@@ -4,7 +4,15 @@ export bezier, dbezier
 """
 	bezier(npts, b[], dpts)
 
-Calculate a Bezier curve.
+Calculate a Bezier curve over the `npts` control polygon points in `b`.
+
+The method evaluates `dpts` points of the curve and gives back the tuple `(P, EV)`.
+Here `P` is the vector of points memorized by columns while `EV` is the `1`-dimensional cellular complex.
+This structure as it is formed could be directly imported in Plasm module by typing:
+```
+julia> P, EV = bezier(npts, b[], dpts);
+julia> Plasm.view(P, EV)
+```
 
 ---
 
@@ -19,15 +27,27 @@ Calculate a Bezier curve.
 # Examples
 
 ```jldoctest
-julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)
+julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[1]
 3×7 Array{Float64,2}:
  1.0  1.56481  2.18519  2.75  3.14815  3.26852  3.0
  1.0  1.83333  2.33333  2.5   2.33333  1.83333  1.0
  0.0  0.0      0.0      0.0   0.0      0.0      0.0
+```
 
+```jldoctest
+julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[2]
+3×7 Array{Float64,2}:
+6-element Array{Array{Int64,1},1}:
+ [1, 2]
+ [2, 3]
+ [3, 4]
+ [4, 5]
+ [5, 6]
+ [6, 7]
+```
 """
 
-function bezier(npts::Int64, b::Array{Float64,2}, dpts::Int64)::Array{Float64,2}
+function bezier(npts::Int64, b::Array{Float64,2}, dpts::Int64)::Tuple{Array{Float64,2}, Array{Array{Int64,1},1}}
 
 	@assert npts == length(b[1,:]) ("ERROR: there are not npts points of the polygon in b[]")
 
@@ -62,7 +82,19 @@ function bezier(npts::Int64, b::Array{Float64,2}, dpts::Int64)::Array{Float64,2}
 		end
 		t = t + step
 	end
-	return transpose(T*C*D*G)
+
+	EV::Array{Array{Int64,1},1} = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
+
+    for i = 1 : dpts-1
+        app = Array{Int64}(2)
+        app[1] = i
+        app[2] = i+1
+        push!(EV,app) 
+    end
+
+    P::Array{Float64,2} = transpose(T*C*D*G)
+
+	return (P, EV)
 end
 
 #-----------------------------------------------------------------------
