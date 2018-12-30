@@ -36,7 +36,6 @@ julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[1]
 
 ```jldoctest
 julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[2]
-3×7 Array{Float64,2}:
 6-element Array{Array{Int64,1},1}:
  [1, 2]
  [2, 3]
