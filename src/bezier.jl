@@ -1,4 +1,4 @@
-export bezier, dbezier
+export bezier, dbezier, bern_basis
 
 
 """
