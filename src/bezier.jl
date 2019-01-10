@@ -9,7 +9,7 @@ Calculate a Bezier curve over the `npts` control polygon points in `b`.
 The method evaluates `dpts` points of the curve and gives back the tuple `(P, EV)`.
 Here `P` is the vector of points memorized by columns while `EV` is the `1`-dimensional cellular complex.
 This structure as it is formed could be directly imported in Plasm module by typing:
-```
+```julia
 julia> P, EV = bezier(npts, b[], dpts);
 julia> Plasm.view(P, EV)
 ```
@@ -44,6 +44,10 @@ julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[2]
  [5, 6]
  [6, 7]
 ```
+
+---
+
+_By Elia Onofri_
 """
 
 function bezier(npts::Int64, b::Array{Float64,2}, dpts::Int64)::Tuple{Array{Float64,2}, Array{Array{Int64,1},1}}
@@ -115,8 +119,53 @@ end
 	bern_basis(n, i, t)
 
 Calculate the Bernstein basis.
+
+This method is meant to evaluate the `i`-th Bernstein Basis of order `n` in the parameter `t`.
+Of course this method could be implemented in a more quick way, in order to evaluate all the basis of a specific order
+but this is out of the scope of this library.
+
+---
+
+# Arguments
+
+- `n::Int64`: the order of the basis (`n = npts-1`).
+- `i::Int64`: the `i`-th basis of the given order. `i ∈ [0, …, n]`.
+- `t::Float64`: the parameter of the basis `N_{n, i}(t)`.
+
+---
+
+# Examples
+
+```jldoctest
+julia> map(x -> bern_basis(3, 0, x), [0, 0.15, 0.35, 0.5, 0.65, 0.85, 1])
+7-element Array{Float64,1}:
+ 1.0     
+ 0.614125
+ 0.274625
+ 0.125   
+ 0.042875
+ 0.003375
+ 0.0   
+```
+
+```jldoctest
+julia> map(x -> bern_basis(3, 3, x), [0, 0.15, 0.35, 0.5, 0.65, 0.85, 1])
+7-element Array{Float64,1}:
+ 0.0     
+ 0.003375
+ 0.042875
+ 0.125   
+ 0.274625
+ 0.614125
+ 1.0 
+```
+
+---
+
+_By Elia Onofri_
 """
 
 function bern_basis(n::Int64, i::Int64, t::Float64)::Float64
+	@assert i >= 0 && i<= n ("ERROR: there are $(n+1) basis of order $(n). You cannot choose the $(i)-th one.")
 	return binomial(n, i) * t^i * (1-t)^(n-i)
 end

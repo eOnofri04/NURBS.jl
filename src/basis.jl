@@ -32,6 +32,9 @@ julia> basis(5,3,0.5,[0. 0 0 1 2 3 3 3])
  0.0  
  0.0  
 ```
+
+---
+
 _By Elia Onofri, Giuseppe Santorelli_
 """
 
@@ -132,6 +135,8 @@ julia> dbasis(5,3,0.5,[0. 0 0 1 2 3 3 3])[3]
   0.0
   0.0
 ```
+
+---
 
 _By Elia Onofri, Giuseppe Santorelli_
 """
@@ -277,6 +282,8 @@ julia> dbasisu(5,3,0.5,[0. 1 2 3 4 5 6 7])[3]
  0.0
  0.0
 ```
+
+---
 
 _By Elia Onofri, Giuseppe Santorelli_
 """
