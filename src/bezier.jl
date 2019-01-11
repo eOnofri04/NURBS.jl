@@ -132,7 +132,7 @@ julia> Plasm.view(P, EV)
 # Examples
 
 ```jldoctest
-julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[1]
+julia> dbezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[1]
 3×7 Array{Float64,2}:
  1.0  1.56481  2.18519  2.75  3.14815  3.26852  3.0
  1.0  1.83333  2.33333  2.5   2.33333  1.83333  1.0
@@ -140,7 +140,7 @@ julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[1]
 ```
 
 ```jldoctest
-julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[2]
+julia> dbezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[2]
 3×5 Array{Float64,2}:
  3.66667  3.66667  3.0   1.66667  3.26852
  4.0      2.0      0.0  -2.0      1.83333
@@ -148,7 +148,7 @@ julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[2]
 ```
 
 ```jldoctest
-julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[3]
+julia> dbezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[3]
 3×5 Array{Float64,2}:
    2.0   -2.0   -6.0  -10.0  3.26852
  -12.0  -12.0  -12.0  -12.0  1.83333
@@ -156,7 +156,7 @@ julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[3]
 ```
 
 ```jldoctest
-julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[4]
+julia> dbezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[4]
 6-element Array{Array{Int64,1},1}:
  [1, 2]
  [2, 3]
@@ -166,12 +166,21 @@ julia> bezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[4]
  [6, 7]
 ```
 
+```jldoctest
+julia> dbezier(4,[1.0 2 4 3; 1 3 3 1; 0 0 0 0], 7)[5]
+6-element Array{Array{Int64,1},1}:
+ [1, 2]
+ [2, 3]
+ [3, 4]
+ [4, 5]
+```
+
 ---
 
 _By Elia Onofri_
 """
 
-function dbezier(npts::Int64, b::Array{Float64,2}, dpts::Int64)::Tuple{Array{Float64,2}, Array{Float64,2}, Array{Float64,2}, Array{Array{Int64,1},1}}
+function dbezier(npts::Int64, b::Array{Float64,2}, dpts::Int64)::Tuple{Array{Float64,2}, Array{Float64,2}, Array{Float64,2}, Array{Array{Int64,1},1}, Array{Array{Int64,1},1}}
 
 	@assert npts == length(b[1,:]) ("ERROR: there are not npts = $(npts) points of the polygon in b[]")
 
@@ -229,6 +238,8 @@ function dbezier(npts::Int64, b::Array{Float64,2}, dpts::Int64)::Tuple{Array{Flo
 		push!(EV,app) 
 	end
 
+	DEV::Array{Array{Int64,1},1} = EV[1:dpts-3] #1-dimensional cellular complex used for plotting the Derivatives with Plasm package
+
 	F::Array{Float64,2} = T*C*D
 	F1::Array{Float64,2} = Der1.*(F[range(2,dpts-2),:])
 	F2::Array{Float64,2} = Der2.*(F[range(2,dpts-2),:])
@@ -236,7 +247,7 @@ function dbezier(npts::Int64, b::Array{Float64,2}, dpts::Int64)::Tuple{Array{Flo
 	D1::Array{Float64,2} = transpose(F1*G)
 	D2::Array{Float64,2} = transpose(F2*G)
 
-	return (P, D1, D2, EV)
+	return (P, D1, D2, EV, DEV)
 end
 
 #-----------------------------------------------------------------------
