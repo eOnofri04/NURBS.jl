@@ -1,6 +1,6 @@
-# Bezier Curves
+# Bézier Curves
 
-Bezier Curves are a special kind of NURBS curves build upon a controll polygon ``B`` and a Bernstein basis ``J_{n,i}``.
+Bézier Curves are a special kind of NURB curves build upon a controll polygon ``B`` and a Bernstein basis ``J_{n,i}``.
 
 Mathematically, a parametric Bézier curve is defined by
 
@@ -18,7 +18,7 @@ where the convention ``(0)^0 = 1`` and ``0! = 1`` have been made.
 
 In particular ``J_{n,i}`` is the ``i``-th base function of order ``n``, while ``n`` is also the number of segments of the the controll polygon (number of points minus one).
 
-## Bezier Properties
+## Bézier Properties
 
 Whe have a small variety of properties, descending directly from the definition:
  - Base function are often real.
@@ -59,6 +59,13 @@ where
 	\binom n0\binom n0 (-1)^0 & 0 & \dots & 0\\
 \end{bmatrix}
 ```
+or, in other words:
+```math
+\left(N_{i+1,j+1}\right)_{i,j=0}^n =& \begin{cases}
+		\binom nj \binom{n-j}{n-i-j}(-1)^{n-i-j}	&	\mbox{if } 0 \leq i+j leq n\\
+		0											&	\mbox{otherwise}
+	\end{cases}\\
+``` 
 
 It is also possible to decompose the matrix ``[N]`` even further in the product of two matrices:
 
@@ -69,7 +76,7 @@ It is also possible to decompose the matrix ``[N]`` even further in the product 
 where
 
 ```math
-[N] = \begin{bmatrix}
+[C] = \begin{bmatrix}
 	\binom nn (-1)^n & \binom{n-1}{n-1}(-1)^{n-1} & \dots & \binom{n-n}{n-n}(-1)^0\\
 	\binom n{n-1} (-1)^{n-1} & \binom{n-1}{n-2}(-1)^{n-2} & \dots & 0\\
 	\vdots & \vdots & \ddots & \vdots\\
@@ -79,7 +86,7 @@ where
 ```
 
 ```math
-[N] = \begin{bmatrix}
+[D] = \begin{bmatrix}
 	\binom n0 & 0 & \dots & 0\\
 	0 & \binom n1 & \dots & 0\\
 	\vdots & \vdots & \ddots & \vdots\\
@@ -87,7 +94,7 @@ where
 \end{bmatrix}
 ```
 
-## Bezier Derivatives
+## Bézier Derivatives
 
 The two derivatives could be obtained starting from the original function:
 
@@ -106,3 +113,46 @@ J'_{n,i}(t) = \frac{1-nt}{t(1-t)}J_{n,i}(t)
 ```math
 J''_{n,i}(t) = \frac{(i-nt)^2-nt^2-i(1-2t)}{t^2(1-t)^2} J_{n,i}(t)
 ```
+defined in all the points but the first and the last (where ``t = 0`` and ``t = 1``).
+
+### Derivatives Matrix Representation
+
+In order to enhance the matrix representation it is usefull to represent the derivatives in two matrices:
+```math
+[Der1] = \begin{bmatrix}
+	\frac{-nt_{(1)}}{t_{(1)}*(1-t_{(1)})}	&	\dots	&	\dots	&	\dots	&	\frac{n-nt_{(0)}}{t_{(0)}(1-t_{(0)})}	\\
+%
+	\vdots	&	\ddots	&					\vdots						&	\vdots	&	\vdots	\\
+	\dots	&	\dots	&	\frac{(j-1)-nt_{(i)}}{t_{(i)}(1-t_{(i)})}	&	\dots	&	\dots	\\
+	\vdots	&	\vdots	&					\vdots						&	\ddots	&	\vdots	\\
+%
+	\frac{-nt_{(bpts-1)}}{t_{(bpts-1)}(1-t_{(bpts-1)})}	&	\dots	&	\dots	&	\dots	&	\frac{n-nt_{(bpts-1)}}{t_{(bpts-1)}(1-t_{(bpts-1)})} \\
+\end{bmatrix}
+```
+and
+```math
+[Der2] = begin{bmatrix}
+	\frac{(-nt_{(1)})^2- nt_{(1)}^2}{t_{(1)}^2*(1-t_{(1)})^2}	&	\dots	&	\dots	&	\dots	&	\frac{(n-nt_{(0)})^2-nt_{(0)}^2-n(1-2t_{(0)})}{t_{(0)}^2(1-t_{(0)})^2}	\\
+%
+	\vdots	&	\ddots	&									\vdots											&	\vdots	&	\vdots	\\
+	\dots	&	\dots	&	\frac{((j-1)-nt_{(i)})^2-nt_{(i)}^2-(j-1)(1-2t_{(i)})}{t_{(i)}^2(1-t_{(i)})^2}	&	\dots	&	\dots	\\
+	\vdots	&	\vdots	&									\vdots											&	\ddots	&	\vdots	\\
+%
+	\frac{(-nt_{(bpts-1)})^2-nt_{(bpts-1)}^2}{t_{(bpts-1)}^2(1-t_{(bpts-1)})^2}	&	\dots	&	\dots	&	\dots	&	\frac{(n-nt_{(bpts-1)})^2-nt_{(bpts-1)}^2-n(1-2t_{(bpts-1)})}{t_{(bpts-1)}^2(1-t_{(bpts-1)})^2} \\
+\end{bmatrix}
+```
+
+which could be scalar multiplied with the base matrix in order to obtain two derivative base matrices.
+Of course the ``T[]`` matrix used must be reduced by eliminating the first and the last points.
+
+The result of the operation is then:
+
+```math
+\begin{split}
+	P'(t) =& 	Der1\cdot([T]_1^{dpts-1}[C][D])[G] \\
+	P''(t) = &	Der2\cdot([T]_1^{dpts-1}[C][D])[G]
+```
+
+
+
+
