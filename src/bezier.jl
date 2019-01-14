@@ -107,15 +107,15 @@ end
 Calculate Bezier curve and its first and second derivatives over the `npts` control polygon points in `b`.
 
 
-The method evaluates `dpts` points of the curve and gives back the tuple `(P, D1, D2, EV)`.
+The method evaluates `dpts` points of the curve and gives back the tuple `(P, D1, D2, EV, DEV)`.
 
-Here `P` is the vector of points memorized by columns while `EV` is the `1`-dimensional cellular complex
-while `D1` and `D2` are the derivatives vectors. Please note that only `dpts-2` points are evaluated as
-there are not enought informations about the first and the last points.
+Here `P` is the vector of points memorized by columns while `EV` is the `1`-dimensional cellular complex associated to it.
+Moreover `D1` and `D2` are the derivatives vectors and `DEV` is the `1`-dimensional cellular complex associated.
+Please note that only `dpts-2` points are evaluated for the derivatives as there are not enought informations about the first and the last points.
 
 This structure as it is formed could be directly imported in Plasm module by typing:
 ```julia
-julia> P, D1, D2, EV = bezier(npts, b[], dpts);
+julia> P, _, _, EV, _ = bezier(npts, b[], dpts);
 julia> Plasm.view(P, EV)
 ```
 
