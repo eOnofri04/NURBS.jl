@@ -40,21 +40,21 @@ where
 \begin{split}
 	[U] =& \begin{bmatrix} 
 		u^n & u^{n-1} & \dots & 1
-	\end{matrix}\\
+	\end{bmatrix}\\
 	[W] =& \begin{bmatrix} 
 		w^n & u^{w-1} & \dots & 1
-	\end{matrix}\\
+	\end{bmatrix}\\
 	[B] =& \begin{bmatrix} 
 		B_{0,0}	&	\dots	&	B_{0,m}	\\
 		\vdots	&	\ddots	&	\vdots	\\
 		B_{n,0}	&	\dots	&	B_{n,m}
-	\end{matrix}
+	\end{bmatrix}
 \end{split}
 ```
 
 and ``N`` and ``M`` are the coefficient matrix of the base, so given by:
 ```math
-	begin{split}
+\begin{split}
 	[N] = \begin{bmatrix}
 		\binom n0\binom nn (-1)^n & \binom n1 \binom{n-1}{n-1}(-1)^{n-1} & \dots & \binom nn \binom{n-n}{n-n}(-1)^0\\
 		\binom n0\binom n{n-1} (-1)^{n-1} & \binom n1 \binom{n-1}{n-2}(-1)^{n-2} & \dots & 0\\
@@ -68,17 +68,18 @@ and ``N`` and ``M`` are the coefficient matrix of the base, so given by:
 		\vdots & \vdots & \ddots & \vdots\\
 		\binom m0\binom m1 (-1)^1 & \binom m1 \binom{m-1}0(-1)^0 & \dots & 0\\
 		\binom m0\binom m0 (-1)^0 & 0 & \dots & 0\\
-	\end{bmatrix} \\
+	\end{bmatrix}
+\end{split}
 ```
 or, in other worlds:
 ```math
 \begin{split}
 	\left(N_{i+1,j+1}\right)_{i,j=0}^n =& \begin{cases}
-		\binom nj \binom{n-j}{n-i-j}(-1)^{n-i-j}	&	\mbox{if } 0 \leq i+j leq n\\
+		\binom nj \binom{n-j}{n-i-j}(-1)^{n-i-j}	&	\mbox{if } 0 \leq i+j \leq n\\
 		0											&	\mbox{otherwise}
 	\end{cases}\\
 	\left(M_{i+1,j+1}\right)_{i,j=0}^m =& \begin{cases}
-		\binom mj \binom{m-j}{m-i-j}(-1)^{m-i-j}	&	\mbox{if } 0 \leq i+j leq m\\
+		\binom mj \binom{m-j}{m-i-j}(-1)^{m-i-j}	&	\mbox{if } 0 \leq i+j \leq m\\
 		0											&	\mbox{otherwise}
 	\end{cases}\\
 \end{split}
@@ -110,9 +111,9 @@ where, as expected, we have:
 
 ```math
 \begin{split}
-	[U'] =& [nu^{n-1} \ (n-1)u^{n-2} \ \dots \ 2n \ 1 \ 0]\\
-	[W'] =& [mw^{m-1} \ (m-1)w^{m-2} \ \dots \ 2m \ 1 \ 0]\\
-	[U''] =& [n(n-1)u^{n-2} \ (n-1)(n-2)u^{n-3} \ \dots \ 1 \ 0 \ 0]\\
-	[W''] =& [m(m-1)w^{m-2} \ (m-1)(m-2)w^{m-3} \ \dots \ 1 \ 0 \ 0]\\
+	[U'] =& [nu^{n-1} \quad (n-1)u^{n-2} \quad \dots \quad 2n \quad 1 \quad 0]\\
+	[W'] =& [mw^{m-1} \quad (m-1)w^{m-2} \quad \dots \quad 2m \quad 1 \quad 0]\\
+	[U''] =& [n(n-1)u^{n-2} \quad (n-1)(n-2)u^{n-3} \quad \dots \quad 1 \quad 0 \quad 0]\\
+	[W''] =& [m(m-1)w^{m-2} \quad (m-1)(m-2)w^{m-3} \quad \dots \quad 1 \quad 0 \quad 0]\\
 \end{split}
 ```

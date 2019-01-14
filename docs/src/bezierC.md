@@ -61,10 +61,10 @@ where
 ```
 or, in other words:
 ```math
-\left(N_{i+1,j+1}\right)_{i,j=0}^n =& \begin{cases}
-		\binom nj \binom{n-j}{n-i-j}(-1)^{n-i-j}	&	\mbox{if } 0 \leq i+j leq n\\
-		0											&	\mbox{otherwise}
-	\end{cases}\\
+\left(N_{i+1,j+1}\right)_{i,j=0}^n = \begin{cases}
+	\binom nj \binom{n-j}{n-i-j}(-1)^{n-i-j}	&	\mbox{if } 0 \leq i+j \leq n\\
+	0											&	\mbox{otherwise}
+\end{cases}
 ``` 
 
 It is also possible to decompose the matrix ``[N]`` even further in the product of two matrices:
@@ -131,7 +131,7 @@ In order to enhance the matrix representation it is usefull to represent the der
 ```
 and
 ```math
-[Der2] = begin{bmatrix}
+[Der2] = \begin{bmatrix}
 	\frac{(-nt_{(1)})^2- nt_{(1)}^2}{t_{(1)}^2*(1-t_{(1)})^2}	&	\dots	&	\dots	&	\dots	&	\frac{(n-nt_{(0)})^2-nt_{(0)}^2-n(1-2t_{(0)})}{t_{(0)}^2(1-t_{(0)})^2}	\\
 %
 	\vdots	&	\ddots	&									\vdots											&	\vdots	&	\vdots	\\
@@ -143,7 +143,7 @@ and
 ```
 
 which could be scalar multiplied with the base matrix in order to obtain two derivative base matrices.
-Of course the ``T[]`` matrix used must be reduced by eliminating the first and the last points.
+Of course the ``[T]`` matrix used must be reduced by eliminating the first and the last points.
 
 The result of the operation is then:
 
@@ -151,6 +151,7 @@ The result of the operation is then:
 \begin{split}
 	P'(t) =& 	Der1\cdot([T]_1^{dpts-1}[C][D])[G] \\
 	P''(t) = &	Der2\cdot([T]_1^{dpts-1}[C][D])[G]
+\end{split}
 ```
 
 
