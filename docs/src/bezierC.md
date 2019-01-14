@@ -1,6 +1,6 @@
-# Bezier Curves
+# Bézier Curves
 
-Bezier Curves are a special kind of NURBS curves build upon a controll polygon ``B`` and a Bernstein basis ``J_{n,i}``.
+Bézier Curves are a special kind of NURB curves build upon a controll polygon ``B`` and a Bernstein basis ``J_{n,i}``.
 
 Mathematically, a parametric Bézier curve is defined by
 
@@ -18,7 +18,7 @@ where the convention ``(0)^0 = 1`` and ``0! = 1`` have been made.
 
 In particular ``J_{n,i}`` is the ``i``-th base function of order ``n``, while ``n`` is also the number of segments of the the controll polygon (number of points minus one).
 
-## Bezier Properties
+## Bézier Properties
 
 Whe have a small variety of properties, descending directly from the definition:
  - Base function are often real.
@@ -59,6 +59,13 @@ where
 	\binom n0\binom n0 (-1)^0 & 0 & \dots & 0\\
 \end{bmatrix}
 ```
+or, in other words:
+```math
+\left(N_{i+1,j+1}\right)_{i,j=0}^n =& \begin{cases}
+		\binom nj \binom{n-j}{n-i-j}(-1)^{n-i-j}	&	\mbox{if } 0 \leq i+j leq n\\
+		0											&	\mbox{otherwise}
+	\end{cases}\\
+``` 
 
 It is also possible to decompose the matrix ``[N]`` even further in the product of two matrices:
 
@@ -87,7 +94,7 @@ where
 \end{bmatrix}
 ```
 
-## Bezier Derivatives
+## Bézier Derivatives
 
 The two derivatives could be obtained starting from the original function:
 
@@ -106,7 +113,7 @@ J'_{n,i}(t) = \frac{1-nt}{t(1-t)}J_{n,i}(t)
 ```math
 J''_{n,i}(t) = \frac{(i-nt)^2-nt^2-i(1-2t)}{t^2(1-t)^2} J_{n,i}(t)
 ```
-defined in all the points but the first and the last (where `t = 0` and `t = 1`).
+defined in all the points but the first and the last (where ``t = 0`` and ``t = 1``).
 
 ### Derivatives Matrix Representation
 
@@ -136,7 +143,7 @@ and
 ```
 
 which could be scalar multiplied with the base matrix in order to obtain two derivative base matrices.
-Of course the `T` matrix used must be reduced by eliminating the first and the last points.
+Of course the ``T[]`` matrix used must be reduced by eliminating the first and the last points.
 
 The result of the operation is then:
 

@@ -1,6 +1,6 @@
 # NURBS.jl
 
-`NURBS.jl` (or `Non Uniform Rational B-Spline`) is a [Julia](http://julialang.org) library to build parametrical curves and parametrical surface based on the interpolation
+`NURBS.jl` (or `Non Uniform Rational B-Spline Surfaces`) is a [Julia](http://julialang.org) library to build parametrical curves and parametrical surface based on the interpolation
 of polynomial bases.
 This library is developed by:
  - [Elia Onofri](https://github.com/eOnofri04) - [Ln](https://www.linkedin.com/in/elia-onofri-80b403173/) (elia.onofri4@gmail.com)
