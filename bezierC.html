@@ -5,10 +5,10 @@
 	\vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
 	\binom n0\binom n1 (-1)^1 &amp; \binom n1 \binom{n-1}0(-1)^0 &amp; \dots &amp; 0\\
 	\binom n0\binom n0 (-1)^0 &amp; 0 &amp; \dots &amp; 0\\
-\end{bmatrix}\]</div><p>or, in other words:</p><div>\[\left(N_{i+1,j+1}\right)_{i,j=0}^n =&amp; \begin{cases}
-		\binom nj \binom{n-j}{n-i-j}(-1)^{n-i-j}	&amp;	\mbox{if } 0 \leq i+j leq n\\
-		0											&amp;	\mbox{otherwise}
-	\end{cases}\\\]</div><p>It is also possible to decompose the matrix <span>$[N]$</span> even further in the product of two matrices:</p><div>\[[N] = [C][D] \quad \Rightarrow \quad P(t) = [T][C][D][G]\]</div><p>where</p><div>\[[C] = \begin{bmatrix}
+\end{bmatrix}\]</div><p>or, in other words:</p><div>\[\left(N_{i+1,j+1}\right)_{i,j=0}^n = \begin{cases}
+	\binom nj \binom{n-j}{n-i-j}(-1)^{n-i-j}	&amp;	\mbox{if } 0 \leq i+j \leq n\\
+	0											&amp;	\mbox{otherwise}
+\end{cases}\]</div><p>It is also possible to decompose the matrix <span>$[N]$</span> even further in the product of two matrices:</p><div>\[[N] = [C][D] \quad \Rightarrow \quad P(t) = [T][C][D][G]\]</div><p>where</p><div>\[[C] = \begin{bmatrix}
 	\binom nn (-1)^n &amp; \binom{n-1}{n-1}(-1)^{n-1} &amp; \dots &amp; \binom{n-n}{n-n}(-1)^0\\
 	\binom n{n-1} (-1)^{n-1} &amp; \binom{n-1}{n-2}(-1)^{n-2} &amp; \dots &amp; 0\\
 	\vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
@@ -27,7 +27,7 @@
 	\vdots	&amp;	\vdots	&amp;					\vdots						&amp;	\ddots	&amp;	\vdots	\\
 %
 	\frac{-nt_{(bpts-1)}}{t_{(bpts-1)}(1-t_{(bpts-1)})}	&amp;	\dots	&amp;	\dots	&amp;	\dots	&amp;	\frac{n-nt_{(bpts-1)}}{t_{(bpts-1)}(1-t_{(bpts-1)})} \\
-\end{bmatrix}\]</div><p>and</p><div>\[[Der2] = begin{bmatrix}
+\end{bmatrix}\]</div><p>and</p><div>\[[Der2] = \begin{bmatrix}
 	\frac{(-nt_{(1)})^2- nt_{(1)}^2}{t_{(1)}^2*(1-t_{(1)})^2}	&amp;	\dots	&amp;	\dots	&amp;	\dots	&amp;	\frac{(n-nt_{(0)})^2-nt_{(0)}^2-n(1-2t_{(0)})}{t_{(0)}^2(1-t_{(0)})^2}	\\
 %
 	\vdots	&amp;	\ddots	&amp;									\vdots											&amp;	\vdots	&amp;	\vdots	\\
@@ -35,6 +35,7 @@
 	\vdots	&amp;	\vdots	&amp;									\vdots											&amp;	\ddots	&amp;	\vdots	\\
 %
 	\frac{(-nt_{(bpts-1)})^2-nt_{(bpts-1)}^2}{t_{(bpts-1)}^2(1-t_{(bpts-1)})^2}	&amp;	\dots	&amp;	\dots	&amp;	\dots	&amp;	\frac{(n-nt_{(bpts-1)})^2-nt_{(bpts-1)}^2-n(1-2t_{(bpts-1)})}{t_{(bpts-1)}^2(1-t_{(bpts-1)})^2} \\
-\end{bmatrix}\]</div><p>which could be scalar multiplied with the base matrix in order to obtain two derivative base matrices. Of course the <span>$T[]$</span> matrix used must be reduced by eliminating the first and the last points.</p><p>The result of the operation is then:</p><div>\[\begin{split}
+\end{bmatrix}\]</div><p>which could be scalar multiplied with the base matrix in order to obtain two derivative base matrices. Of course the <span>$[T]$</span> matrix used must be reduced by eliminating the first and the last points.</p><p>The result of the operation is then:</p><div>\[\begin{split}
 	P&#39;(t) =&amp; 	Der1\cdot([T]_1^{dpts-1}[C][D])[G] \\
-	P&#39;&#39;(t) = &amp;	Der2\cdot([T]_1^{dpts-1}[C][D])[G]\]</div><footer><hr/><a class="previous" href="nurbs.html"><span class="direction">Previous</span><span class="title">NURBS Intro</span></a><a class="next" href="splineC.html"><span class="direction">Next</span><span class="title">B-Spline Curves</span></a></footer></article></body></html>
+	P&#39;&#39;(t) = &amp;	Der2\cdot([T]_1^{dpts-1}[C][D])[G]
+\end{split}\]</div><footer><hr/><a class="previous" href="nurbs.html"><span class="direction">Previous</span><span class="title">NURBS Intro</span></a><a class="next" href="splineC.html"><span class="direction">Next</span><span class="title">B-Spline Curves</span></a></footer></article></body></html>
