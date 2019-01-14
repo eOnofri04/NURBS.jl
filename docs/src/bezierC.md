@@ -106,3 +106,46 @@ J'_{n,i}(t) = \frac{1-nt}{t(1-t)}J_{n,i}(t)
 ```math
 J''_{n,i}(t) = \frac{(i-nt)^2-nt^2-i(1-2t)}{t^2(1-t)^2} J_{n,i}(t)
 ```
+defined in all the points but the first and the last (where `t = 0` and `t = 1`).
+
+### Derivatives Matrix Representation
+
+In order to enhance the matrix representation it is usefull to represent the derivatives in two matrices:
+```math
+[Der1] = \begin{bmatrix}
+	\frac{-nt_{(1)}}{t_{(1)}*(1-t_{(1)})}	&	\dots	&	\dots	&	\dots	&	\frac{n-nt_{(0)}}{t_{(0)}(1-t_{(0)})}	\\
+%
+	\vdots	&	\ddots	&					\vdots						&	\vdots	&	\vdots	\\
+	\dots	&	\dots	&	\frac{(j-1)-nt_{(i)}}{t_{(i)}(1-t_{(i)})}	&	\dots	&	\dots	\\
+	\vdots	&	\vdots	&					\vdots						&	\ddots	&	\vdots	\\
+%
+	\frac{-nt_{(bpts-1)}}{t_{(bpts-1)}(1-t_{(bpts-1)})}	&	\dots	&	\dots	&	\dots	&	\frac{n-nt_{(bpts-1)}}{t_{(bpts-1)}(1-t_{(bpts-1)})} \\
+\end{bmatrix}
+```
+and
+```math
+[Der2] = begin{bmatrix}
+	\frac{(-nt_{(1)})^2- nt_{(1)}^2}{t_{(1)}^2*(1-t_{(1)})^2}	&	\dots	&	\dots	&	\dots	&	\frac{(n-nt_{(0)})^2-nt_{(0)}^2-n(1-2t_{(0)})}{t_{(0)}^2(1-t_{(0)})^2}	\\
+%
+	\vdots	&	\ddots	&									\vdots											&	\vdots	&	\vdots	\\
+	\dots	&	\dots	&	\frac{((j-1)-nt_{(i)})^2-nt_{(i)}^2-(j-1)(1-2t_{(i)})}{t_{(i)}^2(1-t_{(i)})^2}	&	\dots	&	\dots	\\
+	\vdots	&	\vdots	&									\vdots											&	\ddots	&	\vdots	\\
+%
+	\frac{(-nt_{(bpts-1)})^2-nt_{(bpts-1)}^2}{t_{(bpts-1)}^2(1-t_{(bpts-1)})^2}	&	\dots	&	\dots	&	\dots	&	\frac{(n-nt_{(bpts-1)})^2-nt_{(bpts-1)}^2-n(1-2t_{(bpts-1)})}{t_{(bpts-1)}^2(1-t_{(bpts-1)})^2} \\
+\end{bmatrix}
+```
+
+which could be scalar multiplied with the base matrix in order to obtain two derivative base matrices.
+Of course the `T` matrix used must be reduced by eliminating the first and the last points.
+
+The result of the operation is then:
+
+```math
+\begin{split}
+	P'(t) =& 	Der1\cdot([T]_1^{dpts-1}[C][D])[G] \\
+	P''(t) = &	Der2\cdot([T]_1^{dpts-1}[C][D])[G]
+```
+
+
+
+
