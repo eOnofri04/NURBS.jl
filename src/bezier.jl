@@ -70,7 +70,7 @@ function bezier(npts::Int64, b::Array{Float64,2}, dpts::Int64)::Tuple{Array{Floa
 
 	D::Array{Float64,2} = zeros(npts, npts)
 	for i = 1:npts
-		D[i,i] = abs(C[i,1])
+		D[i,i] = abs(C[npts+1-i,1])
 	end
 
 	G::Array{Float64,2} = transpose(b)
@@ -200,7 +200,7 @@ function dbezier(npts::Int64, b::Array{Float64,2}, dpts::Int64)::Tuple{Array{Flo
 
 	D::Array{Float64,2} = zeros(npts, npts)
 	for i = 1:npts
-		D[i,i] = abs(C[i,1])
+		D[i,i] = abs(C[npts+1-i,1])
 	end
 
 	G::Array{Float64,2} = transpose(b)
