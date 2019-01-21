@@ -18,7 +18,7 @@ julia> Plasm.view(P, EV)
 
 # Arguments
 
-- `npts::Int64`: the number of the contol polygon vertices.
+- `npts::Int64`: the number of the control polygon vertices.
 - `b::Array{Float64, 2}`: 2-dimensional Array containing the control polygon vertices in the x, y, z coordinates for columns.
 - `dpts::Int64`: number of data points to be calculated on the curve.
 
@@ -123,7 +123,7 @@ julia> Plasm.view(P, EV)
 
 # Arguments
 
-- `npts::Int64`: the number of the contol polygon vertices.
+- `npts::Int64`: the number of the control polygon vertices.
 - `b::Array{Float64, 2}`: 2-dimensional Array containing the control polygon vertices in the x, y, z coordinates for columns.
 - `dpts::Int64`: number of data points to be calculated on the curve.
 
