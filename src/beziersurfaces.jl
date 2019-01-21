@@ -169,18 +169,20 @@ function mbezsurf(npts::Int64, mpts::Int64, b::Array{Float64,2}, udpts::Int64, w
     end
 
     #=== Points Vector ===#
-	xP::Array{Float64,2} = transpose(U*C*D*x*transpose(F)*transpose(E)*transpose(W))
-	yP::Array{Float64,2} = transpose(U*C*D*y*transpose(F)*transpose(E)*transpose(W))
-	zP::Array{Float64,2} = transpose(U*C*D*z*transpose(F)*transpose(E)*transpose(W))
+    UCD::Array{Float64,2} = U * C * D
+    FEW::Array{Float64,2} = transpose(W * E * F)
+	xP::Array{Float64,2} = transpose(UCD * x * FEW)
+	yP::Array{Float64,2} = transpose(UCD * y * FEW)
+	zP::Array{Float64,2} = transpose(UCD * z * FEW)
 
-	P::Array{Float64,2} = zeros(udpts * wdpts, 3)
+	P::Array{Float64,2} = zeros(3, udpts * wdpts)
 
-	for j = 1 : wdpts
-		for i = 1 : udpts
+	for i = 1 : udpts
+		for j = 1 : wdpts
 			ij::Int64 = (i-1) * udpts + j
-			P[ij, 1] = xP[i, j]
-			P[ij, 2] = yP[i, j]
-			P[ij, 3] = zP[i, j]
+			P[1, ij] = xP[i, j]
+			P[2, ij] = yP[i, j]
+			P[3, ij] = zP[i, j]
 		end
 	end
 
