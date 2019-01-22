@@ -14,14 +14,14 @@ Modifier [?] stands for a missing pseudocode algorithm.
 
 ### Chapter 2: Bezier Curves
 
- - [ ] [E] `bezier___`  Calculates a Bezier curve.
- - [ ] [E] `dbezier__` Calculates a Bezier curve and it's derivatives.
+ - [X] [E] `bezier___` Calculates a Bezier curve using matrix method.
+ - [X] [E] `dbezier__` Calculates a Bezier curve and it's derivatives.
 
 
 ### Chapter 3: B-spline Curves
  
  - [X] `basis____` Calculates the B-spline basis functions.
- - [ ] [GM] `bsplfit__` [+] Subroutine to fit a B-spline curve using an open uniform knot vector. Call `basis, knot, param`.
+ - [X] [T] [D] `bsplfit__` [+] Subroutine to fit a B-spline curve using an open uniform knot vector. Call `basis, knot, param`.
  - [X] `bspline__` Calculates a B-spline curve. Call `basis, knot`.
  - [X] `bsplineu_` Calculates a periodic B-spline curve. Call `basis, knotu`.
  - [X] `dbasis___` Calculates the B-spline basis functions and derivatives.
@@ -29,37 +29,36 @@ Modifier [?] stands for a missing pseudocode algorithm.
  - [X] `dbspline_` Calculates a B-spline curve and derivatives. Call `dbasis, knot`.
  - [X] `dbsplineu` Calculates a periodic B-spline curve and derivatives. Call `knotu, dbasisu`.
  - [X] `knot_____` Calculates an open knot vector.
- - [ ] [G] `knotc____` Calculates a chord length approximation open knot vector.
+ - [X] `knotc____` Calculates a chord length approximation open knot vector.
  - [X] `knotu____` Calculates a periodic knot vector.
- - [ ] [P] `matpbspl_` [+] Generate a B-spline curve using matrix methods and a periodic uniform knot vector. Call `nmatrix`.
- - [ ] [P] `nmatrix__` [+] Calculate the general B-spline periodic basis matrix.
- - [ ] [P] `param____` Calculates the chord length paramter values.
- - [ ] [G] `raise23` [+]
- - [ ] [G] `raise12` [+]
- - [ ] [GM] `remknot` [+]
+ - [X] [T] [D] `matpbspl_` [+] Generate a B-spline curve using matrix methods and a periodic uniform knot vector. Call `nmatrix`.
+ - [X] [T] [D] `nmatrix__` [+] Calculate the general B-spline periodic basis matrix.
+ - [X] [T] [D] `param____` Calculates the chord length paramter values.
+ - [X] `raise23` [+]
+ - [X] `raise12` [+]
+ - [ ] `remknot` [+]
  
 
 
-### Chapter 4: Rational B-spline (NURBS) Curves
+### Chapter 4: Rational B-spline Curves (NURBC)
 
  - [X] `knot_____` [-] Calculates an open knot vector.
  - [X] `knotu____` [-] Calculates a periodic knot vector.
- - [X] `rbasis___` Calculates the rational B-spline basis functions.
- - [X] `rbspline_` Calculates an open rational B-spline curve. Call `rbasis, knot`.
- - [X] `rbsplinu_` Calculates a periodic rational B-spline curve. Call `rbasis, knotu`.
+ - [ ] `rbasis___` Calculates the rational B-spline basis functions.
+ - [ ] `rbspline_` Calculates an open rational B-spline curve. Call `rbasis, knot`.
+ - [ ] `rbsplinu_` Calculates a periodic rational B-spline curve. Call `rbasis, knotu`.
 
 
 ### Chapter 5: Bezier Surface
 
- - [ ] `bezsurf__` Calculates a Bezier surface.
- - [ ] `mbezsurf_` [+] Subroutine to calculate a Bezier surface using matrix methods.
+ - [X] `bezsurf__` Calculates a Bezier surface using matrix method.
 
 ### Chapter 6: B-spline Surfaces
 
  - [X] `basis____` [-] Calculates the B-spline basis functions.
- - [ ] [P] `bsplsurf_` Calculates a B-spline surface. Call `basis, knot`.
- - [ ] [P] `bspsurfu_` Calculates a periodic B-spline surface. Call `knotu, basis`.
- - [ ] [P] `dbsurf___` Calculates the B-spline basis functions and derivatives. Call `dbasis, knot`.
+ - [X] [D] `bsplsurf_` Calculates a B-spline surface. Call `basis, knot`.
+ - [X] [T] [D] `bspsurfu_` Calculates a periodic B-spline surface. Call `knotu, basis`.
+ - [X] [D] `dbsurf___` Calculates the B-spline basis functions and derivatives. Call `dbasis, knot`.
  - [X] `dbasis___` [-] Calculates a B-spline surface and derivatives.
  - [X] `knot_____` [-] Calculates an open knot vector.
  - [X] `knotu____` [-] Calculates a periodic knot vector.
@@ -70,19 +69,18 @@ Modifier [?] stands for a missing pseudocode algorithm.
  - [X] `basis____` [-] Calculates the B-spline basis functions.
  - [ ] `frbsurf__` [?] Calculates and test the fast B-spline surface algorithm. Call `basis, knot, sumrbas`
  - [X] `knot_____` [-] Calculates an open knot vector.
- - [ ] [P] `rbspsurf_` Calculates a rational B-spline (NURBS) surface. Call `knot, basis, sumrbas`.
- - [ ] [P] `sumrbas__` [+] Calculate the sum of the nonrational basis functions.
- - [ ] [GM] `bsurfnaive`
- - [ ] [GM] `rbsurf`
+ - [X] `rbspsurf_` Calculates a rational B-spline (NURBS) surface. Call `knot, basis, sumrbas`.
+ - [X] `sumrbas__` [+] Calculate the sum of the nonrational basis functions.
+ - [ ] [ ] `rbsurf`
 
 ## Summary
 
- **Chap** | **No.** | **Done**
-----------|---------|----------
- 2        |     2   |    0
- 3        |    17   |    0
- 4        |     5   |    0
- 5        |     2   |    0
- 6        |     7   |    0
- 7        |     6   |    0
- **Tot**  |    39   |    0
+ **Chap** | **No.** | **Test** | **Doc** 
+----------|---------|----------|---------
+ 2        |     2   |     2    |     2
+ 3        |    17   |    12    |    12
+ 4        |     5   |     2    |     2
+ 5        |     1   |     0    |     1
+ 6        |     7   |     6    |     4
+ 7        |     6   |     4    |     4
+ **Tot**  |    39   |    26    |    25
