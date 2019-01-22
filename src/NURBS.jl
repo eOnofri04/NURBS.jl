@@ -4,7 +4,7 @@ module NURBS
 	export basis, dbasis, dbasisu
 	export bspline, bsplineu, dbspline, dbsplineu, matpbspl, nmatrix
 	#export rbasis, rbspline, rbsplinu
-	export bezsurf, mbezsurf
+	export bezsurf
 	export bsplsurf, bspsurfu, dbsurf
 	export frbsurf, rbspsurf
 	export raise23, raise45

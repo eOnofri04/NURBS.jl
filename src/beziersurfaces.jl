@@ -1,21 +1,7 @@
 export bezsurf, mbezsurf
 
 """
-	bezsurf()
-
-Calculate a Bezier surface.
-"""
-
-function bezsurf()
-	#[...]
-end
-
-
-#-----------------------------------------------------------------------
-
-
-"""
-	mbezsurf(npts, mptsg, b[], udpts, wdpts)
+	bezsurf(npts, mptsg, b[], udpts, wdpts)
 
 Calculate a Bezier surface over the `npts` by `mpts` control net points in `b`.
 
@@ -28,7 +14,7 @@ Here:
 This structure as it is formed could be directly imported in Plasm module by typing:
 ```julia
 julia> P, EV, FV = bezier(npts, b[], dpts);
-julia> Plasm.view(P, EV, FV)
+julia> Plasm.view(Plasm.mkpol(P,FV))
 ```
 
 ---
@@ -58,7 +44,7 @@ julia>
 _By Elia Onofri_
 """
 
-function mbezsurf(npts::Int64, mpts::Int64, b::Array{Float64,2}, udpts::Int64, wdpts::Int64)::Tuple{Array{Float64,2}, Array{Array{Int64,1},1}, Array{Array{Int64,1},1}}
+function bezsurf(npts::Int64, mpts::Int64, b::Array{Float64,2}, udpts::Int64, wdpts::Int64)::Tuple{Array{Float64,2}, Array{Array{Int64,1},1}, Array{Array{Int64,1},1}}
 
 	@assert npts*mpts == length(b[1,:]) ("ERROR: there are not npts * mpts = $(npts) * $(mpts) = $(npts * mpts) points of the net in b[]")
 
