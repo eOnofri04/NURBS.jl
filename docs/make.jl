@@ -8,7 +8,7 @@ makedocs(
 	assets = ["assets/nurbs.css", "assets/logo.png"],
 	pages = [
 		"Home" => "index.md",
-		"Getting Started" => "gettingStarted.md"
+		"Getting Started" => "gettingStarted.md",
 		"Curves" => [
 			"Bezier Curves" => "bezierC.md",
 			"B-Spline Curves" => "splineC.md",
