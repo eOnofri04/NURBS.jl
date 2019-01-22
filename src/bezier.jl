@@ -18,7 +18,7 @@ julia> Plasm.view(P, EV)
 
 # Arguments
 
-- `npts::Int64`: the number of the contol polygon vertices.
+- `npts::Int64`: the number of the control polygon vertices.
 - `b::Array{Float64, 2}`: 2-dimensional Array containing the control polygon vertices in the x, y, z coordinates for columns.
 - `dpts::Int64`: number of data points to be calculated on the curve.
 
@@ -70,7 +70,7 @@ function bezier(npts::Int64, b::Array{Float64,2}, dpts::Int64)::Tuple{Array{Floa
 
 	D::Array{Float64,2} = zeros(npts, npts)
 	for i = 1:npts
-		D[i,i] = abs(C[i,1])
+		D[i,i] = abs(C[npts+1-i,1])
 	end
 
 	G::Array{Float64,2} = transpose(b)
@@ -123,7 +123,7 @@ julia> Plasm.view(P, EV)
 
 # Arguments
 
-- `npts::Int64`: the number of the contol polygon vertices.
+- `npts::Int64`: the number of the control polygon vertices.
 - `b::Array{Float64, 2}`: 2-dimensional Array containing the control polygon vertices in the x, y, z coordinates for columns.
 - `dpts::Int64`: number of data points to be calculated on the curve.
 
@@ -200,7 +200,7 @@ function dbezier(npts::Int64, b::Array{Float64,2}, dpts::Int64)::Tuple{Array{Flo
 
 	D::Array{Float64,2} = zeros(npts, npts)
 	for i = 1:npts
-		D[i,i] = abs(C[i,1])
+		D[i,i] = abs(C[npts+1-i,1])
 	end
 
 	G::Array{Float64,2} = transpose(b)
