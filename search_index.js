@@ -13,7 +13,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "NURBS.jl",
     "category": "section",
-    "text": "NURBS.jl (or Non Uniform Rational B-Spline Surfaces) is a Julia library to build parametrical curves and parametrical surface based on the interpolation of polynomial bases. This library is developed by:Elia Onofri - Ln (elia.onofri4@gmail.com)\nGianmarco Caramitti (g.caramitti@gmail.com)\nPaolo Macciacchera (polmacra@outlook.it)\nGiuseppe Santorelli (giu.santorelli15@gmail.com)and would be maintained by the Computational Visual Design Laboratory (CVDLAB) of Università degli Studi di Roma Tre."
+    "text": "NURBS.jl (or Non Uniform Rational B-Spline Surfaces) is a Julia library to build parametrical curves and parametrical surface based on the interpolation of polynomial bases.In this documentation it is explained a little brief of theory and how to apply it in computer science."
 },
 
 {
@@ -21,7 +21,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Home",
     "title": "Dependencies",
     "category": "section",
-    "text": "NURBS.jl has no dependencies but is build to work with:Plasm"
+    "text": "NURBS.jl has no dependencies but is build to work with:Plasm\nLinear Algebraic Representation"
 },
 
 {
@@ -33,19 +33,35 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "nurbs.html#",
-    "page": "NURBS Intro",
-    "title": "NURBS Intro",
+    "location": "index.html#Index-1",
+    "page": "Home",
+    "title": "Index",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "gettingStarted.html#",
+    "page": "Getting Started",
+    "title": "Getting Started",
     "category": "page",
     "text": ""
 },
 
 {
-    "location": "nurbs.html#A-short-introduction-to-NURBS-1",
-    "page": "NURBS Intro",
-    "title": "A short introduction to NURBS",
+    "location": "gettingStarted.html#Installation-1",
+    "page": "Getting Started",
+    "title": "Installation",
     "category": "section",
-    "text": ""
+    "text": "If you have not done so already, download and install Julia.This package was developed with julia 0.6.4 but it should be supported also on julia 1.x.x.To install NURBS package first you have to download this repository.Then start julia and navigate to the folder called NURBS.jl (with the command ;cd); here runinclude(\"src/NURBS.jl\")\nusing NURBSIf you want, you can test if everithyng is working fine by runninginclude(\"test/runtests.jl\")this will run all the tests written so far and checking all is working properly.If you want to use a Graphic Interface to preview the curves and the surfaces you are going to build up you can also use Plasm package developed by CVD-LAB by runningpkg.add(\"Plasm\")"
+},
+
+{
+    "location": "gettingStarted.html#First-Steps-1",
+    "page": "Getting Started",
+    "title": "First Steps",
+    "category": "section",
+    "text": "!ToDo"
 },
 
 {
@@ -222,6 +238,62 @@ var documenterSearchIndex = {"docs": [
     "title": "Rational B-Spline Surfaces",
     "category": "section",
     "text": ""
+},
+
+{
+    "location": "authors.html#",
+    "page": "Authors",
+    "title": "Authors",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "authors.html#Authors-1",
+    "page": "Authors",
+    "title": "Authors",
+    "category": "section",
+    "text": "This repository was developed by four students at RomaTre universisty."
+},
+
+{
+    "location": "authors.html#[Elia-Onofri](https://github.com/eOnofri04)-1",
+    "page": "Authors",
+    "title": "Elia Onofri",
+    "category": "section",
+    "text": "Ln elia.onofri4@gmail.com"
+},
+
+{
+    "location": "authors.html#[Gianmarco-Caramitti](https://github.com/cgianmarco)-1",
+    "page": "Authors",
+    "title": "Gianmarco Caramitti",
+    "category": "section",
+    "text": "g.caramitti@gmail.com"
+},
+
+{
+    "location": "authors.html#[Paolo-Macciacchera](https://github.com/pmacciacchera)-1",
+    "page": "Authors",
+    "title": "Paolo Macciacchera",
+    "category": "section",
+    "text": "polmacra@outlook.it"
+},
+
+{
+    "location": "authors.html#[Giuseppe-Santorelli](https://github.com/giusantorelli)-1",
+    "page": "Authors",
+    "title": "Giuseppe Santorelli",
+    "category": "section",
+    "text": "giu.santorelli15@gmail.com"
+},
+
+{
+    "location": "authors.html#Mantainers-1",
+    "page": "Authors",
+    "title": "Mantainers",
+    "category": "section",
+    "text": "This repository would be maintained by the Computational Visual Design Laboratory (CVDLAB) of Università degli Studi di Roma Tre."
 },
 
 ]}
