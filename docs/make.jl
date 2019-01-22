@@ -19,6 +19,6 @@ makedocs(
 			"B-Spline Surfaces" => "splineS.md",
 			"Rational B-Spline Surfaces" => "rSplineS.md"
 		],
-		"Authors" => "authors.md"
+		"Authors" => "authors.md",
 	]
 )
