@@ -2,7 +2,7 @@ export bsplsurf, bspsurfu, dbsurf
 
 
 """
-UNTESTED	bsplsurf(B[], ordx, ordy, npts, mpts, p1, p2)
+	bsplsurf(B[], ordx, ordy, npts, mpts, p1, p2)
 
 Calculate a Cartesian product B-spline surface using open uniform knot vectors.
 
