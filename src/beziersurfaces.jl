@@ -67,20 +67,14 @@ function bezsurf(npts::Int64, mpts::Int64, b::Array{Float64,2}, udpts::Int64, wd
 		end
 	end
 
-	C::Array{Float64,2} = zeros(npts, npts)
-	D::Array{Float64,2} = zeros(npts, npts)
-	E::Array{Float64,2} = zeros(mpts, mpts)
-	F::Array{Float64,2} = zeros(mpts, mpts)
-	U::Array{Float64,2} = ones(udpts, npts)
-	W::Array{Float64,2} = ones(wdpts, mpts)
-	EV::Array{Array{Int64,1},1} = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
-	FV::Array{Array{Int64,1},1} = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
-
 	#=== SYNC BLOCK BEGIN ===#
 	#=== all the following @async are totally indipendent blocks ===#
 	@sync begin
 	
 		#=== N = C * D ===#
+		C::Array{Float64,2} = zeros(npts, npts)
+		D::Array{Float64,2} = zeros(npts, npts)
+
 		@async begin
 			for i = 0 : n
 				for j = 0 : (n - i)
@@ -98,6 +92,9 @@ function bezsurf(npts::Int64, mpts::Int64, b::Array{Float64,2}, udpts::Int64, wd
 		end
 
 		#=== M = E * F ===#
+		E::Array{Float64,2} = zeros(mpts, mpts)
+		F::Array{Float64,2} = zeros(mpts, mpts)
+
 		@async begin
 			for i = 0 : m
 				for j = 0 : (m - i)
@@ -115,6 +112,8 @@ function bezsurf(npts::Int64, mpts::Int64, b::Array{Float64,2}, udpts::Int64, wd
 		end
 
 		#=== U = [u^n ... u 1] ===#
+		U::Array{Float64,2} = ones(udpts, npts)
+
 		@async begin
 			u::Float64 = 0.0
 			for i = 1 : udpts
@@ -126,6 +125,8 @@ function bezsurf(npts::Int64, mpts::Int64, b::Array{Float64,2}, udpts::Int64, wd
 		end
 
 		#=== W = [w^m ... w 1] ===#
+		W::Array{Float64,2} = ones(wdpts, mpts)
+
 		@async begin
 			w::Float64 = 0.0
 			for i = 1 : wdpts
@@ -137,6 +138,8 @@ function bezsurf(npts::Int64, mpts::Int64, b::Array{Float64,2}, udpts::Int64, wd
 		end
 
 		#=== Edge Vector ===#
+		EV::Array{Array{Int64,1},1} = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
+
 		@async begin
 			for i = 1 : ((udpts * wdpts) - 1)
 				app = Array{Int64}(2)
@@ -154,6 +157,8 @@ function bezsurf(npts::Int64, mpts::Int64, b::Array{Float64,2}, udpts::Int64, wd
 		end
 
 		#=== Faces Vector ===#
+		FV::Array{Array{Int64,1},1} = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
+
 		@async begin
 			for j = 0 : (udpts - 2)
 				for i = 1 : wdpts - 1
