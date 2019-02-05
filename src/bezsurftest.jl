@@ -7,6 +7,7 @@ function runner()
 	runn()
 	addprocs(9)
 	runn()
+	1
 end
 
 function runn()

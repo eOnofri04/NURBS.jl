@@ -111,4 +111,8 @@ using Base.Test
         @test bezsurf3(5, 5, arr, 5, 5)[2] == EV
         @test bezsurf3(5, 5, arr, 5, 5)[3] == FV
     end
+
+    @testset "Runner" begin
+        @test runner() == 1
+    end
 end
