@@ -1,4 +1,4 @@
-export bezsurf, mbezsurf
+export bezsurf
 
 """
 	bezsurf(npts, mptsg, b[], udpts, wdpts)
