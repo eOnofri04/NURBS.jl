@@ -13,9 +13,10 @@ end
 function runn()
 	npts = 50
     mpts = 50
-    udpts = 2500
-    wdpts = 2500
+    udpts = 500
+    wdpts = 500
     bplus = zeros(3, npts * mpts)
+    tests = 20
 
     for i = 1 : npts
         ki = i/2
@@ -37,7 +38,7 @@ function runn()
 	avg2 = 0.0
 	avg3 = 0.0
 
-	for i = 1 : 50
+	for i = 1 : tests
 	    xj = @elapsed bezsurfj(npts, mpts, bplus, udpts, wdpts)
 	    x1 = @elapsed bezsurf1(npts, mpts, bplus, udpts, wdpts)
 	    x2 = @elapsed bezsurf2(npts, mpts, bplus, udpts, wdpts)
@@ -47,10 +48,10 @@ function runn()
 	    avg2 = avg2 + x2
 	    avg3 = avg3 + x3
 	end
-	avg1 /= 50
-	avg2 /= 50
-	avg3 /= 50
-	avgj /= 50
+	avg1 /= tests
+	avg2 /= tests
+	avg3 /= tests
+	avgj /= tests
 
 	println("average julia = $(avgj)")
 	println("average par 1 = $(avg1)")
