@@ -72,10 +72,12 @@ function bezsurf(npts::Int64, mpts::Int64, b::Array{Float64,2}, udpts::Int64, wd
 	@sync begin
 	
 		#=== N = C * D ===#
-		C::Array{Float64,2} = zeros(npts, npts)
-		D::Array{Float64,2} = zeros(npts, npts)
+		C::Array{Float64,2} = zeros(2, 2)
+		D::Array{Float64,2} = zeros(2, 2)
 
 		@async begin
+			C = zeros(npts, npts)
+			D = zeros(npts, npts)
 			for i = 0 : n
 				for j = 0 : (n - i)
 					if (n-j-i)%2==0
@@ -92,10 +94,12 @@ function bezsurf(npts::Int64, mpts::Int64, b::Array{Float64,2}, udpts::Int64, wd
 		end
 
 		#=== M = E * F ===#
-		E::Array{Float64,2} = zeros(mpts, mpts)
-		F::Array{Float64,2} = zeros(mpts, mpts)
+		E::Array{Float64,2} = zeros(2, 2)
+		F::Array{Float64,2} = zeros(2, 2)
 
 		@async begin
+			E = zeros(mpts, mpts)
+			F = zeros(mpts, mpts)
 			for i = 0 : m
 				for j = 0 : (m - i)
 					if (m - j - i) % 2 == 0
@@ -112,9 +116,10 @@ function bezsurf(npts::Int64, mpts::Int64, b::Array{Float64,2}, udpts::Int64, wd
 		end
 
 		#=== U = [u^n ... u 1] ===#
-		U::Array{Float64,2} = ones(udpts, npts)
+		U::Array{Float64,2} = zeros(2, 2)
 
 		@async begin
+			U = ones(udpts, npts)
 			u::Float64 = 0.0
 			for i = 1 : udpts
 				for j = 0 : n-1  #Per j=0 il valore è 1 ed è già impostato
@@ -125,9 +130,10 @@ function bezsurf(npts::Int64, mpts::Int64, b::Array{Float64,2}, udpts::Int64, wd
 		end
 
 		#=== W = [w^m ... w 1] ===#
-		W::Array{Float64,2} = ones(wdpts, mpts)
+		W::Array{Float64,2} = zeros(2, 2)
 
 		@async begin
+			W = ones(wdpts, mpts)
 			w::Float64 = 0.0
 			for i = 1 : wdpts
 				for j = 0 : m-1  #Per j=0 il valore è 1 ed è già impostato
