@@ -10,6 +10,10 @@ In a proper manner, this should be the starting point toward a future collaborat
 
 To do so, outputs are formatted in order to be simply read by [Plasm](https://github.com/cvdlab/Plasm.jl) graphic interface.
 
+## Getting Started
+
+To get start using this library please refere to the [Getting Started Page](https://eonofri04.github.io/NURBS.jl/gettingStarted.html) of the documentation.
+
 ## Structure of the Repository
 
  - docs: Contains all the documents related to this package.
@@ -26,13 +30,15 @@ To do so, outputs are formatted in order to be simply read by [Plasm](https://gi
 The [Documentation](https://eOnofri04.github.io/NURBS.jl/) gives a little background about theory and implementation of NURBc and NURBs.
 
 ## Authors
- - [Elia Onofri](https://github.com/eOnofri04) - [Ln](https://www.linkedin.com/in/elia-onofri-80b403173/) (elia.onofri4@gmail.com)
- - [Paolo Macciacchera](https://github.com/pmacciacchera) (polmacra@outlook.it)
- - [Giuseppe Santorelli](https://github.com/giusantorelli) (giu.santorelli15@gmail.com)
+ - Team Leader, Bezier [Elia Onofri](https://github.com/eOnofri04) - [Ln](https://www.linkedin.com/in/elia-onofri-80b403173/) (elia.onofri4@gmail.com)
+ - NUBC & NURBC [Giuseppe Santorelli](https://github.com/giusantorelli) (giu.santorelli15@gmail.com)
+ - NUBS & NURBS [Paolo Macciacchera](https://github.com/pmacciacchera) (polmacra@outlook.it)
+
+More informations about the authors could be found in the (Authors page)[https://eonofri04.github.io/NURBS.jl/authors.html] of the documentation.
 
 ## Project Managers
- - [Alberto Paoluzzi](https://github.com/apaoluzzi)
- - [Roberto D'Autilia](https://github.com/rdautilia)
+ - Professor [Alberto Paoluzzi](https://github.com/apaoluzzi)
+ - Professor [Roberto D'Autilia](https://github.com/rdautilia)
  
 ## Bibliography Link
  - An Introduction to NURBS, David F. Rogers [Rog00]
