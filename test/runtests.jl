@@ -9,3 +9,5 @@ include("beziersurfaces.jl")
 include("bsurfaces.jl")
 include("rbsurfaces.jl")
 include("raise.jl")
+
+include("bezsurftest.jl")

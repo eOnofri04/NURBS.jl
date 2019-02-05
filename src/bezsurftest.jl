@@ -1,4 +1,4 @@
-export bezsurfj, bezsurf1, bezsurf2, bezsurf3, run, runner
+export bezsurfj, bezsurf1, bezsurf2, bezsurf3, runn, runner
 
 
 #=== RUN ===#
@@ -56,59 +56,6 @@ function runn()
 	println("average par 2 = $(avg2)")
 	println("average par 3 = $(avg3)")
 
-end
-
-function run()
-	npts = 50
-    mpts = 50
-    udpts = 2500
-    wdpts = 2500
-    bplus = zeros(3, npts * mpts)
-
-    for i = 1 : npts
-        ki = i/2
-        for j = 1 : mpts
-            kj = j /2
-            r = sqrt((ki)^2+(kj)^2)
-            if (r == 0)
-                r = 0.000001
-            end
-            ij = (i-1)*npts + j
-            bplus[1,ij] = i
-            bplus[2,ij] = j# + i/10
-            bplus[3,ij] = i+j
-        end
-    end
-
-    min = [10.0, 10, 10, 10]
-	avg = [0.0, 0, 0, 0]
-	maj = [0.0, 0, 0, 0]
-	x   = [0.0, 0, 0, 0]
-
-	for i = 1 : 20
-	    x[4] = @elapsed bezsurfj(npts, mpts, bplus, udpts, wdpts)
-	    x[1] = @elapsed bezsurf1(npts, mpts, bplus, udpts, wdpts)
-	    x[2] = @elapsed bezsurf2(npts, mpts, bplus, udpts, wdpts)
-	    x[3] = @elapsed bezsurf3(npts, mpts, bplus, udpts, wdpts)
-	    for j = 1 : 4
-	    	if (x[j] < min[j])
-	    	    min[j] = x[j]
-	    	end
-	    	if (x[j] > maj[j])
-	    	    maj[j] = x[j]
-	    	end
-	    	avg[j] += x[j]
-	    end
-	end
-	avg[1] /= 20
-	avg[2] /= 20
-	avg[3] /= 20
-	avg[4] /= 20
-	for j = 1 : 4
-		println("minimum $j = $(min[j])")
-		println("average $j = $(avg[j])")
-		println("maximum $j = $(maj[j])")
-	end
 end
 
 #=== DEFAULT ===#
