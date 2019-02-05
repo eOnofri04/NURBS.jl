@@ -1,4 +1,4 @@
-export bsplsurf, bspsurfu, dbsurf
+export bsplsurf, bsplsurfu, dbsurf
 
 
 """
@@ -21,15 +21,63 @@ Calculate a Cartesian product B-spline surface using open uniform knot vectors.
 
 # Examples
 ```jldoctest
-julia> 
-```
+julia> b = [
+        0.0 0.0 0.0 1.0 1.0 1.0 2.0 2.0 2.0;
+        0.0 2.0 4.0 0.0 2.0 4.0 0.0 2.0 4.0;
+        2.0 0.0 2.0 0.0 1.0 0.0 2.0 0.0 2.0
+       ]
+3×9 Array{Float64,2}:
+ 0.0  0.0  0.0  1.0  1.0  1.0  2.0  2.0  2.0
+ 0.0  2.0  4.0  0.0  2.0  4.0  0.0  2.0  4.0
+ 2.0  0.0  2.0  0.0  1.0  0.0  2.0  0.0  2.0
 
-```jldoctest
-julia> 
-```
+julia> bsplsurf(b, 2, 2, 3, 3, 5, 5)[1]
+3×25 Array{Float64,2}:
+ 0.0  0.0  0.0  0.0  0.0  0.5  0.5   0.5  0.5   0.5  1.0  …  1.0  1.5  1.5   1.5  1.5   1.5  2.0  2.0  2.0  2.0  2.0
+ 0.0  1.0  2.0  3.0  4.0  0.0  1.0   2.0  3.0   4.0  0.0     4.0  0.0  1.0   2.0  3.0   4.0  0.0  1.0  2.0  3.0  4.0
+ 2.0  1.0  0.0  1.0  2.0  1.0  0.75  0.5  0.75  1.0  0.0     0.0  1.0  0.75  0.5  0.75  1.0  2.0  1.0  0.0  1.0  2.0
 
-```jldoctest
-julia> 
+julia> bsplsurf(b, 2, 2, 3, 3, 5, 5)[2]
+44-element Array{Array{Int64,1},1}:
+ [1, 2]  
+ [2, 3]  
+ [3, 4]  
+ [4, 5]  
+ [5, 6]  
+ [6, 7]  
+ [7, 8]  
+ [8, 9]  
+ [9, 10] 
+ [10, 11]
+ ⋮       
+ [12, 17]
+ [13, 18]
+ [14, 19]
+ [15, 20]
+ [16, 21]
+ [17, 22]
+ [18, 23]
+ [19, 24]
+ [20, 25] 
+
+julia> bsplsurf(b, 2, 2, 3, 3, 5, 5)[3]
+16-element Array{Array{Int64,1},1}:
+ [1, 2, 6, 7]    
+ [2, 3, 7, 8]    
+ [3, 4, 8, 9]    
+ [4, 5, 9, 10]   
+ [6, 7, 11, 12]  
+ [7, 8, 12, 13]  
+ [8, 9, 13, 14]  
+ [9, 10, 14, 15] 
+ [11, 12, 16, 17]
+ [12, 13, 17, 18]
+ [13, 14, 18, 19]
+ [14, 15, 19, 20]
+ [16, 17, 21, 22]
+ [17, 18, 22, 23]
+ [18, 19, 23, 24]
+ [19, 20, 24, 25]
 ```
 
 ---
@@ -105,7 +153,7 @@ end
 #-----------------------------------------------------------------------
 
 """
-UNTESTED	bspsurfu(B[], ordx, ordy, npts, mpts, p1, p2)
+	bsplsurfu(B[], ordx, ordy, npts, mpts, p1, p2)
 
 Calculate a Cartesian product B-spline surface using periodic uniform knot vectors.
 
@@ -124,15 +172,63 @@ Calculate a Cartesian product B-spline surface using periodic uniform knot vecto
 
 # Examples
 ```jldoctest
-julia> 
-```
+julia> b = [
+        0.0 0.0 0.0 1.0 1.0 1.0 2.0 2.0 2.0;
+        0.0 2.0 4.0 0.0 2.0 4.0 0.0 2.0 4.0;
+        2.0 0.0 2.0 0.0 1.0 0.0 2.0 0.0 2.0
+       ]
+3×9 Array{Float64,2}:
+ 0.0  0.0  0.0  1.0  1.0  1.0  2.0  2.0  2.0
+ 0.0  2.0  4.0  0.0  2.0  4.0  0.0  2.0  4.0
+ 2.0  0.0  2.0  0.0  1.0  0.0  2.0  0.0  2.0
 
-```jldoctest
-julia> 
-```
+julia> bsplsurfu(b, 2, 2, 3, 3, 5, 5)[1]
+3×25 Array{Float64,2}:
+ 0.0  0.0  0.0  0.0  0.0  0.5  0.5   …  1.5   1.5  2.0  2.0  2.0  2.0  2.0
+ 0.0  1.0  2.0  3.0  4.0  0.0  1.0      3.0   4.0  0.0  1.0  2.0  3.0  4.0
+ 2.0  1.0  0.0  1.0  2.0  1.0  0.75     0.75  1.0  2.0  1.0  0.0  1.0  2.0
 
-```jldoctest
-julia> 
+julia> bsplsurfu(b, 2, 2, 3, 3, 5, 5)[2]
+44-element Array{Array{Int64,1},1}:
+ [1, 2]  
+ [2, 3]  
+ [3, 4]  
+ [4, 5]  
+ [5, 6]  
+ [6, 7]  
+ [7, 8]  
+ [8, 9]  
+ [9, 10] 
+ [10, 11]
+ ⋮       
+ [12, 17]
+ [13, 18]
+ [14, 19]
+ [15, 20]
+ [16, 21]
+ [17, 22]
+ [18, 23]
+ [19, 24]
+ [20, 25] 
+
+julia> bsplsurfu(b, 2, 2, 3, 3, 5, 5)[3]
+16-element Array{Array{Int64,1},1}:
+ [1, 2, 6, 7]    
+ [2, 3, 7, 8]    
+ [3, 4, 8, 9]    
+ [4, 5, 9, 10]   
+ [6, 7, 11, 12]  
+ [7, 8, 12, 13]  
+ [8, 9, 13, 14]  
+ [9, 10, 14, 15] 
+ [11, 12, 16, 17]
+ [12, 13, 17, 18]
+ [13, 14, 18, 19]
+ [14, 15, 19, 20]
+ [16, 17, 21, 22]
+ [17, 18, 22, 23]
+ [18, 19, 23, 24]
+ [19, 20, 24, 25]
 ```
 
 ---
@@ -208,7 +304,7 @@ end
 #-----------------------------------------------------------------------
 
 """
-UNTESTED	dbsurf(B[], ordx, ordy, npts, mpts, p1, p2)
+	dbsurf(B[], ordx, ordy, npts, mpts, p1, p2)
 
 Calculate a Cartesian product B-spline surface and its derivatives using open uniform knot vectors.
 
@@ -228,15 +324,22 @@ Calculate a Cartesian product B-spline surface and its derivatives using open un
 
 # Examples
 ```jldoctest
-julia> 
-```
+julia> b = [
+        0.0 0.0 0.0 1.0 1.0 1.0 2.0 2.0 2.0;
+        0.0 2.0 4.0 0.0 2.0 4.0 0.0 2.0 4.0;
+        2.0 0.0 2.0 0.0 1.0 0.0 2.0 0.0 2.0
+       ]
+3×9 Array{Float64,2}:
+ 0.0  0.0  0.0  1.0  1.0  1.0  2.0  2.0  2.0
+ 0.0  2.0  4.0  0.0  2.0  4.0  0.0  2.0  4.0
+ 2.0  0.0  2.0  0.0  1.0  0.0  2.0  0.0  2.0
 
-```jldoctest
-julia> 
-```
-
-```jldoctest
-julia> 
+julia> bsplsurf(arr, 4, 4, 5, 5, 100, 100)[1] == dbsurf(arr, 4, 4, 5, 5, 100, 100)[1]
+true
+julia> bsplsurf(arr, 4, 4, 5, 5, 100, 100)[2] == dbsurf(arr, 4, 4, 5, 5, 100, 100)[7]
+true
+julia> bsplsurf(arr, 4, 4, 5, 5, 100, 100)[3] == dbsurf(arr, 4, 4, 5, 5, 100, 100)[8]
+true
 ```
 
 ---
