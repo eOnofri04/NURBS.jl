@@ -253,7 +253,7 @@ var documenterSearchIndex = {"docs": [
     "page": "Authors",
     "title": "Authors",
     "category": "section",
-    "text": "This repository was developed by four students at RomaTre universisty."
+    "text": "This repository was developed by three students at RomaTre universisty."
 },
 
 {
@@ -262,14 +262,6 @@ var documenterSearchIndex = {"docs": [
     "title": "Elia Onofri",
     "category": "section",
     "text": "Ln elia.onofri4@gmail.com"
-},
-
-{
-    "location": "authors.html#[Gianmarco-Caramitti](https://github.com/cgianmarco)-1",
-    "page": "Authors",
-    "title": "Gianmarco Caramitti",
-    "category": "section",
-    "text": "g.caramitti@gmail.com"
 },
 
 {
