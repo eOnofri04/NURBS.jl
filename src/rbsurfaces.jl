@@ -73,9 +73,9 @@ function rbspsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mp
     stepu = x[nplusc] / (p1 - 1)
     stepw = y[mplusc] / (p2 - 1)
     for u = 0 : stepu : x[nplusc]
-        nbasis = basis(npts, ordx, u, x)
+        nbasis = rbasis(npts, ordx, u, x, B[4,:])
         for w = 0 : stepw : y[mplusc]
-            mbasis = basis(mpts, ordy, w, y)
+            mbasis = rbasis(mpts, ordy, w, y, B[4,:])
             sum = sumrbas(B, nbasis, mbasis, npts, mpts)
             icount = icount + 1
             for i = 1 : npts
