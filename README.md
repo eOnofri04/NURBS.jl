@@ -37,7 +37,7 @@ The [Documentation](https://eOnofri04.github.io/NURBS.jl/) gives a little backgr
 More informations about the authors could be found in the (Authors page)[https://eonofri04.github.io/NURBS.jl/authors.html] of the documentation.
 
 ## Project Managers
- - Professor [Alberto Paoluzzi](https://github.com/apaoluzzi)
+ - Professor [Alberto Paoluzzi](http://paoluzzi.dia.uniroma3.it)
  - Professor [Roberto D'Autilia](https://github.com/rdautilia)
  
 ## Bibliography Link
