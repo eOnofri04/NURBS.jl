@@ -1,20 +1,5 @@
-export frbsurf, rbspsurf
+export rbspsurf
 
-
-"""
-	frbsrf(b, k, l, npts, mpts, p1, p2, p_itest, ibnum, bold, niku, mjlw, rsumij, savrsumij)
-
-Calculates and test the fast B-spline surface algorithm.
-
-Call: basis, knot, sumrbas
-"""
-
-function frbsurf(b::Array{Float64}, k::Int64, l::Int64, npts::Int64, mpts::Int64, p1::Int64, p2::Int64, p_itest, ibnum::Int64, bold::Array{Float64}, niku::Array{Float64}, mjlw::Array{Float64}, rsumij::Array{Float64}, savrsumij::Array{Float64})::Array{Float64}
-	#[...]
-	return [0.0 0.0]
-end
-
-#-----------------------------------------------------------------------
 
 """
 UNTESTED	rbspsurf(b[], ordx, ordy, npts, mpts, p1, p2)
@@ -80,11 +65,13 @@ function rbspsurf(B::Array{Float64,2}, ordx::Int64, ordy::Int64, npts::Int64, mp
             icount = icount + 1
             for i = 1 : npts
                 for j = 1 : mpts
-                    for s = 1 : 3
-                        j1 = mpts * (i - 1) + j
-                        qtemp = (B[4, j1] * B[s, j1] * nbasis[i] * mbasis[j]) / sum
-                        q[s, icount] = q[s, icount] + qtemp
-                    end
+		    if mbasis[j]!=0
+                        for s = 1 : 3
+                            j1 = mpts * (i - 1) + j
+                            qtemp = (B[4, j1] * B[s, j1] * nbasis[i] * mbasis[j]) / sum
+                            q[s, icount] = q[s, icount] + qtemp
+                        end
+		    end
                 end
             end
         end
