@@ -13,6 +13,10 @@ using Base.Test
         @test typeof(raise23(b,x,4)) == Tuple{Array{Float64,2},Int64}
         @test raise23(b,x,4)[1] == [1 1.5 2 3 3.5 4; 1 1.5 2 2 1.5 1; 1 1 1 1 1 1]
         @test raise23(b,x,4)[2] == 6
+        x = knotu(4,2)
+        @test typeof(raise23(b,x,4)) == Tuple{Array{Float64,2},Int64}
+        @test raise23(b,x,4)[1] == [0.5 1 1.5 2 2.5 3 3.5 4 2;0.5 1 1.5 2 2 2 1.5 1 0.5;0.5 1 1 1 1 1 1 1 0.5]
+        @test raise23(b,x,4)[2] == 9
     end
     
     @testset "From order 4 to 5" begin
