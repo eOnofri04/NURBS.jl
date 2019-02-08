@@ -316,7 +316,7 @@ julia>
 """
 
 
-function constructmatrix(B::Array{Float64,2}, npts::Int64, mpts::Int64)::Array{Float64,2}
+function constructmatrix(B::Array{Float64,1}, npts::Int64, mpts::Int64)::Array{Float64,2}
 	H = zeros( mpts, npts) 
 	for j = 1 : mpts
 		for i = 1 : npts       
