@@ -1,4 +1,4 @@
-export bsplsurf, bsplsurfu, dbsurf
+export bsplsurf, bsplsurfu, dbsurf, matrixbsplsurf, matrixbsplsurfu
 
 
 """
