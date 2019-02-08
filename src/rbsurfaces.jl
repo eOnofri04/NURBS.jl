@@ -1,4 +1,4 @@
-export rbspsurf, matrixnurbs
+export rbspsurf, matrixnurbs, constructmatrix, sumelement
 
 
 """
