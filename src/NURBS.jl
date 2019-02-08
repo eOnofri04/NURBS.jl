@@ -6,7 +6,7 @@ module NURBS
 	export rbasis, rbspline, rbsplinu
 	export bezsurf
 	export bsplsurf, bspsurfu, dbsurf
-	export rbspsurf
+	export rbspsurf, matrixnurbs, constructmatrix
 	export raise23, raise45
 
 	export bezsurfj, bezsurf1, bezsurf2, bezsurf3, runn, runner
