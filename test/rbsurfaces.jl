@@ -14,6 +14,6 @@ using Base.Test
 	
 	@testset "matrix version" begin
 		@test typeof(matrixnurbs(vec,4,4,5,5,100,100)) == Tuple{Array{Float64, 2}, Array{Array{Int64, 1}, 1}, Array{Array{Int64, 1}, 1}}
-		@test typeof(matrixnurbs(vec,4,4,5,5,4,4)[1], res; atol=1e-3)
+		@test isapprox(matrixnurbs(vec,4,4,5,5,4,4)[1], res; atol=1e-3)
 	end	
 end
