@@ -1,4 +1,4 @@
-export rbspsurf
+export rbspsurf, matrixnurbs
 
 
 """
