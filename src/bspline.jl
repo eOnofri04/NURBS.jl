@@ -130,33 +130,28 @@ function bspline(npts::Int64, ord::Int64, p1::Int64, b::Array{Float64,2})::Tuple
     @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
     @assert npts >= ord ("ERROR: ord > npts")
 
-    m::Int64 = npts + ord
-    P::Array{Float64} = zeros(3, p1)
+    m::Int64 = npts + ord    
+    x::Array{Float64} = knot(npts,ord) #creates knot array
     
-    x::Array{Float64} = knot(npts, ord) #creates knot array
+    G::Array{Float64} = transpose(b)
     
-    icount::Int64 = 1
     t::Float64 = 0.0
-    
-    step::Float64 = x[m] / (p1 - 1)
-    
-    for i1 = 1 : p1 #computes the value of the B-spline in the p1 points
+    step::Float64 = x[m] / (p1-1)
+            
+    N::Array{Float64} = zeros(p1, npts)
+       
+    for i = 1 : p1 #computes the value of the B-spline in the p1 points
         if (x[m] - t) < 5e-6
             t = x[m]
         end
-        
         nbasis::Array{Float64} = basis(npts,ord,t,x) #computes the basis value depending on patameter t
-        
-        for i = 1 : npts
-            for j = 1 : 3 #iteration over three components for every point
-                temp = nbasis[i] * b[j,i]
-                P[j,icount] = P[j,icount] + temp
-            end
+        for j = 1 : npts
+            N[i,j] = nbasis[j]
         end
-        
-        icount = icount + 1
         t = t + step
     end
+    
+    P::Array{Float64} = transpose(N*G)
     
     EV = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
 
@@ -229,32 +224,32 @@ function bsplineu(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64,2})::Tuple{A
     @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
     @assert npts >= ord ("ERROR: ord > npts")
 
-    m::Int64 = npts + ord
-    P::Array{Float64} = zeros(3,p1)
+    m::Int64 = npts + ord    
     x::Array{Float64} = knotu(npts,ord) #creates knot array
     
-    icount::Int64 = 1
+    G::Array{Float64} = transpose(b)
+    
     t::Float64 = ord - 1
     step::Float64 = (npts - (ord - 1)) / (p1 - 1)
     
-    for i1 = 1 : p1 #computes the value of the B-spline in the p1 points
+    N::Array{Float64} = zeros(p1, npts)
+    
+    for i = 1 : p1 #computes the value of the B-spline in the p1 points
         if (npts - t) < 5e-6
             t = npts
         end
         
         nbasis::Array{Float64} = basis(npts,ord,t,x) #computes the basis value depending on patameter t
         
-        for j = 1 : 3 #iteration over three components for every point
-            for i = 1 : npts
-                temp = nbasis[i] * b[j,i]
-                P[j,icount] = P[j,icount] + temp
-            end
+        for j = 1 : npts
+            N[i,j] = nbasis[j]
         end
-        
-        icount = icount + 1
         t = t + step
+        
     end
     
+    P::Array{Float64} = transpose(N*G)
+        
     EV = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
 
     for i = 1 : p1-1
@@ -340,36 +335,37 @@ function dbspline(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64,2})::Tuple{A
     @assert npts >= ord ("ERROR: ord > npts")
 
     m::Int64 = npts + ord
-
-    P::Array{Float64} = zeros(3,p1)
-    D1::Array{Float64} = zeros(3,p1)
-    D2::Array{Float64} = zeros(3,p1)
     x = knot(npts,ord)
     
-    icount::Int64 = 1
+    G::Array{Float64} = transpose(b)
+    
+    N::Array{Float64} = zeros(p1, npts)
+    N1::Array{Float64} = zeros(p1, npts)
+    N2::Array{Float64} = zeros(p1, npts)
+    
     t::Float64 = 0.0
     step::Float64 = x[m] / (p1 - 1)
     
-    for i1 = 1 : p1
+    for i = 1 : p1
         if (x[m] - t) < 5e-6
             t = x[m]
         end
         
         nbasis, d1nbasis, d2nbasis = dbasis(npts,ord,t,x)
         
-        for j = 1 : 3       
-            for i = 1 : npts
-                P[j,icount] = P[j,icount] + (nbasis[i] * b[j,i])
-                D1[j,icount] = D1[j,icount] + (d1nbasis[i] * b[j,i])
-                D2[j,icount] = D2[j,icount] + (d2nbasis[i] * b[j,i])
-            end
+        for j = 1 : npts
+            N[i,j] = nbasis[j]
+            N1[i,j] = d1nbasis[j]
+            N2[i,j] = d2nbasis[j]
         end
-        
-        icount = icount + 1
         t = t + step
     end
     
-     EV = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
+    P::Array{Float64} = transpose(N*G)
+    D1::Array{Float64} = transpose(N1*G)
+    D2::Array{Float64} = transpose(N2*G)
+    
+    EV = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
 
     for i = 1 : p1-1
         C = Array{Int64}(2)
@@ -448,34 +444,36 @@ function dbsplineu(npts::Int64,ord::Int64,p1::Int64,b::Array{Float64,2})::Tuple{
     @assert npts >= ord ("ERROR: ord > npts")
 
     m::Int64 = npts + ord
-
-    P::Array{Float64} = zeros(3,p1)
-    D1::Array{Float64} = zeros(3,p1)
-    D2::Array{Float64} = zeros(3,p1)
     x = knotu(npts,ord)
     
-    icount::Int64 = 1
+    G::Array{Float64} = transpose(b)
+    
+    N::Array{Float64} = zeros(p1, npts)
+    N1::Array{Float64} = zeros(p1, npts)
+    N2::Array{Float64} = zeros(p1, npts)
+    
     t::Float64 = ord - 1
     step::Float64 = (npts - (ord - 1)) / (p1 - 1)
     
-    for i1 = 1 : p1
+    for i = 1 : p1
         if (npts - t) < 5e-6
             t = npts
         end
         
         nbasis, d1nbasis, d2nbasis = dbasisu(npts,ord,t,x)
         
-        for j = 1 : 3
-            for i = 1 : npts
-                P[j,icount] = P[j,icount] + (nbasis[i] * b[j,i])
-                D1[j,icount] = D1[j,icount] + (d1nbasis[i] * b[j,i])
-                D2[j,icount] = D2[j,icount] + (d2nbasis[i] * b[j,i])
-            end
+        for j = 1 : npts
+            N[i,j] = nbasis[j]
+            N1[i,j] = d1nbasis[j]
+            N2[i,j] = d2nbasis[j]
         end
-        
-        icount = icount + 1
         t = t + step
+        
     end
+    
+    P::Array{Float64} = transpose(N*G)
+    D1::Array{Float64} = transpose(N1*G)
+    D2::Array{Float64} = transpose(N2*G)
     
     EV = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
 
@@ -492,130 +490,124 @@ end
 
 #--------------------------------------------------------------------------------------------------------------------------------
 
-
 """
-	matpbspl(ord, npts, p1, D[])
+matpbspl(npts,ord,p1,b)
 
-Generate a B-spline curve using matrix methods and a periodic uniform knot vector.
-
----
+Subroutine to generate a B-spline curve using matrix methods ad a periodic uniform knot vector. Returns a tuple `(P,EV)`. P is the coordinates matrix of the p1 points b-spline curve and defined by the control points matrix b. EV is the 1-dimensional cellular complex. 
 
 # Arguments
-- `ord::Int64`: order of the B-spline basis function.
-- `npts::Int64`: number of control polygon vertices.
-- `p1::Int64`: number of points to be calculated on the span of the curve.
-- `D::Array{Float64,2}`: array containing the control polygon vertices.
 
----
+- `npts::Int64`: the number of the contol polygon vertices.
+- `ord::Int64`: order of the bspline basis function.
+- `p1::Int64`: number of the points to be calculated on the curve
+- `b::Array{Float64}`: 2-dimensional array containing the control polygon vertices
 
-# Examples
-```jldoctest
-julia> 
-
-```
-```jldoctest
-julia> 
-
-```
-```jldoctest
-julia> 
-
-```
----
-_By Paolo Macciacchera, Elia Onofri_
+--------------------------------------------------------------------------------------------------------------------------------
+_By Giuseppe Santorelli
 """
 
-function matpbspl(ord::Int64, npts::Int64, p1::Int64, D::Array{Float64,2})::Array{Float64,2}
-    b::Array{Float64,2} = zeros(3, ord)
-    n::Array{Float64,2} = zeros(ord, ord)
-    t::Array{Float64,2} = zeros(1, ord)
-    temp::Array{Float64,2} = zeros(1, ord)
-    p::Array{Float64,2} = zeros(3, p1 * npts)
-    fcoeff::Float64 = 0.0
+function matpbspl(npts::Int64, ord::Int64, p1::Int64, b::Array{Float64})::Tuple{Array{Float64,2},Array{Array{Int64,1},1}}
     
-    n, fcoeff = nmatrix(ord)
-    icount = 0
-    stepl = 1 / p1
-    rangel = 0 : stepl : 1 - (1 / p1)
+    @assert length(b) == 3 * npts ("ERROR: array b not matching with parameters")
+    @assert npts >= ord ("ERROR: ord > npts")
     
-    for j = 1 : npts
-        for k = 0 : ord-1
-            b[1, k + 1] = D[1, mod(j + k, npts) + 1]
-            b[2, k + 1] = D[2, mod(j + k, npts) + 1]
-            b[3, k + 1] = D[3, mod(j + k, npts) + 1]
+    G::Array{Float64,2} = zeros(ord, 3)
+    T::Array{Float64,2} = zeros(1, ord)
+    N::Array{Float64,2}, fcoeff::Float64 = nmatrix(ord)
+
+    P::Array{Float64} = Float64[]
+    
+    step::Float64 = 1 / (p1 - 1)
+    
+    for i = 0 : npts
+        #building G matrix
+        for j = 0 : ord - 1
+            G[j + 1, 1] = b[1, mod(i + j, npts) + 1]
+            G[j + 1, 2] = b[2, mod(i + j,npts) + 1]
+            G[j + 1, 3] = b[3, mod(i + j, npts) + 1]
         end
-        for l in rangel         
-            icount = icount + 1               
-            for i = 1 : ord
-                t[i] = l ^ (ord - i)
-            end                      
-            t = fcoeff * t
-            temp = t * n
-            ptemp::Array{Float64} = temp * b'
-            p[1, icount] = ptemp[1]
-            p[2, icount] = ptemp[2]
-            p[3, icount] = ptemp[3]
+               
+        t::Float64 = 0.0
+        
+        #calculating T array for every parameter t
+        while t <= 1 - step
+            for j = 1 : ord
+                T[1,j] = t^(ord - j)
+            end
+            
+            T = fcoeff * T
+            
+            #matrix multiplication
+            P1::Array{Float64} = T*N*G
+            
+            push!(P,P1[1,1])
+            push!(P,P1[1,2])
+            push!(P,P1[1,3])
+            
+            t = t + step
         end
+    
     end
-    return p            
+    
+    P = reshape(P,3,:)
+
+    EV = Array{Int64,1}[] #1-dimensional cellular complex used for plotting the curve with Plasm package
+
+    for i = 1 : length(P)/3
+        C = Array{Int64}(2)
+        C[1] = i
+        C[2] = i+1
+        push!(EV,C) 
+    end
+    
+    return P, EV
 end
 
 
 #--------------------------------------------------------------------------------------------------------------------------------
 
-
 """
-	nmatrix(k)
+nmatrix(ord)
 
-Calculate the general B-spline periodic basis matrix.
-
-This function is used in matpbspl.
-
----
+Subroutine to calculate the general B-spline periodic basis matrix. Returns the matrix `N` and the coefficient `fcoeff`.
 
 # Arguments
-- `ord::Int64`: order of the periodic basis function.
 
----
+- `ord::Int64` : order of the periodic basis function
 
-# Examples
-```jldoctest
-julia> 
-
-```
-```jldoctest
-julia> 
-
-```
-```jldoctest
-julia> 
-
-```
----
-_By Paolo Macciacchera, Elia Onofri_
+---------------------------------------------------------------------------------------------------------------------------------
+_By Giuseppe Santorelli
 """
 
 function nmatrix(ord::Int64)::Tuple{Array{Float64,2}, Float64}
-    n::Array{Float64} = Array{Float64}(zeros(ord, ord))
-    fcoeff = 1 / factorial(ord - 1)
-    Ni = (n,i) -> factorial(n) / (factorial(i) * factorial(n - i)) 
- 
+    
+    function Ni(n, i)
+       return factorial(n) / (factorial(i) * factorial(n - i))
+    end
+    
+    N::Array{Float64,2} = zeros(ord, ord)
+    fcoeff::Float64 = 1 / factorial(ord - 1)
+    
     for i = 0 : ord - 1
-        temp = Ni(ord - 1, i)
+        t = Ni(ord - 1, i)
+        
         for j = 0 : ord - 1
-            sum = 0
+            s = 0
+            
             for k = j : ord - 1
-                sum1 = ( ord - ( k + 1 ) ) ^ i
-                sum2 = (-1) ^ (k - j)
-                sum3 = Ni(ord, k - j)
-                sum = sum + sum1 * sum2 * sum3
+                s1 = (ord - (k + 1))^i
+                s2 = (-1)^(k-j)
+                s3 = Ni(ord, k - j)
+                s = s + s1 * s2 * s3
             end
-            n[i + 1, j + 1] = temp * sum
+            
+            N[i + 1, j + 1] = t*s
         end
     end
-    return(n, fcoeff)            
+    
+    return N, fcoeff
+    
 end
-
 
 #--------------------------------------------------------------------------------------------------------------------------------
 
