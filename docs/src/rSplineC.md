@@ -16,7 +16,7 @@ Projecting into the three-dimensional space by dividing through by thr homogeneo
 P(t) = \dfrac{\sum_{i=1}^{n+1} B_ih_iN_{i,k}(t)}{\sum_{i=1}^{n+1}h_iN_{i,k}(t)} = \sum_{i=1}^{n+1}B_iR_{i,k}(t)
 ```
 
-here the ``B_i`` are the three-dimensional control polygon vertices and ``R_{i,k}(t)=dfrac{h_iN_{i,k}(t)}{\sum_{i=1}^{n+1}h_iN_{i,k}(t)}`` are the rational B-spline basis function where ``h_i>0`` for every value of ``i``.
+here the ``B_i`` are the three-dimensional control polygon vertices and ``R_{i,k}(t) = \dfrac{h_iN_{i,k}(t)}{\sum_{i=1}^{n+1}h_iN_{i,k}(t)}`` are the rational B-spline basis function where ``h_i>0`` for every value of ``i``.
 
 ## RB-Spline Properties
 
