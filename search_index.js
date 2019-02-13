@@ -165,7 +165,31 @@ var documenterSearchIndex = {"docs": [
     "page": "Rational B-Spline Curves",
     "title": "Rational B-Spline Curves",
     "category": "section",
-    "text": ""
+    "text": "A rational B-spline curve is the projection of a nonrational B-spline curve defined in four-dimensional homogeneous coordinate space back to the three-dimensional physical space.A rational B-spline curve is defined asP(t) = sum_i=1^n+1 B_i^hN_ik(t)where B_i^h are the four-dimensional homogeneous control polygon vertices for the nonrational four-dimensional B-spline curve and N_ik(t) is the nonrational B-spline basis function.Projecting into the three-dimensional space by dividing through by thr homogeneous coordinate yeldsP(t) = dfracsum_i=1^n+1 B_ih_iN_ik(t)sum_i=1^n+1h_iN_ik(t) = sum_i=1^n+1B_iR_ik(t)here the B_i are the three-dimensional control polygon vertices and R_ik(t)=dfrach_iN_ik(t)sum_i=1^n+1h_iN_ik(t) are the rational B-spline basis function where h_i0 for every value of i."
+},
+
+{
+    "location": "rSplineC.html#RB-Spline-Properties-1",
+    "page": "Rational B-Spline Curves",
+    "title": "RB-Spline Properties",
+    "category": "section",
+    "text": "RB-spline are a generalization of nonrational B-spline, thus they carry forward nearly all the analytic and geometric characteristics:Every rational basis function is positive or zero for all parameter values.\nThe sum of the rational B-spline basis functions for any value of t is one.\nEach basis function has one maximum, except for the first order basis.\nThe maximum order of the rational B-spline is equal to the number of control polygon vertices.\nA RB-spline generally follows the shape of the control polygon."
+},
+
+{
+    "location": "rSplineC.html#RB-Spline-Basis-Functions-1",
+    "page": "Rational B-Spline Curves",
+    "title": "RB-Spline Basis Functions",
+    "category": "section",
+    "text": "To generate RB-spline basis functions and curves are used open uniform, periodic uniform and nonuniform knot vectors.The homogeneous coordinates h_i, also called homogeneous weight factors, provide additional blendig capability, i.e. as a certain weight h_j increases the curve is pulled closer to the polygon vertex B_j."
+},
+
+{
+    "location": "rSplineC.html#RB-Spline-Derivatives-1",
+    "page": "Rational B-Spline Curves",
+    "title": "RB-Spline Derivatives",
+    "category": "section",
+    "text": "The derivatives are obtained by formal differantiation of the curve\'s functionP(t) = sum_i=1^n+1B_iR_ik(t)whereR_ik(t)=dfrach_iN_ik(t)sum_i=1^n+1h_iN_ik-dfrach_iN_iksum_i=1^n+1h_iN_ik(sum_i=1^n+1h_iN_ik)^2For example, evaluating this result at t=0 and t=n-k+2P(0)=(k-1)dfrach_2h_1(B_2-B_1)andP(n-k+2)=(k-1)dfrach_nh_n+1(B_n+1-B_n)Higher order dervatives are obtained in a similar manner."
 },
 
 {
