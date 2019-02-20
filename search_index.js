@@ -312,4 +312,76 @@ var documenterSearchIndex = {"docs": [
     "text": "This repository would be maintained by the Computational Visual Design Laboratory (CVDLAB) of Università degli Studi di Roma Tre."
 },
 
+{
+    "location": "parallelization-report.html#",
+    "page": "About Parallelization",
+    "title": "About Parallelization",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "parallelization-report.html#Parallelization-Tests-1",
+    "page": "About Parallelization",
+    "title": "Parallelization Tests",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "parallelization-report.html#Bezier-Surfaces-1",
+    "page": "About Parallelization",
+    "title": "Bezier Surfaces",
+    "category": "section",
+    "text": ""
+},
+
+{
+    "location": "parallelization-report.html#Results-over-20-runs-with:-1",
+    "page": "About Parallelization",
+    "title": "Results over 20 runs with:",
+    "category": "section",
+    "text": "npts = 50\nmpts = 50\nudpts = 2500\nwdpts = 25001 proc min avg max\nserial 3.817236 4.302450 4.587352\nparallel 1 3.803109 4.229924 4.662597\nparallel 2 3.813949 4.231862 4.651251\nparallel 3 3.813311 4.274616 4.87146810 proc min avg max\nserial 3.839719 4.609300 6.655391\nparallel 1 3.826293 4.541800 5.381051\nparallel 2 3.843635 4.517371 5.319194\nparallel 3 3.834900 4.452138 5.040315the test made are:serial: no parallelization esplicitly made.\nparallel 1: with @sync and @async and matrices defined inside @sync block.\nparallel 2: with @sync and @async and matrices defined before @sync block."
+},
+
+{
+    "location": "parallelization-report.html#Result-over-50-runs-with:-1",
+    "page": "About Parallelization",
+    "title": "Result over 50 runs with:",
+    "category": "section",
+    "text": "npts = 50\nmpts = 50\nudpts = 2500\nwdpts = 25001 proc average\nserial 4.44101856\nparallel 1 4.45837448\nparallel 2 4.47456267\nparallel 3 4.43402378\n––––––– –––––––10 proc average\nserial 4.61977279\nparallel 1 4.60410667\nparallel 2 4.55359172\nparallel 3 4.51270721"
+},
+
+{
+    "location": "parallelization-report.html#The-Code-1",
+    "page": "About Parallelization",
+    "title": "The Code",
+    "category": "section",
+    "text": "The initialisation of the calculus:begin\n    npts = 50\n    mpts = 50\n    udpts = 2500\n    wdpts = 2500\n    bplus = zeros(3, npts * mpts)\n\n    for i = 1 : npts\n        ki = i/2\n        for j = 1 : mpts\n            kj = j /2\n            r = sqrt((ki)^2+(kj)^2)\n            if (r == 0)\n                r = 0.000001\n            end\n            ij = (i-1)*npts + j\n            bplus[1,ij] = i\n            bplus[2,ij] = j# + i/10\n            bplus[3,ij] = i+j\n        end\n    end\nendand the execution:begin\n	minor = 10.0\n	medium = 0.0 \n	major = 0.0\n	for i = 1 : 20\n	    x = @elapsed bezsurf(npts, mpts, bplus, 1000, 1000)\n	    if (x < minor)\n	        minor = x\n	    end\n	    if (x > major)\n	        major = x\n	    end\n	    medium += x\n	end\n	medium /= 20\n	println(\"minimum = $(minor)\")\n	println(\"average = $(medium)\")\n	println(\"maximum = $(major)\")\nend"
+},
+
+{
+    "location": "parallelization-report.html#Conclusions-1",
+    "page": "About Parallelization",
+    "title": "Conclusions",
+    "category": "section",
+    "text": "New tests have been made on small and medium data sets.All of them have enhanced the same results: over \"not so big\" data sets no particular changes have been discovered.At this state of art Julia parallelism seems to be the best choice as manage memory allocation of Activation Registers in the most efficient way. Usually Julia\'s default parallelization seems to be a little slowler. However this virtual time cost is totally overcome by the smaller amount of memory leack that, in user parallelizations, come at the cost of a high number of Garbage Collector calls.More test should be made in order to have a precise results sets but it seems useless at the current state of art to waste time over its analysis."
+},
+
+{
+    "location": "ToDo.html#",
+    "page": "Further Developments",
+    "title": "Further Developments",
+    "category": "page",
+    "text": ""
+},
+
+{
+    "location": "ToDo.html#Further-Developments-1",
+    "page": "Further Developments",
+    "title": "Further Developments",
+    "category": "section",
+    "text": "..."
+},
+
 ]}
