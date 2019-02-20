@@ -100,3 +100,14 @@ begin
 	println("maximum = $(major)")
 end
 ```
+
+## Conclusions
+
+New tests have been made on small and medium data sets.
+
+All of them have enhanced the same results: over "not so big" data sets no particular changes have been discovered.
+
+At this state of art Julia parallelism seems to be the best choice as manage memory allocation of Activation Registers in the most efficient way.
+Usually Julia's default parallelization seems to be a little slowler. However this virtual time cost is totally overcome by the smaller amount of memory leack that, in user parallelizations, come at the cost of a high number of Garbage Collector calls.
+
+More test should be made in order to have a precise results sets but it seems useless at the current state of art to waste time over its analysis.

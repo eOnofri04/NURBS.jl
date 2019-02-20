@@ -20,5 +20,9 @@ makedocs(
 			"Rational B-Spline Surfaces" => "rSplineS.md"
 		],
 		"Authors" => "authors.md",
+		"Project Conclusions" => [
+			"About Parallelization" => "parallelization-report.md",
+			"Further Developments" => "ToDo.md"
+		],
 	]
 )
