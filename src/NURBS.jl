@@ -5,8 +5,8 @@ module NURBS
 	export bspline, bsplineu, dbspline, dbsplineu, matpbspl, nmatrix
 	export rbasis, rbspline, rbsplinu
 	export bezsurf
-	export bsplsurf, bspsurfu, dbsurf
-	export rbspsurf
+	export bsplsurf, bspsurfu, dbsurf, matrixbsplsurf, matrixbsplsurfu
+	export rbspsurf, matrixnurbs, constructmatrix
 	export raise23, raise45
 
 	export bezsurfj, bezsurf1, bezsurf2, bezsurf3, runn, runner
